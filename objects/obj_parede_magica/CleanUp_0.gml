@@ -1,0 +1,1 @@
+solido_remover(solido);
