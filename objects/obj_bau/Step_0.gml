@@ -1,5 +1,19 @@
 var _dt = global.dt;
 if (revelar_t > 0) revelar_t -= _dt;
+if (selo_quebra > 0) selo_quebra -= _dt;
+// v1.14: a chave sobe do baú, gira no ar e voa até Twilight
+if (chave_voo >= 0)
+{
+    chave_voo += _dt;
+    if (chave_voo >= 70)
+    {
+        chave_voo = -1;
+        global.chave_portao = true;
+        aviso_mostrar("CHAVE DO PORTÃO  ·  VOLTE AO PORTÃO TRANCADO");
+        som("sfx_cura", 0.7, 0);
+        global.camera_impact = max(global.camera_impact, 3);
+    }
+}
 if (!visivel) exit;
 
 switch (estado)
@@ -9,7 +23,8 @@ switch (estado)
         // tampa: quadros 1-3
         image_index = min(3, floor(t / 7) + 1);
         if (t >= 22 and magia_soltas == 0) { fx_em("faiscas_golpe", x, y - 16, 0.8, 1); global.camera_impact = max(global.camera_impact, 4); }
-        // a magia sai do baú em fluxo
+        // a magia sai do baú em fluxo (o baú da chave não cura: a chave é o tesouro)
+        if (conteudo == "chave" and t >= 22) { estado = "aberto"; break; }
         if (t >= 22 and magia_soltas < BAU_PARTICULAS)
         {
             var _n = min(BAU_PARTICULAS - magia_soltas, ceil(0.5 * _dt));

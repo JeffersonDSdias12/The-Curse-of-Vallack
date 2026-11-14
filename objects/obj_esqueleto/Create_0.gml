@@ -22,7 +22,7 @@ usa_hud_nivel = true;
 inimigo_status(45);
 dano_ataque = inimigo_dano(7);
 recarga_max = round(40 * dif_recarga_inimigo());
-vel_correr = 2.3;            // mais rápido que a besta
+vel_correr = 2.3 * dif_velocidade();            // mais rápido que a besta
 zona_pulo_max = 0;           // não tem o salto de ataque (só pula caixotes)
 alcance_ataque = 46;
 distancia_minima = 34;
@@ -78,7 +78,7 @@ reagir_dano = function(_dano, _dir, _forca)
         return;
     }
 
-    empurrao = _dir * _forca * 0.45;
+    empurrao = _dir * _forca * 0.25;          // v1.12: era 0.45 (os golpes jogavam o inimigo longe)
     inimigo_atordoar(30);
     if (vida <= 0)
     {

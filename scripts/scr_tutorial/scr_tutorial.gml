@@ -1,155 +1,27 @@
 // =====================================================================
-//  scr_tutorial: tutorial em PERGAMINHO (como no God of War)
-//  * na fase 1 os pergaminhos aparecem na hora certa, pausam o jogo e
-//    só fecham com ENTER ou X (cruz do controle)
-//  * o botão TUTORIAL do menu inicial (e COMANDOS na pausa) abre todos
-//    eles como um livro
+//  scr_tutorial: o tutorial em PERGAMINHO da tela de carregamento
+//  * v1.13: é o único tutorial do jogo; durante a fase não aparece nenhum
 //  * ícones de teclas e botões do controle (mudam conforme o que está em uso)
 // =====================================================================
 
-enum TUT { INICIO, ACOES, COMBOS, COMBATE, ESPECIAIS, ORBS, FURIA, FINALIZADOR, ESCUDO, CENARIO, ARQUEIRO, ESQUELETO, ARANHA, ESTATUA, PORCO, GUARDIAO, TOTAL }
-
 // ---------------------------------------------------------------------
-// CONTEÚDO DAS PÁGINAS
-// linhas: { ic: [ações], n: "NOME", t: "descrição" }   ícones + nome + texto
-//         { seq: [ações], n: "NOME", t: "descrição" }  sequência de combo
-//         { t: "texto" }                                parágrafo
+// O ÚNICO TUTORIAL DO JOGO (v1.13)
+// Aparece só na tela de carregamento das fases (Novo Jogo, Carregar Jogo e
+// a passagem para a Fase 2). Durante o jogo não aparece nenhum tutorial.
+// OPÇÕES > TUTORIAL NO CARREGAMENTO liga e desliga.
+// Linhas: { ic: [ações], n: "NOME", t: "descrição" } — mude os textos aqui.
 // ---------------------------------------------------------------------
-function tutorial_pagina(_i)
+function tutorial_carregamento()
 {
-    switch (_i)
-    {
-        // ----- TUTORIAL RÁPIDO (início da fase 1): 3 páginas -----
-        case TUT.INICIO:
-            return { titulo: "TUTORIAL RÁPIDO  ·  MOVIMENTO", sub: "Capítulo I  ·  A caminho do castelo", linhas: [
-                { ic: [ACAO.ESQUERDA, ACAO.DIREITA], n: "CORRER", t: "Twilight está sempre correndo: é só apertar para o lado." },
-                { ic: [ACAO.PULAR], n: "PULAR", t: "Salta obstáculos e sobe em caixotes. No ar também dá para atacar." },
-                { ic: [ACAO.ESQUIVA], n: "ESQUIVA (ROLAGEM)", t: "Rola para o lado: no meio da rolagem nada acerta Twilight. No controle, o analógico direito também rola." },
-                { ic: [ACAO.AGACHAR], n: "AGACHAR", t: "Abaixa o corpo. Agachado, o ataque vira uma rasteira." },
-                { ic: [ACAO.INTERAGIR], n: "INTERAGIR", t: "Abre baús de vida e salva no cristal dourado (início e meio da fase)." }
-            ] };
-
-        case TUT.ACOES:
-            return { titulo: "TUTORIAL RÁPIDO  ·  COMBATE", sub: "Botões de ataque, defesa e fúria", linhas: [
-                { ic: [ACAO.ATACAR, ACAO.ATAQUE_FORTE, ACAO.ATAQUE_SALTO], n: "ATAQUE  ·  PESADO  ·  RASTEIRA", t: "Os três golpes da espada. Encadeados no ritmo, viram combos." },
-                { ic: [ACAO.DEFENDER], n: "DEFESA E APARAR", t: "Segure para defender. Aperte NA HORA do golpe para aparar: o inimigo fica atordoado." },
-                { ic: [ACAO.ATAQUE_SALTO], n: "FINALIZADOR", t: "Inimigo atordoado com o ícone sobre a cabeça: aperte para o golpe final." },
-                { ic: [ACAO.ESPECIAL_3], n: "ESPECIAL", t: "Gasta magia. Novos especiais e combos chegam ao evoluir a espada." },
-                { ic: [ACAO.FURIA], n: "FÚRIA", t: "Com a barra de fúria cheia, libera a Ira de Vallack." }
-            ] };
-
-        case TUT.COMBOS:
-            var _c = combos_lista();
-            return { titulo: "COMBOS", sub: "Aperte no ritmo: cada golpe começa logo depois do anterior", linhas: [
-                { seq: _c[0].seq, n: "COMBO 1  ·  " + _c[0].nome, t: _c[0].desc + " Desde o início." },
-                { seq: _c[1].seq, n: "COMBO 2  ·  " + _c[1].nome, t: _c[1].desc + " Espada nível " + string(combo_nivel_req(2)) + "." },
-                { seq: _c[2].seq, n: "COMBO 3  ·  " + _c[2].nome, t: _c[2].desc + " Espada nível " + string(combo_nivel_req(3)) + "." },
-                { t: "Evolua a espada com orbs na tela de ARMAS (" + botao_menu_armas() + "). O nome do combo aparece na tela quando ele sai." }
-            ] };
-
-        case TUT.COMBATE:
-            return { titulo: "A ARTE DA LÂMINA", sub: "Os servos da maldição surgem de portais de magia", linhas: [
-                { t: "Enquanto você ataca, os inimigos à sua frente ficam atordoados. Golpes marcados com QUEBRA-GUARDA atravessam a defesa." },
-                { ic: [ACAO.DEFENDER], n: "APARAR", t: "Aperte a defesa no instante do golpe: o ataque é rebatido e o inimigo fica tonto por 2 segundos." },
-                { ic: [ACAO.ESQUIVA], n: "ESQUIVA", t: "Role por dentro do golpe. No meio da rolagem nada acerta Twilight." },
-                { ic: [ACAO.ATACAR, ACAO.ATAQUE_FORTE], n: "NO AR", t: "Corte aéreo. O golpe pesado no ar faz Twilight mergulhar com a espada." }
-            ] };
-
-        case TUT.ESPECIAIS:
-            return { titulo: "PODERES AMALDIÇOADOS", sub: "Os especiais gastam a barra de MAGIA, que enche em " + string(ESPECIAL_SEGUNDOS) + " segundos", linhas: [
-                { ic: [ACAO.ESPECIAL_3], n: especial_nome(ACAO.ESPECIAL_3) + "  ·  " + string(round(especial_custo(ACAO.ESPECIAL_3) * 100)) + "% DA MAGIA", t: "Carrega a força e golpeia o chão: a terra treme em volta de Twilight. Desde o início." },
-                { ic: [ACAO.ESPECIAL], n: especial_nome(ACAO.ESPECIAL) + "  ·  " + string(round(especial_custo(ACAO.ESPECIAL) * 100)) + "% DA MAGIA", t: "Onda vermelha que avança (agachado, sai rente ao chão). Espada nível " + string(especial_nivel_req(ACAO.ESPECIAL)) + "." },
-                { ic: [ACAO.ESPECIAL_2], n: especial_nome(ACAO.ESPECIAL_2) + "  ·  " + string(round(especial_custo(ACAO.ESPECIAL_2) * 100)) + "% DA MAGIA", t: "Salta e crava a espada no chão, levantando faíscas. Espada nível " + string(especial_nivel_req(ACAO.ESPECIAL_2)) + "." },
-                { t: "Cada especial tira 30% a 40% da vida dos inimigos comuns; no boss, bem menos. Durante um especial Twilight não é interrompido." }
-            ] };
-
-        case TUT.ORBS:
-            return { titulo: "ORBS DE ALMA", sub: "Cada inimigo derrotado liberta orbs vermelhas", linhas: [
-                { t: "As orbs voam sozinhas até Twilight e enchem o pote no canto da tela. Finalizadores rendem 50% a mais." },
-                { t: "Caixotes, paredes rachadas e segredos escondidos também guardam orbs." },
-                { n: "EVOLUIR A ESPADA", ic: [], t: "Na tela de ARMAS (" + botao_menu_armas() + ") gaste orbs para evoluir a " + espada_nome() + ": cada nível dá mais dano e libera um combo ou especial." }
-            ] };
-
-        case TUT.FURIA:
-            return { titulo: "A IRA DE VALLACK", sub: "A barra de fúria está cheia!", linhas: [
-                { t: "A fúria enche quando Twilight acerta, apara e também quando é ferido." },
-                { ic: [ACAO.FURIA], n: "LIBERAR A FÚRIA", t: "Um golpe devastador em volta de Twilight, que derrota os inimigos comuns de uma vez. Ele não é interrompido." }
-            ] };
-
-        case TUT.FINALIZADOR:
-            return { titulo: "FINALIZADOR", sub: "O inimigo está atordoado e fraco", linhas: [
-                { ic: [ACAO.ATAQUE_SALTO], n: "GOLPE FINAL", t: "Quando o ícone aparecer sobre um inimigo, chegue perto e aperte: Twilight executa o golpe final." },
-                { t: "Aparar um golpe ou quebrar um escudo também deixa o inimigo pronto para o finalizador. Ele rende mais orbs e recupera um pouco de vida." }
-            ] };
-
-        case TUT.ESCUDO:
-            return { titulo: "BESTAS ESCUDEIRAS", sub: "Um escudo de ferro protege a frente", linhas: [
-                { t: "Golpes de frente batem no escudo. Continue golpeando: a guarda quebra e a besta fica atordoada." },
-                { ic: [ACAO.ATAQUE_FORTE], n: "GOLPES PESADOS", t: "Contam em dobro para quebrar o escudo. Especiais e a Fúria quebram na hora." },
-                { ic: [ACAO.ESQUIVA], n: "PELAS COSTAS", t: "Role para trás dela: pelas costas o escudo não protege." }
-            ] };
-
-        case TUT.CENARIO:
-            return { titulo: "A ESTRADA EM CHAMAS", sub: "A vila foi atacada pelos servos de Vallack", linhas: [
-                { t: "Caixotes quebram com golpes e às vezes escondem orbs ou um BAÚ DE VIDA. Dá para subir e correr em cima deles." },
-                { t: "Paredes rachadas escondem segredos. Golpes pesados e especiais derrubam mais rápido." },
-                { t: "Cuidado com espinhos, vigas em chamas que caem do alto e fogo no chão. A vida não volta sozinha: use os baús." }
-            ] };
-
-        case TUT.ARQUEIRO:
-            return { titulo: "ARQUEIROS ESQUELETO", sub: "Também surgem dos portais de magia", linhas: [
-                { t: "Atiram de longe e fogem quando você chega perto; se você se afasta demais, eles voltam para a distância de tiro." },
-                { ic: [ACAO.DEFENDER], n: "DEFESA E APARAR", t: "A defesa segura as flechas. Aparada na hora certa, a flecha volta contra quem atirou." },
-                { ic: [ACAO.ESPECIAL], n: "ONDA CARMESIM", t: "A onda alcança os arqueiros que tentam fugir." }
-            ] };
-
-        case TUT.ESQUELETO:
-            return { titulo: "ESQUELETOS GUERREIROS", sub: "Rápidos, com golpe duplo... e teimosos", linhas: [
-                { t: "Atacam com dois golpes seguidos: um corte largo e uma estocada. Defenda ou apare os dois." },
-                { n: "REERGUER", ic: [], t: "Derrubado por golpes comuns, ele desmonta numa pilha de ossos e se levanta com metade da vida. Golpeie a pilha antes que ele se erga!" },
-                { ic: [ACAO.ESPECIAL_3, ACAO.FURIA], n: "DE UMA VEZ", t: "Especiais, a Fúria e o finalizador acabam com ele na hora." }
-            ] };
-
-        case TUT.ARANHA:
-            return { titulo: "MULHER-ARANHA", sub: "Ágil e traiçoeira: luta de longe e de perto", linhas: [
-                { t: "Cospe TEIA em arco. Preso na teia, Twilight fica lento e não pula nem rola. Teia caída no chão também prende." },
-                { ic: [ACAO.PULAR, ACAO.ATACAR], n: "SOLTE-SE", t: "Aperte os botões várias vezes para rasgar a teia mais rápido." },
-                { ic: [ACAO.DEFENDER], n: "DEFESA E APARAR", t: "A defesa segura a teia; aparada na hora certa, ela volta e prende a própria aranha." },
-                { t: "De perto ela ataca com as garras; de média distância dá o BOTE, saltando sobre você." }
-            ] };
-
-        case TUT.ESTATUA:
-            return { titulo: "ESTÁTUA ENFEITIÇADA", sub: "Pedra que desperta quando você se aproxima", linhas: [
-                { t: "Enquanto dorme ela é PEDRA: golpes comuns só tiram faíscas." },
-                { n: "OLHOS ACESOS", ic: [], t: "Quando os olhos brilham ela carrega um orbe que persegue Twilight. Só agora (e logo depois do disparo) ela pode ser ferida." },
-                { ic: [ACAO.DEFENDER], n: "APARAR O ORBE", t: "Aparado na hora certa, o orbe volta, racha a estátua e a deixa vulnerável." },
-                { ic: [ACAO.ESPECIAL_3, ACAO.FURIA], n: "ESPECIAIS", t: "Especiais e a Fúria ferem a estátua mesmo em forma de pedra." }
-            ] };
-
-        case TUT.PORCO:
-            return { titulo: "PORCO CORROMPIDO", sub: "Um brutamontes da maldição", linhas: [
-                { t: "Pesado: golpes comuns não o atordoam. Apare os golpes dele ou use especiais. Um em cada três cortes QUEBRA a guarda." },
-                { ic: [ACAO.PULAR, ACAO.ESQUIVA], n: "SALTO E CORTE ROXO", t: "A onda de choque do salto e a onda roxa correm pelo chão e não dá para defender: pule por cima ou role através delas." },
-                { n: "FÚRIA", ic: [], t: "Com metade da vida ele ruge, invoca esqueletos pelos portais de magia e fica mais rápido." }
-            ] };
-
-        case TUT.GUARDIAO:
-            return { titulo: "A ÁRVORE AMALDIÇOADA", sub: "Guardiã da estrada de Vallack", linhas: [
-                { t: "Muralhas mágicas fecham a arena: ninguém entra nem sai até o fim da luta." },
-                { t: "A cada onda ela invoca 10 bestas, 5 arqueiros e esqueletos guerreiros pelos portais de magia; a partir da segunda onda, também mulheres-aranha." },
-                { t: "Com metade da vida ela se enfurece: lança três bolas de fogo e ergue raízes do chão." },
-                { ic: [ACAO.DEFENDER], n: "APARAR", t: "Uma bola de fogo aparada na hora certa volta contra a árvore." }
-            ] };
-    }
-    return { titulo: "", sub: "", linhas: [] };
-}
-
-// Todas as páginas, na ordem do livro (pausa e menu)
-function tutorial_todas()
-{
-    var _r = [];
-    for (var _i = 0; _i < TUT.TOTAL; _i++) array_push(_r, _i);
-    return _r;
+    return { titulo: "COMO JOGAR", sub: "Fogo roxo, espinhos e veneno ferem   ·   a fumaça dos inimigos derrotados, não", linhas: [
+        { ic: [ACAO.ESQUERDA, ACAO.DIREITA, ACAO.PULAR], n: "CORRER E PULAR", t: "Twilight sempre corre. No ar, ainda dá para atacar." },
+        { ic: [ACAO.ESQUIVA], n: "ESQUIVA E BACKDASH", t: "Com direção, rola: no meio da rolagem nada acerta. Parado, salta para trás." },
+        { ic: [ACAO.ATACAR, ACAO.ATAQUE_FORTE, ACAO.ATAQUE_SALTO], n: "ATAQUE  ·  PESADO  ·  RASTEIRA", t: "No ritmo, viram combos. Acertar com a ponta da espada causa crítico." },
+        { ic: [ACAO.PULAR, ACAO.ATAQUE_FORTE], n: "LANÇADOR E COMBO AÉREO", t: "Quase juntos: o inimigo voa, Twilight sobe junto e continua no ar." },
+        { ic: [ACAO.DEFENDER], n: "DEFESA E CONTRA-ATAQUE", t: "Segure para defender. Na hora exata do golpe: apara e contra-ataca." },
+        { ic: [ACAO.INTERAGIR], n: "INTERAGIR E SUB-ARMAS", t: "Baús, cristal e execução (contorno vermelho). Longe deles: sub-arma." },
+        { ic: [ACAO.ESPECIAL_3, ACAO.FURIA], n: "MAGIA E FÚRIA", t: "Especiais gastam a barra azul. Fúria cheia: Modo Fúria. " + botao_menu_armas() + ": armas." }
+    ] };
 }
 
 // Rótulo do botão da tela de armas
@@ -157,34 +29,6 @@ function botao_menu_armas()
 {
     if (global.usando_pad and global.pad_slot >= 0) return (pad_estilo() == "ps") ? "OPTIONS" : "START";
     return "TAB";
-}
-
-// Mostra um pergaminho no jogo (uma única vez por partida).
-// Se algo estiver na frente (pausa, carregamento...), tenta de novo depois.
-function tutorial_mostrar(_tut)
-{
-    if (!global.cfg_tutorial) return false;          // tutorial desligado no menu
-    if (global.tut_visto[_tut]) return false;
-    // o primeiro pergaminho da fase 1 sempre vem antes dos outros
-    if (_tut != TUT.INICIO and room == Room1 and !global.tut_visto[TUT.INICIO]) return false;
-    if (instance_exists(obj_pergaminho) or instance_exists(obj_pausa) or instance_exists(obj_save_menu)
-        or instance_exists(obj_loading) or instance_exists(obj_game_over) or instance_exists(obj_final)
-        or instance_exists(obj_menu_armas) or instance_exists(obj_resultado)) return false;
-    var _p = instance_find(obj_player, 0);
-    if (_p == noone or _p.morto) return false;
-    // não interrompe um golpe especial / finalizador no meio
-    if (!is_undefined(_p.golpe) and _p.golpe.armadura) return false;
-    global.tut_visto[_tut] = true;
-    var _g = instance_create_depth(0, 0, -10500, obj_pergaminho);
-    _g.paginas = [_tut];
-    // tutorial rápido: movimento, combate e combos de uma vez
-    if (_tut == TUT.INICIO)
-    {
-        _g.paginas = [TUT.INICIO, TUT.ACOES, TUT.COMBOS];
-        global.tut_visto[TUT.ACOES] = true;
-        global.tut_visto[TUT.COMBOS] = true;
-    }
-    return true;
 }
 
 // ---------------------------------------------------------------------

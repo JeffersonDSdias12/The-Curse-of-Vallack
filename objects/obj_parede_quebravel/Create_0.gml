@@ -35,6 +35,7 @@ ao_quebrar = function(_lado)
     {
         aviso_mostrar("SEGREDO ENCONTRADO!  +" + string(orbs_valor) + " ORBS");
         som("sfx_segredo", 0.8, 0);
+        perfil_somar("segredos");        // v1.17: conquista OLHOS DE CAÇADOR
     }
     solido_remover(solido);
     solido = noone;

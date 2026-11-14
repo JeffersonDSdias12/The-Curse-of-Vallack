@@ -16,9 +16,19 @@ switch (fase)
     case "continua":
         if (tempo >= duracao_texto)
         {
-            fase = "sair";
+            fase = "continua_sai";
             tempo = 0;
         }
+    break;
+
+    // o "CONTINUA..." some e entram os créditos com os nomes da equipe
+    case "continua_sai":
+        if (tempo >= 50) { fase = "creditos"; tempo = 0; }
+    break;
+
+    case "creditos":
+        if ((input_confirmar_pergaminho() or mouse_check_button_pressed(mb_left)) and tempo > 60) tempo += 120;   // acelera
+        if (tempo >= creditos_duracao() + 240) { fase = "sair"; tempo = 0; }
     break;
 
     case "sair":

@@ -2,8 +2,6 @@ var _dt = global.dt_real;
 tempo += _dt;
 var _gw = display_get_gui_width();
 var _cartao = min(300, _gw * 0.23);
-dica_tempo += _dt;
-if (dica_tempo >= 180) { dica_tempo = 0; dica_atual = (dica_atual + 1) mod array_length(dicas); }
 
 var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);

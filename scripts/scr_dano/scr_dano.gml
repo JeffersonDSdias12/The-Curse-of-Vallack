@@ -59,23 +59,27 @@ function levar_dano(_dano, _origem_x = undefined, _bloqueavel = true, _forca = 4
             return;
         }
 
+        // v1.12: MODO FÚRIA = super armadura (metade do dano e nada interrompe Twilight)
+        if (furia_modo) _dano = max(1, round(_dano * 0.5));
         vida = max(0, vida - _dano);
+        global.dano_na_luta += _dano;    // v1.17: conquista INTOCÁVEL (zera quando o Carrasco acorda)
         tempo_invencivel = 60;           // v1.4: 1 s sem levar outro golpe (menos dano em sequência)
         tempo_sem_dano = 0;
         global.combo = 0;
         global.combo_tempo = 0;
         global.last_hit_flash = 12;
         global.last_hit_damage = _dano;
-        global.camera_impact = 6;
-        impacto(4);
+        global.camera_impact = 8;
+        impacto(6);
+        camera_empurrar((_dir == 0) ? -facing : _dir, 5, 0.2);   // a pancada empurra a tela junto
         som("sfx_dano", 0.9);
-        furia_ganhar(4);                  // apanhar também enche um pouco a fúria
+        furia_ganhar(2);                  // apanhar também enche um pouco a fúria
 
         var _sangue = instance_create_depth(x, _cy, -100, obj_fagulha);
         _sangue.cor = make_color_rgb(255, 60, 50);
 
         // durante especiais, fúria e finalizador Twilight não é interrompido (só perde a vida)
-        if (armadura and vida > 0)
+        if ((armadura or furia_modo) and vida > 0)
         {
             tempo_invencivel = 30;
             return;
@@ -88,6 +92,8 @@ function levar_dano(_dano, _origem_x = undefined, _bloqueavel = true, _forca = 4
         buffer_golpe = "";
         bloqueando = false;
         rolando = false;
+        recuando = false;
+        contra_t = 0;
 
         if (vida <= 0)
         {
@@ -114,6 +120,7 @@ function levar_dano(_dano, _origem_x = undefined, _bloqueavel = true, _forca = 4
     // INIMIGOS (filhos de obj_inimigo_base): parte comum
     // =================================================================
     if (morrendo or !ativo) return;
+    if (em_qte) return;              // v1.17: na sequência de golpes quem tira a vida é a sequência
     if (tempo_invencivel > 0) return;
     // durante o finalizador só o golpe final acerta este inimigo
     if (executando and (is_undefined(_golpe) or _golpe.chave != "finalizador")) return;
@@ -142,6 +149,7 @@ function levar_dano(_dano, _origem_x = undefined, _bloqueavel = true, _forca = 4
 
     global.combo += 1;
     global.combo_tempo = 120;
+    perfil_maximo("maior_combo", global.combo);     // v1.17: conquista TEMPESTADE DE AÇO (20)
     global.hits_total += 1;
     global.last_hit_flash = 5;
     global.last_hit_damage = _dano;
@@ -155,10 +163,22 @@ function levar_dano(_dano, _origem_x = undefined, _bloqueavel = true, _forca = 4
     reagir_dano(_dano, _dir, _forca);
 }
 
+// Twilight caiu num abismo: morte na hora (nem a rolagem nem a fúria salvam)
+function jogador_cair_abismo()
+{
+    if (morto) return;
+    rolando = false;
+    recuando = false;
+    tempo_invencivel = 0;
+    levar_dano(vida + 9999, x, false, 0);
+    som("sfx_derrota", 0.7, 0);
+}
+
 // A rolagem está no trecho em que nada acerta Twilight?
 function jogador_intangivel()
 {
-    return rolando and rolar_t >= ROLAR_INVENC_INI and rolar_t <= ROLAR_INVENC_FIM;
+    return (rolando and rolar_t >= ROLAR_INVENC_INI and rolar_t <= ROLAR_INVENC_FIM)
+        or (recuando and recuar_t <= RECUAR_INVENC);          // v1.12: backdash
 }
 
 // O jogador segurou um golpe/projétil na defesa mágica
@@ -186,6 +206,7 @@ function jogador_aparou(_atacante)
     {
         janela_aparar = 0;
         aparar_recarga = 0;
+        machucado = false;               // v1.12: (segurança) aparar nunca deixa Twilight preso na animação de dano
         aparar_fx = 24;
         defesa_fx = 16;
         tempo_invencivel = max(tempo_invencivel, 24);
@@ -195,11 +216,18 @@ function jogador_aparou(_atacante)
         global.camera_impact = max(global.camera_impact, 10);
         global.last_hit_flash = 8;
         som("sfx_aparar", 1);
+        perfil_somar("aparos");          // v1.17: conquista LÂMINA DE ESPELHO
         var _cy = (bbox_top + bbox_bottom) / 2;
         fx_criar("aparar", x + facing * 20, _cy - 6, 1);
-        furia_ganhar(12);
+        furia_ganhar(6);
         trocar_animacao(spr_player_defendendo, 1);
         image_index = 2;
+        // v1.12: CONTRA-ATAQUE: 8 quadros depois do aparar, Twilight revida sozinho
+        if (instance_exists(_atacante) and object_is_ancestor(_atacante.object_index, obj_inimigo_base) and abs(_atacante.x - x) < 140)
+        {
+            contra_t = 8;
+            contra_alvo = _atacante;
+        }
     }
     if (instance_exists(_atacante))
     {
@@ -217,6 +245,7 @@ function inimigo_atordoar(_quadros, _forcar = false)
     if (resiste_atordoar and !_forcar) return;          // mini-boss: só aparar / exaustão
     if (imune_atordoar > 0 and !_forcar) return;        // acabou de se libertar: não pode ser travado de novo
     _quadros = round(_quadros * dif_atordoamento());
+    if (elite and !_forcar) _quadros = round(_quadros * 0.6);   // v1.12: elites se recuperam mais rápido
     if (atordoado <= 0) atordoado_anim = 0;
     atordoado = max(atordoado, _quadros);
     // cancela ataque, mira ou preparação de pulo em andamento
@@ -254,7 +283,8 @@ function inimigo_atordoamento_step(_dt)
     }
     atordoado -= _dt;
     atordoado_anim += _dt;
-    if (aparado_t <= 0) atordoado_acumulado += _dt;
+    // v1.17: o Carrasco de joelhos (exausto) espera a sequência de golpes o tempo todo
+    if (aparado_t <= 0 and estado_ia != "exausto") atordoado_acumulado += _dt;
     if (atordoado_acumulado >= 150)
     {
         atordoado = 0;
@@ -272,7 +302,7 @@ function inimigo_ricochete(_dir)
 {
     if (morrendo or !ativo or eh_boss) return;
     if (_dir == 0) _dir = -dir;
-    empurrao = _dir * (resiste_atordoar ? 3 : 6.5);
+    empurrao = _dir * (resiste_atordoar ? 2.2 : 3.6);        // v1.12: era 3 / 6.5 (ficava longe do combo)
     velv = min(velv, -2.2);
     imune_atordoar = 0;
     inimigo_atordoar(24);
@@ -292,7 +322,7 @@ function inimigo_aparado(_dir)
         return;
     }
     if (_dir == 0) _dir = -dir;
-    empurrao = _dir * 3.2;
+    empurrao = _dir * 1.8;           // v1.12: era 3.2 (fica perto para o contra-ataque)
     imune_atordoar = 0;
     atordoado_acumulado = 0;
     aparado_t = resiste_atordoar ? 70 : 120;
@@ -306,6 +336,14 @@ function inimigo_aparado(_dir)
 // no finalizador (a IA não roda).
 function inimigo_finalizador_step()
 {
+    // v1.17: SEQUÊNCIA DE GOLPES: o chefe fica preso nela e os outros inimigos esperam
+    if (em_qte or (global.qte_alvo != noone and global.qte_alvo != id and instance_exists(global.qte_alvo)))
+    {
+        finalizavel = false;
+        velh = 0;
+        empurrao = 0;
+        return true;
+    }
     if (executando)
     {
         finalizavel = false;
@@ -315,7 +353,11 @@ function inimigo_finalizador_step()
         return executando;
     }
     var _fraco = (vida <= vida_max * (resiste_atordoar ? 0.25 : 0.34));
-    finalizavel = ativo and !morrendo and !eh_boss and atordoado > 0 and (aparado_t > 0 or escudo_quebrado_t > 0 or _fraco);
+    // v1.12: ELITES e inimigos de muita vida, quase mortos, podem ser EXECUTADOS
+    // mesmo sem estar atordoados (contorno vermelho piscando + ícone)
+    var _executavel = !resiste_atordoar and (elite or object_index == obj_porco or object_index == obj_inimigo_03 or object_index == obj_estatua)
+        and vida <= vida_max * 0.25;
+    finalizavel = ativo and !morrendo and !eh_boss and ((atordoado > 0 and (aparado_t > 0 or escudo_quebrado_t > 0 or _fraco)) or _executavel);
     if (escudo_quebrado_t > 0) escudo_quebrado_t = max(0, escudo_quebrado_t - global.dt);
     return false;
 }
@@ -358,7 +400,7 @@ function escudo_quebrar(_dir)
     imune_atordoar = 0;
     atordoado_acumulado = 0;
     inimigo_atordoar(110, true);
-    empurrao = _dir * 2.5;
+    empurrao = _dir * 1.6;
     repeat (6)
     {
         var _f = instance_create_depth(x + dir * 18, y - 40, -100, obj_fagulha);
@@ -379,12 +421,25 @@ function inimigo_morrer(_dir, _soltar_orbs = true)
     if (!morrendo)
     {
         global.inimigos_derrotados += 1;
+        // v1.17: números do PERFIL (conquistas)
+        perfil_somar("inimigos");
+        if (object_index == obj_porco) perfil_somar("javalis");
         if (_soltar_orbs)
         {
             var _total = invocado ? 3 : orbs_do_inimigo(id);
             if (finalizado) _total *= ORBS_FINALIZADOR;
             orbs_soltar(x, y - 30, _total);
+            // v1.12: cristais de essência (sub-armas)
+            var _ess = essencia_do_inimigo(id);
+            if (_ess > 0) essencia_soltar(x, y - 34, _ess);
         }
+        // v1.12: o sangue do monstro voa para a lâmina e enche a FÚRIA
+        var _sg = sangue_do_inimigo(id);
+        if (_sg > 0) sangue_soltar(x, y - 30, _sg);
+        // GOLPE FATAL: pausa, câmera lenta e o monstro explode em chamas
+        var _alt = max(20, bbox_bottom - bbox_top);
+        golpe_fatal(x, (bbox_top + bbox_bottom) / 2, (_dir == 0) ? 1 : sign(_dir), clamp(_alt / 64, 0.8, 2.4));
+        camera_soco((inimigos_vivos() > 1) ? 0.07 : 0.12);     // v1.20: o último do grupo fecha mais a câmera
     }
     morrendo = true;
     pulando = false;
@@ -443,17 +498,19 @@ function inimigo_evaporar(_dt, _ini, _fim)
     evaporar_fx -= _dt;
     if (evaporar_fx <= 0)
     {
-        evaporar_fx = (global.cfg_qualidade == 0) ? 5 : 3;
+        // fumaça discreta: poucos sopros (antes 5 / 8 quadros e até 140 na tela poluíam o cenário)
+        evaporar_fx = (global.cfg_qualidade == 0) ? 20 : 13;
         // muita fumaça na tela (uma onda inteira morrendo junto): solta menos
+        // v1.17: o corpo ARDE em chamas (antes: fumaça negra, uma mancha escura na tela)
         var _n = 0;
-        with (obj_fx) if (tipo == "fumaca_maldita") _n += 1;
-        if (_n < 140 or random(1) < 0.3)
-            fx_em("fumaca_maldita", x + random_range(-_larg, _larg) * 0.5, y - random(_alt * (1 - 0.35 * _e)), _tam * (0.7 + 0.5 * _e));
+        with (obj_fx) if (tipo == "chamas_corpo") _n += 1;
+        if (_n < 36 or random(1) < 0.15)
+            fx_em("chamas_corpo", x + random_range(-_larg, _larg) * 0.5, y - random(_alt * (1 - 0.35 * _e)), _tam * (0.7 + 0.5 * _e));
     }
     if (morte_t >= _fim)
     {
-        // último sopro: a maldição leva o que sobrou do corpo
-        fx_em("fumaca_maldita_estouro", x, y - _alt * 0.45, _tam);
+        // último lampejo: o que sobrou do corpo vira brasa e some
+        fx_em("chamas_estouro", x, y - _alt * 0.45, _tam);
         return true;
     }
     return false;
@@ -465,7 +522,36 @@ function inimigo_corpo_desenhar(_spr, _img, _x, _y, _xs, _ys, _rot, _cor, _alpha
 {
     if (!morrendo or evaporar <= 0)
     {
+        // v1.12: ELITE: brilho vermelho em volta do corpo
+        if (elite and !morrendo)
+        {
+            gpu_set_blendmode(bm_add);
+            gpu_set_fog(true, make_color_rgb(200, 30, 20), 0, 0);
+            var _ea = _alpha * (0.22 + 0.08 * sin(current_time / 160));
+            draw_sprite_hd(_spr, _img, _x - 2, _y, _xs, _ys, _rot, c_white, _ea);
+            draw_sprite_hd(_spr, _img, _x + 2, _y, _xs, _ys, _rot, c_white, _ea);
+            gpu_set_fog(false, c_white, 0, 0);
+            gpu_set_blendmode(bm_normal);
+        }
+        // v1.12: pode ser executado: contorno vermelho piscando
+        if (finalizavel and !morrendo)
+        {
+            var _pa = _alpha * (0.55 + 0.45 * sin(current_time / 70));
+            gpu_set_fog(true, make_color_rgb(255, 40, 30), 0, 0);
+            draw_sprite_hd(_spr, _img, _x - 3, _y, _xs, _ys, _rot, c_white, _pa);
+            draw_sprite_hd(_spr, _img, _x + 3, _y, _xs, _ys, _rot, c_white, _pa);
+            draw_sprite_hd(_spr, _img, _x, _y - 3, _xs, _ys, _rot, c_white, _pa);
+            draw_sprite_hd(_spr, _img, _x, _y + 2, _xs, _ys, _rot, c_white, _pa);
+            gpu_set_fog(false, c_white, 0, 0);
+        }
         draw_sprite_hd(_spr, _img, _x, _y, _xs, _ys, _rot, _cor, _alpha);
+        // v1.12: PETRIFICAÇÃO (Modo Fúria): o corpo vai virando pedra cinza
+        if (petrif > 0 and !morrendo)
+        {
+            gpu_set_fog(true, make_color_rgb(130, 128, 120), 0, 0);
+            draw_sprite_hd(_spr, _img, _x, _y, _xs, _ys, _rot, c_white, _alpha * (petrificado ? 0.85 : 0.22 * petrif));
+            gpu_set_fog(false, c_white, 0, 0);
+        }
         return;
     }
     var _e = evaporar;
@@ -478,19 +564,16 @@ function inimigo_corpo_desenhar(_spr, _img, _x, _y, _xs, _ys, _rot, _cor, _alpha
     var _yy = _y - 14 * _k * _sai;
     var _sx = _xs * (1 - 0.3 * _sai);
     var _sy = _ys * (1 + 0.22 * _sai);
-    draw_sprite_hd(_spr, _img, _xx, _yy, _sx, _sy, _rot, _cor, _a);
-    // silhueta negra da maldição tomando o corpo
-    gpu_set_fog(true, make_color_rgb(10, 0, 14), 0, 0);
-    draw_sprite_hd(_spr, _img, _xx, _yy, _sx, _sy, _rot, c_white, _a * min(1, _e * 2.2));
-    gpu_set_fog(false, c_white, 0, 0);
-    // brilho roxo nas bordas (mais forte no meio da evaporação)
-    var _g = _a * 0.6 * sin(pi * _e);
+    // v1.17: o corpo ARDE em brasa (antes virava uma silhueta negra: a "mancha
+    // preta" na tela). Escurece só um pouco (carbonizando) e brilha em laranja.
+    draw_sprite_hd(_spr, _img, _xx, _yy, _sx, _sy, _rot, merge_color(_cor, make_color_rgb(120, 46, 30), min(1, _e * 1.6)), _a);
+    var _g = _a * (0.3 + 0.5 * sin(pi * min(1, _e * 1.2)));
     if (_g > 0.02)
     {
         gpu_set_blendmode(bm_add);
-        gpu_set_fog(true, make_color_rgb(150, 20, 110), 0, 0);
-        draw_sprite_hd(_spr, _img, _xx - 2 * _k, _yy, _sx, _sy, _rot, c_white, _g);
-        draw_sprite_hd(_spr, _img, _xx + 2 * _k, _yy - 1, _sx, _sy, _rot, c_white, _g);
+        gpu_set_fog(true, merge_color(make_color_rgb(255, 70, 20), make_color_rgb(255, 170, 60), _e), 0, 0);
+        draw_sprite_hd(_spr, _img, _xx, _yy, _sx, _sy, _rot, c_white, _g * 0.75);
+        draw_sprite_hd(_spr, _img, _xx, _yy - 2 * _k, _sx, _sy, _rot, c_white, _g * 0.35);
         gpu_set_fog(false, c_white, 0, 0);
         gpu_set_blendmode(bm_normal);
     }
@@ -515,8 +598,13 @@ function inimigos_vivos()
 // ---------------------------------------------------------------------
 // Fala de um inimigo; _chance = probabilidade; respeita uma espera global
 // para não falarem todos ao mesmo tempo.
+// v1.12: os balões de fala saíram das lutas (pedido dos testes: a atenção fica
+// na jogabilidade). Os chefes falam nas caixas de diálogo (scr_v112).
+// Para trazer os balões de volta, troque FALAS_LIGADAS para true.
+#macro FALAS_LIGADAS false
 function fala_dizer(_inst, _texto, _cor = c_white, _forcar = false, _dur = 110)
 {
+    if (!FALAS_LIGADAS) return noone;
     if (!instance_exists(_inst)) return noone;
     if (!_forcar)
     {
@@ -524,6 +612,12 @@ function fala_dizer(_inst, _texto, _cor = c_white, _forcar = false, _dur = 110)
         if (global.fala_espera > 0) return noone;
     }
     global.fala_espera = 100;
+    return fala_balao(_inst, _texto, _cor, _dur);
+}
+
+// cria o balão (obj_fala) preso ao inimigo
+function fala_balao(_inst, _texto, _cor, _dur)
+{
     with (obj_fala) if (alvo == _inst) instance_destroy();
     var _f = instance_create_depth(_inst.x, _inst.y, -150, obj_fala);
     _f.alvo = _inst;
@@ -540,6 +634,22 @@ function fala_aleatoria(_inst, _lista, _cor, _chance = 0.35)
     return fala_dizer(_inst, _lista[irandom(array_length(_lista) - 1)], _cor);
 }
 
+// v1.18: os balões voltaram SÓ no começo dos ataques (pedido do jogador): o
+// inimigo grita uma frase curta de vez em quando, avisando o golpe. Funciona
+// mesmo com FALAS_LIGADAS = false (as outras falas, ao apanhar ou surgir,
+// continuam desligadas). Um balão de ataque por vez na tela inteira.
+#macro FALA_ATAQUE_ESPERA 190     // quadros (~3,2 s) entre dois balões de ataque
+#macro FALA_ATAQUE_DUR    80      // curto: some antes do próximo golpe
+function fala_ataque(_inst, _lista, _cor, _chance = 0.35)
+{
+    if (!instance_exists(_inst) or array_length(_lista) == 0) return noone;
+    if (!variable_global_exists("fala_espera")) global.fala_espera = 0;
+    if (global.fala_espera > 0) return noone;
+    if (random(1) > _chance) return noone;
+    global.fala_espera = FALA_ATAQUE_ESPERA;
+    return fala_balao(_inst, _lista[irandom(array_length(_lista) - 1)], _cor, FALA_ATAQUE_DUR);
+}
+
 function falas_besta()     { return ["Atacaaarrr!", "Grrraaah!", "Carne fresca!", "Pela maldição!", "Daqui não passa!"]; }
 function falas_arqueiro()  { return ["Fogo!", "Na mira...", "Hehehe!", "Flechas!", "Fique longe!"]; }
 function falas_escudo()    { return ["Atrás do escudo!", "Ninguém passa!", "Formação!", "Meu escudo não cai!"]; }
@@ -549,14 +659,29 @@ function falas_boss_furia(){ return ["Sinta a fúria da floresta!", "Vallack rei
 // ---------------------------------------------------------------------
 // PORTAL DE MAGIA: bestas e arqueiros surgem do chão (executado no inimigo)
 // ---------------------------------------------------------------------
+#macro SURGIR_SUBIDA 60     // quadros escalando para fora do buraco (era 42, subida reta)
+#macro SURGIR_PUXOES 3      // quantos puxões até sair
+#macro SURGIR_GRITO  26     // quadros gritando antes de atacar
+
+// progresso da escalada (0 = enterrado, 1 = fora): cada puxão sobe rápido
+// e segura um instante, como alguém se içando pela borda
+function surgir_progresso(_t)
+{
+    var _seg = SURGIR_SUBIDA / SURGIR_PUXOES;
+    var _i = min(SURGIR_PUXOES - 1, floor(_t / _seg));
+    var _f = clamp((_t - _i * _seg) / (_seg * 0.6), 0, 1);
+    return (_i + 1 - power(1 - _f, 3)) / SURGIR_PUXOES;
+}
+
 function inimigo_portal_iniciar()
 {
     ativo = false;
-    surgir_fase = "escondido";   // escondido -> portal -> subindo -> ativo
+    surgir_fase = "escondido";   // escondido -> portal -> subindo -> grito -> ativo
+    surgir_puxao = -1;
     surgir_t = 0;
     surgir_agora = false;        // o boss liga isto ao invocar
     surgir_atraso = 0;
-    distancia_surgir = 520;      // o portal abre quando o ponto entra na tela e o jogador está a até 520 px
+    distancia_surgir = 420;      // o portal abre quando o ponto entra na tela e o jogador está a até 420 px (v1.12: era 520; os grupos chegam um de cada vez)
     portal_raio = 0;
 }
 
@@ -594,6 +719,13 @@ function inimigo_portal_step(_dt)
                 surgir_fase = "portal";
                 surgir_t = 0;
                 som_em("sfx_portal", x, y, 0.45);
+                // v1.19: a primeira leva da fase -> Twilight fala antes da luta
+                if (!surgir_agora and _pj != noone and global.fala_batalha_room != room)
+                {
+                    global.fala_batalha_room = room;
+                    fala_balao(_pj, "Servos de Vallack... irão pagar com a vida!", make_color_rgb(150, 20, 20), 170);
+                    global.grito_espera = max(global.grito_espera, 40);
+                }
             }
         break;
         case "portal":
@@ -603,15 +735,39 @@ function inimigo_portal_step(_dt)
             {
                 surgir_fase = "subindo";
                 surgir_t = 0;
+                surgir_puxao = -1;
                 if (_pj != noone and _pj.x != x) dir = sign(_pj.x - x);
             }
         break;
         case "subindo":
-            // primeira vez que um inimigo surge: pergaminho do tutorial
-            var _tut = inimigo_tutorial(object_index);
-            if (_tut != -1 and (room == Room1 or _tut != TUT.COMBATE)) tutorial_mostrar(_tut);
+            // v1.19: escala para fora do submundo em puxões (SURGIR_PUXOES),
+            // cada puxão solta terra na borda do buraco
             surgir_t += _dt;
-            if (surgir_t >= 42)
+            var _px = min(SURGIR_PUXOES - 1, floor(surgir_t / (SURGIR_SUBIDA / SURGIR_PUXOES)));
+            if (_px != surgir_puxao)
+            {
+                surgir_puxao = _px;
+                fx_em("pedras", x + random_range(-14, 14), y - 2, 0.6);
+                fx_em("poeira", x, y - 2, 0.7);
+            }
+            if (surgir_t >= SURGIR_SUBIDA)
+            {
+                surgir_fase = "grito";
+                surgir_t = 0;
+                // o grito: rugido, tremida e um balão curto (um por leva)
+                global.camera_impact = max(global.camera_impact, 3);
+                if (global.grito_espera <= 0)
+                {
+                    global.grito_espera = 45;
+                    som_em("sfx_rugido", x, y, 0.5);
+                    var _gritos = ["GRRAAAH!", "RAAARGH!", "AAARGH!", "HRRAAA!"];
+                    fala_balao(id, _gritos[irandom(array_length(_gritos) - 1)], make_color_rgb(120, 10, 10), 40);
+                }
+            }
+        break;
+        case "grito":
+            surgir_t += _dt;
+            if (surgir_t >= SURGIR_GRITO)
             {
                 surgir_fase = "ativo";
                 ativo = true;
@@ -630,31 +786,16 @@ function inimigo_portal_step(_dt)
     return true;
 }
 
-// Pergaminho do tutorial de cada tipo de inimigo
-function inimigo_tutorial(_obj)
-{
-    switch (_obj)
-    {
-        case obj_inimigo_02: return TUT.ARQUEIRO;
-        case obj_inimigo_03: return TUT.ESCUDO;
-        case obj_esqueleto:  return TUT.ESQUELETO;
-        case obj_aranha:     return TUT.ARANHA;
-        case obj_porco:      return TUT.PORCO;
-        case obj_estatua:    return TUT.ESTATUA;
-    }
-    return TUT.COMBATE;
-}
-
 // Desenha o portal e o inimigo saindo do buraco (só a parte acima do chão)
 // _esc = escala do inimigo no mundo (a sprite HD é desenhada com 1/k)
 function inimigo_portal_desenhar(_spr, _esc, _cor_final = c_white)
 {
     if (surgir_fase == "escondido") return;
     desenhar_portal(x, y, portal_raio, current_time / 16);
-    if (surgir_fase == "subindo")
+    if (surgir_fase == "subindo" or surgir_fase == "grito")
     {
-        var _t = clamp(surgir_t / 42, 0, 1);
-        var _ease = 1 - power(1 - _t, 3);
+        var _grito = (surgir_fase == "grito");
+        var _ease = _grito ? 1 : surgir_progresso(surgir_t);
         var _k = hd_escala(_spr);                 // pixels da sprite por pixel do mundo
         var _e = _esc / _k;
         var _h = sprite_get_height(_spr);
@@ -662,13 +803,33 @@ function inimigo_portal_desenhar(_spr, _esc, _cor_final = c_white)
         var _oy = sprite_get_yoffset(_spr);
         var _sobe = (1 - _ease) * _h;           // ainda enterrado este tanto (px da sprite)
         var _vis = clamp(_oy - _sobe, 0, _h);   // linhas acima do chão
+        // balanço lateral da escalada / tremor do grito
+        var _bx = _grito ? random_range(-1, 1) : sin(surgir_t * 0.35) * 2 * (1 - _ease);
+        var _sy = 1;
+        if (_grito) _sy = 1 + 0.08 * sin(clamp(surgir_t / SURGIR_GRITO, 0, 1) * pi);   // estufa ao gritar
         if (_vis >= 1)
         {
             gpu_set_texfilter(_k > 1);
             draw_sprite_part_ext(_spr, 0, 0, 0, sprite_get_width(_spr), _vis,
-                x - dir * _ox * _e, y + (_sobe - _oy) * _e, dir * _e, _e,
+                x + _bx - dir * _ox * _e, y + (_sobe - _oy) * _e * _sy, dir * _e, _e * _sy,
                 merge_color(make_color_rgb(200, 120, 255), _cor_final, _ease), 1);
             gpu_set_texfilter(false);
+        }
+        if (_grito)
+        {
+            // ondas do grito saindo da boca
+            var _cy = y - _oy * _e * 0.75;
+            gpu_set_blendmode(bm_add);
+            draw_set_color(make_color_rgb(255, 80, 60));
+            for (var _o = 0; _o < 2; _o++)
+            {
+                var _f = frac(surgir_t / 16 + _o * 0.5);
+                draw_set_alpha(0.45 * (1 - _f));
+                draw_circle(x + dir * 10, _cy, 8 + _f * 34, true);
+            }
+            gpu_set_blendmode(bm_normal);
+            draw_set_alpha(1);
+            return;
         }
         // brilho na borda do portal por cima
         gpu_set_blendmode(bm_add);

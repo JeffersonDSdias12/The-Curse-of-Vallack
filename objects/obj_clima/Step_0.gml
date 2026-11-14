@@ -14,7 +14,7 @@ if (chao_y < 0) chao_y = chao_da_sala();
 var _chao = (chao_y >= 0) ? chao_y : _vy + _vh + 30;
 
 // som da chuva (loop)
-ambiente("amb_chuva", 0.55);
+ambiente("amb_chuva", 0.275);   // metade do volume anterior (0.55): estava alto demais
 
 // ----- vento e rajadas -----
 prox_rajada -= _dt;

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_player_atacar_agaichado
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 7be285696ce92b54abe4b05c9e1ed38f, type: 3}
+  - {fileID: 21300000, guid: a7f733e70700ada48890760b053e98ac, type: 3}
+  - {fileID: 21300000, guid: abdc9dbd8ba013d4bbd5f7e7ec013295, type: 3}
+  - {fileID: 21300000, guid: 184c772948a0add4f9cc758551bb1984, type: 3}
+  - {fileID: 21300000, guid: 627c3cf275dbd1249ba843eb7e24297b, type: 3}
+  - {fileID: 21300000, guid: 66fe381cb27e487478cbc78e9d366dfc, type: 3}
+  velocidade: 10
+  porSegundo: 1
+  k: 3

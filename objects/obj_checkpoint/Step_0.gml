@@ -12,7 +12,7 @@ if (!ativado and instance_exists(obj_player))
         global.checkpoint_y = _entrou.y;
         salvar_slot(global.save_slot_atual, false);
         progresso_marcar();
-        aviso_mostrar("CHECKPOINT SALVO AUTOMATICAMENTE");
+        aviso_mostrar("CHECKPOINT SALVO AUTOMATICAMENTE", false);
         global.camera_impact = max(global.camera_impact, 4);
     }
 }

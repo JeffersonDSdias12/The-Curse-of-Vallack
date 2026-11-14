@@ -104,6 +104,7 @@ function orbs_ganhar(_n)
     global.orbs += _n;
     global.orbs_coletados += _n;
     global.orbs_fx = 20;      // o pote do HUD "pulsa"
+    perfil_somar("orbs", _n); // v1.17: conquista ALMAS SEM FIM
 }
 
 // Valor de orbs de cada tipo de inimigo
@@ -111,6 +112,10 @@ function orbs_do_inimigo(_inst)
 {
     switch (_inst.object_index)
     {
+        // v1.12: elites valem 3 vezes mais
+        case obj_besta_elite:     return ORBS_BESTA * 3;
+        case obj_esqueleto_elite: return ORBS_ESQUELETO * 3;
+        case obj_alquimista:      return ORBS_ARQUEIRO;
         case obj_inimigo_01: return ORBS_BESTA;
         case obj_inimigo_02: return ORBS_ARQUEIRO;
         case obj_inimigo_03: return ORBS_ESCUDO;

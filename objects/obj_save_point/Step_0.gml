@@ -11,5 +11,5 @@ if (!marcado and _p != noone and !_p.morto and abs(_p.x - x) < 90 and abs(_p.y -
     marcado_fx = 45;
     var _novo = !(global.checkpoint_ativo and global.checkpoint_room == room and abs(global.checkpoint_x - _p.x) < 120);
     salvar_slot(global.save_slot_atual, false);
-    if (_novo) aviso_mostrar("CHECKPOINT  ·  JOGO SALVO AUTOMATICAMENTE");
+    if (_novo) aviso_mostrar("CHECKPOINT  ·  JOGO SALVO AUTOMATICAMENTE", false);
 }

@@ -12,8 +12,8 @@
 
 // ---------------------------------------------------------------------
 // NÍVEL: fase 1 = Nv 1 no começo, Nv 2 no meio e Nv 3 perto do guardião;
-// fase 2 = Nv 3 a 5. Cada nível dá +15% de vida e +10% de dano (além da
-// dificuldade escolhida).
+// fase 2 = Nv 3 a 5. Cada nível dá vida e dano a mais conforme a dificuldade
+// (dif_nivel_vida / dif_nivel_dano: no MÉDIO +15% e +10%).
 // ---------------------------------------------------------------------
 function inimigo_nivel_calcular()
 {
@@ -23,8 +23,8 @@ function inimigo_nivel_calcular()
     return clamp(_n, 1, NIVEL_MAX);
 }
 
-function nivel_vida(_n) { return 1 + 0.15 * (_n - 1); }
-function nivel_dano(_n) { return 1 + 0.10 * (_n - 1); }
+function nivel_vida(_n) { return 1 + dif_nivel_vida() * (_n - 1); }     // v1.13: sobe mais nos níveis altos
+function nivel_dano(_n) { return 1 + dif_nivel_dano() * (_n - 1); }
 
 function nivel_cor(_n)
 {
@@ -186,9 +186,11 @@ function inimigo_hud(_topo, _larg = 46)
             draw_rectangle(_bx - 2, _by - 2, _bx + _larg + 2, _by + 6, true);
             draw_set_alpha(1);
         }
-        // selo do nível à esquerda da barra
+        // selo do nível à esquerda da barra (v1.12: só junto da barra, menos poluição)
         var _nx = _bx - 6;
         var _ny = _by + 2;
+        if (elite) txt(x, _by - 4, "ELITE", FONTE.MINI, make_color_rgb(255, 90, 70), _a, fa_center, fa_bottom, 0.6);
+        if (!_mostra) { gpu_set_texfilter(false); return; }
         draw_set_alpha(_a);
         draw_set_color(c_black);
         draw_circle(_nx, _ny, 7, false);
@@ -252,3 +254,14 @@ function cor_fala_esqueleto() { return make_color_rgb(150, 30, 25); }
 function cor_fala_aranha()    { return make_color_rgb(90, 60, 120); }
 function cor_fala_porco()     { return make_color_rgb(140, 30, 20); }
 function cor_fala_estatua()   { return make_color_rgb(70, 80, 40); }
+
+// v1.14: VIRAR DE LADO com reação. O inimigo só vira com o alvo a mais de 8 px
+// do outro lado e depois de um instante (antes ele virava no mesmo quadro em
+// que o herói passava por ele e o corpo piscava de um lado para o outro).
+// _ja: vira na hora (ataque, pulo), mas ainda com a margem de 8 px.
+function inimigo_virar(_dx, _ja = false)
+{
+    if (abs(_dx) <= 8 or sign(_dx) == dir) { virar_t = 0; return; }
+    virar_t += global.dt;
+    if (_ja or virar_t >= 7) { dir = sign(_dx); virar_t = 0; }
+}

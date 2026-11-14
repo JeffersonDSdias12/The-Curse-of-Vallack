@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="ouro" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0c0"/>
+      <stop offset="0.3" stop-color="#d9a64e"/>
+      <stop offset="0.55" stop-color="#7a4f1c"/>
+      <stop offset="0.8" stop-color="#e6c06a"/>
+      <stop offset="1" stop-color="#5e3a12"/>
+    </linearGradient>
+    <radialGradient id="fundo" cx="0.5" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#3a2f31"/>
+      <stop offset="1" stop-color="#0c0909"/>
+    </radialGradient>
+  </defs>
+  <circle cx="64" cy="64" r="61" fill="#0b0909"/>
+  <circle cx="64" cy="64" r="56" fill="url(#fundo)" stroke="url(#ouro)" stroke-width="6"/>
+  <circle cx="64" cy="64" r="45" fill="none" stroke="#d9b56a" stroke-opacity="0.35" stroke-width="1.5"/>
+  <path fill="#d9b56a" fill-opacity="0.22" d="M64 20 L71 57 L108 64 L71 71 L64 108 L57 71 L20 64 L57 57 Z"/>
+  <path fill="#d9b56a" fill-opacity="0.12" d="M64 34 L68 60 L94 64 L68 68 L64 94 L60 68 L34 64 L60 60 Z" transform="rotate(45 64 64)"/>
+  <g fill="#f0d28a">
+    <path d="M64 11 L69 20 L59 20 Z"/>
+    <path d="M64 11 L69 20 L59 20 Z" transform="rotate(90 64 64)"/>
+    <path d="M64 11 L69 20 L59 20 Z" transform="rotate(180 64 64)"/>
+    <path d="M64 11 L69 20 L59 20 Z" transform="rotate(270 64 64)"/>
+  </g>
+</svg>

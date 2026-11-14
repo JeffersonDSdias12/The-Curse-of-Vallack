@@ -1,9 +1,9 @@
 // ===== SOMBRA =====
-if (place_meeting(x, y + 2, obj_chao))
+if (place_meeting(x, y + 2, obj_chao) or plataforma_sob_pes() != noone)
 {
-    draw_set_alpha(0.32);
+    draw_set_alpha(0.45);
     draw_set_color(c_black);
-    draw_ellipse(x - 16, y - 3, x + 16, y + 3, false);
+    draw_ellipse(x - 18, y - 4, x + 18, y + 3, false);
     draw_set_alpha(1);
 }
 
@@ -43,8 +43,17 @@ if (carga_fx > 0)
     draw_set_alpha(1);
 }
 
+// ===== v1.12: MODO FÚRIA: aura de sangue forte e brasas =====
+if (furia_modo and !morto)
+{
+    gpu_set_blendmode(bm_add);
+    var _fm = 0.4 + 0.2 * sin(current_time / 35);
+    draw_sprite_hd(sprite_index, image_index, x + random_range(-1.5, 1.5), y, facing * _esc * 1.12, _esc * 1.08, 0, make_color_rgb(255, 20, 10), _fm);
+    draw_sprite_hd(sprite_index, image_index, x, y - 2, facing * _esc * 1.2, _esc * 1.14, 0, make_color_rgb(140, 0, 0), _fm * 0.5);
+    gpu_set_blendmode(bm_normal);
+}
 // ===== FÚRIA CHEIA: aura vermelha tremendo =====
-if (furia >= 100 and !morto)
+else if (furia >= 100 and !morto)
 {
     gpu_set_blendmode(bm_add);
     var _fp = 0.25 + 0.15 * sin(current_time / 45);
@@ -81,6 +90,12 @@ if (array_length(fantasmas) > 0)
     {
         var _fa = fantasmas[_g];
         var _ga = _fa.ang;
+        var _fspr = _fa[$ "spr"];
+        if (!is_undefined(_fspr))         // v1.12: backdash
+        {
+            draw_sprite_hd(_fspr, _fa.img, _fa.x, _fa.y, _fa.dir * _esc, _esc, 0, make_color_rgb(140, 170, 255), 0.35 * _fa.vida / _fa.vmax);
+            continue;
+        }
         draw_sprite_hd(spr_player_agaichar, 0, _fa.x + lengthdir_x(_hf, 270 + _ga), _fa.y - _hf + lengthdir_y(_hf, 270 + _ga), _fa.dir * _esc, _esc * 0.86, _ga, make_color_rgb(140, 170, 255), 0.35 * _fa.vida / _fa.vmax);
     }
 }
@@ -138,6 +153,30 @@ if (array_length(rastros) > 0)
         var _cy = _rs.y - _rs.h;
         var _seg = 14;
         var _fim = lerp(_rs.a1, _rs.a2, min(1, 0.35 + _p * 1.6));   // o arco "corre" com o golpe
+        // v1.14: aura de magia carmesim, larga, por fora de tudo
+        draw_primitive_begin(pr_trianglestrip);
+        for (var _s = 0; _s <= _seg; _s++)
+        {
+            var _t = _s / _seg;
+            var _ang = lerp(_rs.a1, _fim, _t);
+            var _angw = (_rs.dir == 1) ? _ang : 180 - _ang;
+            var _lm = (16 + 22 * _t) * (_rs.forte ? 1.3 : 1);
+            draw_vertex_color(_cx + lengthdir_x(_rs.r + 10, _angw), _cy + lengthdir_y(_rs.r + 10, _angw), make_color_rgb(200, 30, 90), 0);
+            draw_vertex_color(_cx + lengthdir_x(_rs.r - _lm, _angw), _cy + lengthdir_y(_rs.r - _lm, _angw), make_color_rgb(200, 30, 90), _a * _t * 0.22);
+        }
+        draw_primitive_end();
+        // brilho largo e suave por fora do arco
+        draw_primitive_begin(pr_trianglestrip);
+        for (var _s = 0; _s <= _seg; _s++)
+        {
+            var _t = _s / _seg;
+            var _ang = lerp(_rs.a1, _fim, _t);
+            var _angw = (_rs.dir == 1) ? _ang : 180 - _ang;
+            var _lb = (8 + 16 * _t) * (_rs.forte ? 1.4 : 1);
+            draw_vertex_color(_cx + lengthdir_x(_rs.r + 4, _angw), _cy + lengthdir_y(_rs.r + 4, _angw), _rs.cor, 0);
+            draw_vertex_color(_cx + lengthdir_x(_rs.r - _lb, _angw), _cy + lengthdir_y(_rs.r - _lb, _angw), _rs.cor, _a * _t * 0.28);
+        }
+        draw_primitive_end();
         draw_primitive_begin(pr_trianglestrip);
         for (var _s = 0; _s <= _seg; _s++)
         {
@@ -151,8 +190,58 @@ if (array_length(rastros) > 0)
             draw_vertex_color(_cx + lengthdir_x(_int, _angw), _cy + lengthdir_y(_int, _angw), make_color_rgb(255, 255, 255), _a * _t * 0.5);
         }
         draw_primitive_end();
+        // fio de luz branco na borda cortante
+        draw_primitive_begin(pr_trianglestrip);
+        for (var _s = 0; _s <= _seg; _s++)
+        {
+            var _t = _s / _seg;
+            var _ang = lerp(_rs.a1, _fim, _t);
+            var _angw = (_rs.dir == 1) ? _ang : 180 - _ang;
+            var _fi = _rs.r - 1.6 * _t - 0.4;
+            draw_vertex_color(_cx + lengthdir_x(_rs.r + 0.5, _angw), _cy + lengthdir_y(_rs.r + 0.5, _angw), c_white, _a * _t * 0.9);
+            draw_vertex_color(_cx + lengthdir_x(_fi, _angw), _cy + lengthdir_y(_fi, _angw), c_white, _a * _t * 0.9);
+        }
+        draw_primitive_end();
     }
     gpu_set_blendmode(bm_normal);
+}
+// v1.17: RASTRO DE FOGO: o caminho que a lâmina percorreu, em chamas
+if (array_length(fogo_rastro) > 1 or array_length(fogo_chamas) > 0)
+{
+    var _est = espada_estilo_atual();
+    fogo_rastro_desenhar(fogo_rastro, _est);
+    fogo_chamas_desenhar(fogo_chamas, _est);
+}
+// v1.14: faíscas douradas (estrelinhas) e brasas da maldição soltas pelo corte
+if (array_length(faiscas_espada) > 0)
+{
+    gpu_set_blendmode(bm_add);
+    for (var _fe = 0; _fe < array_length(faiscas_espada); _fe++)
+    {
+        var _fs = faiscas_espada[_fe];
+        var _fa = clamp(_fs.vida / _fs.vmax, 0, 1);
+        if (_fs.brasa)
+        {
+            draw_set_color(make_color_rgb(255, 90, 40));
+            draw_set_alpha(_fa * 0.9);
+            draw_rectangle(_fs.x - 0.8, _fs.y - 0.8, _fs.x + 0.8, _fs.y + 0.8, false);
+            draw_set_alpha(_fa * 0.25);
+            draw_circle(_fs.x, _fs.y, 2.6, false);
+        }
+        else
+        {
+            var _tam = 1.2 + 2.2 * _fa;
+            draw_set_color(make_color_rgb(255, 226, 150));
+            draw_set_alpha(_fa);
+            draw_line(_fs.x - _tam, _fs.y, _fs.x + _tam, _fs.y);
+            draw_line(_fs.x, _fs.y - _tam, _fs.x, _fs.y + _tam);
+            draw_set_color(c_white);
+            draw_set_alpha(_fa * 0.3);
+            draw_circle(_fs.x, _fs.y, 1.8, false);
+        }
+    }
+    gpu_set_blendmode(bm_normal);
+    draw_set_alpha(1);
 }
 
 // ===== DEFESA MÁGICA =====

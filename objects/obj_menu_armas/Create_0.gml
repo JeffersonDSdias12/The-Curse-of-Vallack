@@ -61,6 +61,7 @@ evoluir = function()
     global.marca.orbs = max(0, global.marca.orbs - _custo);
     global.marca.nivel = max(global.marca.nivel, _prox);
     evoluiu_fx = 90;
+    if (_prox >= ESPADA_NIVEL_MAX) conquista("espada_max");     // v1.17
     var _niv = espada_niveis();
     var _info = _niv[_prox - 1];
     evoluiu_txt = "NÍVEL " + string(_prox) + "!";

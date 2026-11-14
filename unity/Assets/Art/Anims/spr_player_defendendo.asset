@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_player_defendendo
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 69d4a624a48c461419a2ad407d700175, type: 3}
+  - {fileID: 21300000, guid: 6389f3591d0bae340a9b098bb433fca8, type: 3}
+  - {fileID: 21300000, guid: cde9ea1d0718b874a912b4fa4784fa28, type: 3}
+  - {fileID: 21300000, guid: 7560ba90c3dc90c44a594743d0628c6b, type: 3}
+  - {fileID: 21300000, guid: 58f7a7ab7d69f01458c9ab3f8adb7a26, type: 3}
+  - {fileID: 21300000, guid: 5501da63324230c4685480b830df517e, type: 3}
+  velocidade: 10
+  porSegundo: 1
+  k: 3

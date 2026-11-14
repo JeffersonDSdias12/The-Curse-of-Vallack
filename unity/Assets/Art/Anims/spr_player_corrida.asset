@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_player_corrida
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 0e0cfefb30a2fc544901aada13c5313b, type: 3}
+  - {fileID: 21300000, guid: 1bb3a378bf1ab9447b6513dd1721058e, type: 3}
+  - {fileID: 21300000, guid: 99da808fcc723694c9a1753db2b083b7, type: 3}
+  - {fileID: 21300000, guid: 60f90050eb5859043823eae6bc8a0183, type: 3}
+  - {fileID: 21300000, guid: fadb7d3ace8f18745a0408decc5c29f3, type: 3}
+  - {fileID: 21300000, guid: 9b375a65e11815b459f16d894ff4a542, type: 3}
+  - {fileID: 21300000, guid: a0e1339af5f02ce488d56473791204e6, type: 3}
+  - {fileID: 21300000, guid: 241c6e59fbf53f54395ed009601d5467, type: 3}
+  - {fileID: 21300000, guid: 480d6b15801a78a4d98b1a01ac778e15, type: 3}
+  - {fileID: 21300000, guid: 2ae36301ae5ce1b448010c0a669a1147, type: 3}
+  - {fileID: 21300000, guid: 35621ee51d082164db404dd5dddb11ae, type: 3}
+  - {fileID: 21300000, guid: 79847fc5746ab4247882753872b8b38a, type: 3}
+  - {fileID: 21300000, guid: 22753c74a3f1bb54498bde7d219121a2, type: 3}
+  - {fileID: 21300000, guid: 3ddda8fc31ed0c946b007e7ca0f99c90, type: 3}
+  - {fileID: 21300000, guid: d54650a6a8e1bfe44a2fe805e857a125, type: 3}
+  - {fileID: 21300000, guid: 1347fbcd5e650b744ae31412fe0f96f1, type: 3}
+  velocidade: 16
+  porSegundo: 1
+  k: 3

@@ -1,0 +1,74 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="The Curse of Vallack"
+config/description="A Maldição de Vallack"
+config/version="1.17"
+run/main_scene="res://src/main.tscn"
+config/auto_accept_quit=false
+config/quit_on_go_back=false
+config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
+config/icon="res://icon.png"
+
+[autoload]
+
+Spr="*res://src/core/spr.gd"
+G="*res://src/core/g.gd"
+
+[debug]
+
+gdscript/warnings/unused_variable=0
+gdscript/warnings/unused_local_constant=0
+gdscript/warnings/unused_private_class_variable=0
+gdscript/warnings/unused_parameter=0
+gdscript/warnings/unused_signal=0
+gdscript/warnings/shadowed_variable=0
+gdscript/warnings/shadowed_variable_base_class=0
+gdscript/warnings/shadowed_global_identifier=0
+gdscript/warnings/unreachable_code=0
+gdscript/warnings/unreachable_pattern=0
+gdscript/warnings/standalone_expression=0
+gdscript/warnings/standalone_ternary=0
+gdscript/warnings/incompatible_ternary=0
+gdscript/warnings/static_called_on_instance=0
+gdscript/warnings/integer_division=0
+gdscript/warnings/narrowing_conversion=0
+gdscript/warnings/confusable_local_declaration=0
+gdscript/warnings/confusable_local_usage=0
+gdscript/warnings/inference_on_variant=0
+gdscript/warnings/native_method_override=0
+gdscript/warnings/get_node_default_without_onready=0
+gdscript/warnings/onready_with_export=0
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep_height"
+window/handheld/orientation=4
+
+[dotnet]
+
+project/assembly_name="The Curse of Vallack"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

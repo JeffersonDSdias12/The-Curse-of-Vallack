@@ -16,6 +16,12 @@ alvo = noone;
 magia = [];                // partículas de magia indo até o jogador
 magia_soltas = 0;
 cura_total = dif_valor([70, 55, 45, 35]);
+// v1.14: o baú do forte guarda a CHAVE DO PORTÃO e fica selado (correntes de magia)
+// até os guardiões caírem (obj_terreno)
+conteudo = "vida";         // "vida" ou "chave"
+selado = false;
+selo_quebra = 0;           // brilho quando o selo se parte
+chave_voo = -1;            // a chave subindo do baú e voando até Twilight (quadros)
 chave = aberto_chave("bau", xstart, ystart);
 if (aberto_tem(chave))
 {

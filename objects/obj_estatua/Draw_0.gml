@@ -36,10 +36,13 @@ if (morrendo)
             merge_color(c_white, make_color_rgb(90, 85, 80), _m * 0.7), _al);
         if (_ev > 0)
         {
-            gpu_set_fog(true, make_color_rgb(10, 0, 14), 0, 0);
+            // v1.17: o entulho arde em brasa (antes: silhueta negra)
+            gpu_set_blendmode(bm_add);
+            gpu_set_fog(true, merge_color(make_color_rgb(255, 70, 20), make_color_rgb(255, 170, 60), _ev), 0, 0);
             draw_sprite_part_ext(spr_estatua, 0, 0, _topo_p, _w, _h - _topo_p,
-                x + _tr - dir * _ox * _e, y - _sub - (_oy - _topo_p) * _e, dir * _e, _e, c_white, _al * min(1, _ev * 2.2));
+                x + _tr - dir * _ox * _e, y - _sub - (_oy - _topo_p) * _e, dir * _e, _e, c_white, _al * 0.6 * sin(pi * min(1, _ev * 1.2)));
             gpu_set_fog(false, c_white, 0, 0);
+            gpu_set_blendmode(bm_normal);
         }
     }
     gpu_set_texfilter(false);

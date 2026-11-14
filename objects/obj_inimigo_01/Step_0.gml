@@ -99,7 +99,7 @@ else
                 velh = 0;
                 break;
             }
-            if (_dx != 0) dir = sign(_dx);
+            inimigo_virar(_dx);
 
             // limite de inimigos atacando ao mesmo tempo (depende da dificuldade)
             var _ativos = 0;
@@ -114,7 +114,7 @@ else
                 golpe_som_i = 0;
                 contador_ataques += 1;
                 ataque_bloqueavel = (contador_ataques mod dif_quebra_guarda() != 0);   // a cada N golpes, 1 quebra a guarda
-                fala_aleatoria(id, falas, cor_fala, 0.3);
+                fala_ataque(id, falas, cor_fala, 0.4);       // v1.18: balão ao começar o golpe
                 velh = 0;
                 sprite_index = spr_ia_ataque;
                 image_index = 0;
@@ -138,7 +138,7 @@ else
             }
 
             // PULO: só quando o jogador está na zona próxima
-            if (_no_chao and recarga_salto <= 0 and _adx >= zona_pulo_min and _adx <= zona_pulo_max
+            if (_no_chao and dif_golpe_liberado(DIF.MEDIO) and recarga_salto <= 0 and _adx >= zona_pulo_min and _adx <= zona_pulo_max
                 and _dy > -140 and _dy < 50 and random(1) < 0.035 * _dt)
             {
                 estado_ia = "pular_preparo";
@@ -152,13 +152,13 @@ else
             if (_adx > distancia_minima)
             {
                 // sempre correndo atrás de Twilight (não anda mais)
-                velh = dir * vel_correr;
+                velh_para(dir * vel_correr, 0.35, 0.55);
                 trocar_sprite(spr_ia_correr, 1);
             }
             else
             {
-                velh = 0;
-                trocar_sprite(spr_ia_parado, 1);
+                velh_para(0, 0.35, 0.55);      // freia (ainda nas passadas) até parar
+                trocar_sprite((abs(velh) > 0.6) ? spr_ia_correr : spr_ia_parado, 1);
             }
         break;
 
@@ -199,7 +199,7 @@ else
             image_speed = 1.3;
             if (image_index >= 2)
             {
-                if (_dx != 0) dir = sign(_dx);
+                inimigo_virar(_dx, true);
                 var _tempo_ar = 2 * forca_salto / grav_ia;
                 var _dist = max(0, _adx - 34);
                 velh = dir * clamp(_dist / _tempo_ar, 1.2, 4.4);

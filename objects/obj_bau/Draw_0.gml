@@ -59,12 +59,50 @@ if (array_length(magia) > 0)
     draw_set_alpha(1);
 }
 
-// dica: tecla de interagir
-var _p = instance_find(obj_player, 0);
-if (estado == "fechado" and _p != noone and _p.alvo_interacao == id)
+// v1.14: SELO de magia (correntes roxas em X e um círculo de runas girando)
+if (selado or selo_quebra > 0)
 {
-    gpu_set_texfilter(true);
-    txt(x, y - 38, rotulo_acao(ACAO.INTERAGIR) + " ABRIR O BAÚ DE VIDA", FONTE.MINI, c_white, 0.9 + 0.1 * sin(_t / 6), fa_center, fa_bottom, 0.55);
-    gpu_set_texfilter(false);
+    var _sa = selado ? (0.75 + 0.25 * sin(_t / 8)) : selo_quebra / 40;
+    var _sr = selado ? 1 : 1 + (1 - selo_quebra / 40) * 0.8;
+    gpu_set_blendmode(bm_add);
+    draw_set_color(make_color_rgb(170, 60, 255));
+    draw_set_alpha(0.25 * _sa);
+    draw_ellipse(x - 30 * _sr, y - 30 * _sr, x + 30 * _sr, y + 6, false);
+    draw_set_alpha(0.9 * _sa);
+    draw_set_color(make_color_rgb(210, 140, 255));
+    for (var _k = 0; _k < 8; _k++)
+    {
+        var _ang = _t * 1.6 + _k * 45;
+        draw_circle(x + lengthdir_x(24 * _sr, _ang), y - 12 + lengthdir_y(10 * _sr, _ang), 1.5, false);
+    }
+    // as correntes cruzadas por cima do baú (elos)
+    for (var _c = -1; _c <= 1; _c += 2)
+        for (var _k = 0; _k <= 8; _k++)
+        {
+            var _cx = x - 16 + _k * 4;
+            var _cy = y - 22 + _k * 2.4 * _c + ((_c > 0) ? 0 : 19);
+            draw_ellipse(_cx - 2, _cy - 1.5, _cx + 2, _cy + 1.5, true);
+        }
+    gpu_set_blendmode(bm_normal);
+    draw_set_alpha(1);
 }
+// v1.14: a chave subindo do baú e voando até Twilight
+if (chave_voo >= 0)
+{
+    var _kp = clamp(chave_voo / 70, 0, 1);
+    var _kx = x, _ky = y - 20 - 40 * min(1, chave_voo / 30);
+    if (chave_voo > 40 and instance_exists(alvo))
+    {
+        var _kk = (chave_voo - 40) / 30;
+        _kx = lerp(_kx, alvo.x, _kk);
+        _ky = lerp(_ky, alvo.bbox_top + 10, _kk);
+    }
+    gpu_set_blendmode(bm_add);
+    draw_set_color(make_color_rgb(255, 210, 100));
+    draw_set_alpha(0.35 * (1 - _kp * 0.5));
+    draw_circle(_kx, _ky, 12, false);
+    gpu_set_blendmode(bm_normal);
+    desenhar_chave(_kx, _ky, 1, sin(chave_voo / 6));
+}
+// (o botão ABRIR, em destaque sobre o baú, é desenhado pelo HUD do jogador)
 desenho_resetar();

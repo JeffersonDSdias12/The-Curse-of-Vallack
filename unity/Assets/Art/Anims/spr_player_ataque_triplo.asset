@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_player_ataque_triplo
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 4eabd6239d2112d41ab651a395bfba97, type: 3}
+  - {fileID: 21300000, guid: bc8b76ccdf812b843a6155abd1a24a87, type: 3}
+  - {fileID: 21300000, guid: 0d7c70fd4f5ca504eaa4d702e8492288, type: 3}
+  - {fileID: 21300000, guid: 2c506221087a04441838d8c6cdee4bf5, type: 3}
+  - {fileID: 21300000, guid: 7942f48a0f6710b48b3c5f503e7bb610, type: 3}
+  - {fileID: 21300000, guid: aaa3e356136ee0f4499c05f730d2e8d7, type: 3}
+  - {fileID: 21300000, guid: 8aa1e24039c8a5943ba1972bd7f133db, type: 3}
+  - {fileID: 21300000, guid: 0c838a983e4708345864beba00175c12, type: 3}
+  - {fileID: 21300000, guid: ea9b04ba48764e94583a8b184a65f323, type: 3}
+  - {fileID: 21300000, guid: 84368e714178b4b4a9946a5e4ed77668, type: 3}
+  - {fileID: 21300000, guid: 4f3c33e24284cf0418fa59ff4f274c68, type: 3}
+  - {fileID: 21300000, guid: 13e6c81abcf631343855d22ce227aecd, type: 3}
+  - {fileID: 21300000, guid: b96f5df5f81071445b220d40e41f1400, type: 3}
+  - {fileID: 21300000, guid: 27a3bc0a6e0e76243992806668a6ccba, type: 3}
+  - {fileID: 21300000, guid: 57542360968516542b429c922d32f0cf, type: 3}
+  - {fileID: 21300000, guid: 9de8f55490e130e49915e2ffdcf60798, type: 3}
+  - {fileID: 21300000, guid: 0ce58aba87e55fd4992f49176b2e5c81, type: 3}
+  - {fileID: 21300000, guid: 0bfc092e2f318944ca601ea3a3ba684f, type: 3}
+  velocidade: 15
+  porSegundo: 1
+  k: 3

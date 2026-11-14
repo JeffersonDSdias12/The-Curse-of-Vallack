@@ -9,9 +9,6 @@ confirmado = false;
 modo = "salvar";
 mouse_antes_x = -1;
 mouse_antes_y = -1;
-dicas = dicas_tutorial();
-dica_atual = irandom(array_length(dicas) - 1);
-dica_tempo = 0;
 slots = [slot_info(1), slot_info(2), slot_info(3)];
 
 // Se veio do menu de pausa, a pausa volta quando este menu fechar.

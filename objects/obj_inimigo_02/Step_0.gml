@@ -93,18 +93,19 @@ else
             }
             if (_ve)
             {
-                if (_dx != 0) dir = sign(_dx);
+                inimigo_virar(_dx);
                 var _lado_fuga = (_dx >= 0) ? -1 : 1;
                 if (_adx < distancia_fuga and pode_fugir(_lado_fuga))
                 {
                     estado_ia = "fugir";
                 }
-                else if (recarga <= 0 and abs(_dy) < 160)
+                else if (recarga <= 0 and abs(_dy) < 160 and instance_number(obj_flecha) + instance_number(obj_frasco_veneno) < dif_valor([2, 2, 3, 4]))
                 {
+                    // v1.12: no máximo 2 projéteis na tela ao mesmo tempo
                     // só atira de longe (ou se estiver encurralado)
                     estado_ia = "atirar";
                     flecha_solta = false;
-                    fala_aleatoria(id, falas_arqueiro(), make_color_rgb(70, 40, 100), 0.22);
+                    fala_ataque(id, falas_arqueiro(), make_color_rgb(70, 40, 100), 0.35);    // v1.18
                     sprite_index = spr_ia_ataque;
                     image_index = 0;
                     image_speed = 1.8;
@@ -117,15 +118,15 @@ else
             var _fuga = (_dx >= 0) ? -1 : 1;           // para longe do jogador
             if (!_tem_alvo or _adx >= distancia_segura or !pode_fugir(_fuga))
             {
-                if (_tem_alvo and !pode_fugir(_fuga)) recarga = min(recarga, 25);   // encurralado: atira logo
+                if (_tem_alvo and !pode_fugir(_fuga)) recarga = min(recarga, 70);   // encurralado: atira logo (v1.12: 25 -> 70)
                 estado_ia = "parado";
                 velh = 0;
-                if (_tem_alvo and _dx != 0) dir = sign(_dx);
+                if (_tem_alvo) inimigo_virar(_dx, true);
             }
             else
             {
                 dir = _fuga;
-                velh = _fuga * vel_fuga;
+                velh_para(_fuga * vel_fuga, 0.4, 0.6);
                 trocar_sprite(spr_ia_correr, 1.3);
             }
         break;
@@ -137,12 +138,12 @@ else
             {
                 estado_ia = "parado";
                 velh = 0;
-                recarga = min(recarga, 30);
+                recarga = min(recarga, 100);         // v1.12: era 30
                 break;
             }
-            dir = sign(_dx);
+            inimigo_virar(_dx, true);
             if (place_meeting(x + dir * 12, y - 2, obj_chao) or !pode_andar(dir)) { estado_ia = "parado"; velh = 0; break; }
-            velh = dir * vel_aproximar;              // sempre correndo
+            velh_para(dir * vel_aproximar, 0.4, 0.6);      // sempre correndo
             trocar_sprite(spr_ia_correr, 1.3);
         break;
 
@@ -154,23 +155,7 @@ else
             if (!flecha_solta and image_index >= 5)
             {
                 flecha_solta = true;
-                var _bx = x + dir * 17 * escala;
-                var _by = y - 21 * escala;
-                var _f = instance_create_depth(_bx, _by, depth - 1, obj_flecha);
-                som_em("sfx_flecha", x, y, 0.7);
-                _f.dano = dano_flecha;
-                _f.escala = escala * 0.85;
-                var _tx = _bx + dir * 300;
-                var _ty = _by;
-                if (_tem_alvo) { _tx = _p.x; _ty = _p.y - 34; }
-                // mira um pouco acima para compensar a leve queda da flecha
-                var _dist = point_distance(_bx, _by, _tx, _ty);
-                var _tempo = _dist / velocidade_flecha;
-                _ty -= 0.5 * 0.05 * _tempo * _tempo;
-                var _ang = point_direction(_bx, _by, _tx, _ty);
-                _f.vx = lengthdir_x(velocidade_flecha, _ang);
-                _f.vy = lengthdir_y(velocidade_flecha, _ang);
-                if (view_camera[0] != -1) _f.alcance = camera_get_view_width(view_camera[0]) * 1.1;
+                disparar(x + dir * 17 * escala, y - 21 * escala, _tem_alvo ? _p : noone);
             }
         break;
     }

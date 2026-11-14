@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_player_ataque_frenetico
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 5f44f969ef6314b479130cb16df22dcd, type: 3}
+  - {fileID: 21300000, guid: d3a7ed1fefaba2d4aa98378beb4364a6, type: 3}
+  - {fileID: 21300000, guid: 3000d6f46bf7da84396c4d682c0981a9, type: 3}
+  - {fileID: 21300000, guid: 2b7bb7950cc7262459bf49e521fd0c54, type: 3}
+  - {fileID: 21300000, guid: 499742be351eb3344b2cf928067cc32e, type: 3}
+  - {fileID: 21300000, guid: 9f85c6bd8f7e3734e80cf5ecdfc81242, type: 3}
+  - {fileID: 21300000, guid: 47ba696678c7fc341ae6fa546254e807, type: 3}
+  - {fileID: 21300000, guid: ef69d3d7a8726f2468065aedc26d20f8, type: 3}
+  - {fileID: 21300000, guid: 7a20aeaf36281274d8ac929def1fa089, type: 3}
+  - {fileID: 21300000, guid: 6657eb8e5cbbef2439f8eb8f189fc6b8, type: 3}
+  - {fileID: 21300000, guid: 2e2c215e171780d4bac107ab9ce8c479, type: 3}
+  - {fileID: 21300000, guid: 9d9113e7142d5b74cb5828e46a964f7e, type: 3}
+  - {fileID: 21300000, guid: 60dc941114043cb4c8b2858588960bbf, type: 3}
+  - {fileID: 21300000, guid: 7ff79818c9ad99640a704c12c846f4fe, type: 3}
+  - {fileID: 21300000, guid: 62ba9c0806808684cb2b5809ff3d10e3, type: 3}
+  - {fileID: 21300000, guid: edc822d73ac826b4daaca66de5e66d2f, type: 3}
+  - {fileID: 21300000, guid: 2f1ec4b43849449479302ef78da26aa7, type: 3}
+  - {fileID: 21300000, guid: 22ba74fa02f043b4285a128b40964e00, type: 3}
+  velocidade: 15
+  porSegundo: 1
+  k: 3

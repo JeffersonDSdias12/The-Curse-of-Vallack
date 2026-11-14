@@ -8,6 +8,7 @@ if (_boss != noone and !_boss.morrendo and x > _boss.barreira_x - 14)
     x = _boss.barreira_x - 14;
     if (velh > 0) velh = 0;
     if (empurrao > 0) empurrao = 0;
+    if (barreira_aviso <= 0) som_mensagem();     // v1.16: o alerta da barreira aparece
     barreira_aviso = 90;
 }
 camera_atualizar(id);       // câmera depois do movimento: sem tremedeira/atraso

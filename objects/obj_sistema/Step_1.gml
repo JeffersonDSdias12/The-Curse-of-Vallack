@@ -24,10 +24,20 @@ if (room == rm_menu) { global.hitstop = 0; global.lenta_t = 0; global.lenta_fato
 if (instance_exists(obj_player)) global.tempo_jogo += global.dt_real / 60;
 
 // áudio: música, ambientes e a pausa abafando o som
-global.audio_pausa = instance_exists(obj_pausa) or instance_exists(obj_menu_armas) or instance_exists(obj_save_menu) or instance_exists(obj_pergaminho);
+global.audio_pausa = instance_exists(obj_pausa) or instance_exists(obj_menu_armas) or instance_exists(obj_save_menu) or instance_exists(obj_dialogo);
 audio_atualizar();
 if (global.orbs_fx > 0) global.orbs_fx = max(0, global.orbs_fx - global.dt_real);
+if (global.essencia_fx > 0) global.essencia_fx = max(0, global.essencia_fx - global.dt_real);
 if (global.fala_espera > 0) global.fala_espera -= global.dt;
+if (global.grito_espera > 0) global.grito_espera -= global.dt;
+if (global.veu_t < global.veu_dur) global.veu_t += global.dt_real;     // v1.19: véu de transição
+// v1.18: conquistas gravadas juntas (conquista() em scr_v117)
+if (variable_global_exists("perfil_salvar_t") and global.perfil_salvar_t > 0)
+{
+    global.perfil_salvar_t -= global.dt_real;
+    if (global.perfil_salvar_t <= 0) perfil_salvar_se_mudou();
+}
+if (global.fatal_t > 0) global.fatal_t -= global.dt_real;
 if (global.orb_som_t > 0) global.orb_som_t -= global.dt_real;
 else if (!instance_exists(obj_orb)) global.orb_seq = 0;
 
@@ -45,3 +55,6 @@ if (keyboard_check_pressed(vk_f11))
 
 // F1: mostra máscaras de colisão e hitboxes (verificação)
 if (keyboard_check_pressed(vk_f1)) global.debug_hitbox = !global.debug_hitbox;
+// v1.19: F2 mostra o diagnóstico do controle (o que o GameMaker recebe de cada slot)
+if (!variable_global_exists("debug_pad")) global.debug_pad = false;
+if (keyboard_check_pressed(vk_f2)) global.debug_pad = !global.debug_pad;

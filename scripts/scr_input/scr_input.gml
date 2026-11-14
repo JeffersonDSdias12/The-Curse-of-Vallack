@@ -11,8 +11,8 @@
 
 function acoes_nomes()
 {
-    return ["CORRER À ESQUERDA", "CORRER À DIREITA", "PULAR", "ATAQUE (COMBO)", "ESPECIAL · ONDA", "DEFENDER / APARAR", "INTERAGIR", "AGACHAR",
-            "GOLPE PESADO", "RASTEIRA / FINALIZADOR", "ESPECIAL · QUEDA", "ESPECIAL · TREMOR", "ESQUIVA (ROLAR)", "FÚRIA"];
+    return ["CORRER À ESQUERDA", "CORRER À DIREITA", "PULAR", "ATAQUE (COMBO)", "ESPECIAL · ONDA", "DEFENDER / APARAR", "INTERAGIR / SUB-ARMA", "AGACHAR",
+            "GOLPE PESADO", "RASTEIRA / FINALIZADOR", "ESPECIAL · QUEDA", "ESPECIAL · TREMOR", "ESQUIVA / BACKDASH", "FÚRIA"];
 }
 
 // ordem das ações na tela de remapeamento: coluna MOVIMENTO e coluna COMBATE
@@ -66,7 +66,7 @@ function botoes_remapeaveis()
 // Teclas que não podem ser usadas em ações (são do sistema)
 function tecla_reservada(_k)
 {
-    return (_k == vk_escape or _k == vk_enter or _k == vk_tab or _k == vk_f1 or _k == vk_f11 or _k <= 0);
+    return (_k == vk_escape or _k == vk_enter or _k == vk_tab or _k == vk_f1 or _k == vk_f2 or _k == vk_f11 or _k <= 0);
 }
 
 // ---------------------------------------------------------------------
@@ -94,8 +94,23 @@ function gamepad_alguma_entrada(_pad)
     return false;
 }
 
+// v1.19: QUALQUER sinal deste controle agora: botões mapeados, botões brutos
+// (controles genéricos sem mapeamento), eixos e direcional "hat"
+function gamepad_atividade(_pad)
+{
+    if (gamepad_alguma_entrada(_pad)) return true;
+    var _nb = clamp(gamepad_button_count(_pad), 0, 32);
+    for (var _b = 0; _b < _nb; _b++) if (gamepad_button_check(_pad, _b)) return true;
+    if (abs(gamepad_axis_value(_pad, gp_axislh)) > 0.5 or abs(gamepad_axis_value(_pad, gp_axislv)) > 0.5
+        or abs(gamepad_axis_value(_pad, gp_axisrh)) > 0.5 or abs(gamepad_axis_value(_pad, gp_axisrv)) > 0.5) return true;
+    if (gamepad_hat_count(_pad) > 0 and gamepad_hat_value(_pad, 0) != 0) return true;
+    return false;
+}
+
 // Escolhe o controle em uso: mantém o atual; se outro controle for usado,
 // passa a ser ele (útil com mais de um controle conectado).
+// v1.19: o Windows às vezes lista um controle "fantasma" (driver virtual,
+// receptor sem controle pareado) antes do de verdade: quem mandar sinal ganha
 function gamepad_escolher()
 {
     var _atual = global.pad_slot;
@@ -107,11 +122,12 @@ function gamepad_escolher()
         if (!gamepad_is_connected(_i)) continue;
         _conectados += 1;
         if (_atual == -1) _atual = _i;
-        else if (_i != _atual and gamepad_alguma_entrada(_i)) _atual = _i;
+        else if (_i != _atual and gamepad_atividade(_i)) _atual = _i;
     }
     if (_atual != global.pad_slot)
     {
         global.pad_slot = _atual;
+        show_debug_message("[controle] em uso: slot " + string(_atual) + ((_atual >= 0) ? "  " + gamepad_get_description(_atual) + "  botoes=" + string(gamepad_button_count(_atual)) : ""));
         if (_atual >= 0)
         {
             gamepad_set_axis_deadzone(_atual, 0.25);
@@ -125,6 +141,37 @@ function gamepad_escolher()
         }
     }
     return _atual;
+}
+
+// v1.19: DIAGNÓSTICO DO CONTROLE (F2, em qualquer tela): mostra o que o
+// GameMaker está recebendo de cada slot, ao vivo
+function gamepad_diagnostico_desenhar()
+{
+    if (!variable_global_exists("debug_pad") or !global.debug_pad) return;
+    var _gw = display_get_gui_width();
+    var _lin = ["DIAGNÓSTICO DO CONTROLE (F2)   ·   em uso: slot " + string(global.pad_slot) + "   ·   dispositivos: " + string(gamepad_get_device_count())];
+    var _nomes = [[gp_face1, "A/X"], [gp_face2, "B/BOLA"], [gp_face3, "X/QUAD"], [gp_face4, "Y/TRI"], [gp_shoulderl, "LB"], [gp_shoulderr, "RB"],
+                  [gp_shoulderlb, "LT"], [gp_shoulderrb, "RT"], [gp_select, "SELECT"], [gp_start, "START"], [gp_stickl, "L3"], [gp_stickr, "R3"],
+                  [gp_padu, "CIMA"], [gp_padd, "BAIXO"], [gp_padl, "ESQ"], [gp_padr, "DIR"]];
+    for (var _s = 0; _s < gamepad_slots_total(); _s++)
+    {
+        if (!gamepad_is_connected(_s)) continue;
+        var _ap = "";
+        for (var _k = 0; _k < array_length(_nomes); _k++) if (gamepad_button_check(_s, _nomes[_k][0])) _ap += _nomes[_k][1] + " ";
+        var _nb = clamp(gamepad_button_count(_s), 0, 32), _brutos = "";
+        for (var _b = 0; _b < _nb; _b++) if (gamepad_button_check(_s, _b)) _brutos += string(_b) + " ";
+        array_push(_lin, "slot " + string(_s) + ": " + gamepad_get_description(_s) + "  ·  botões " + string(gamepad_button_count(_s))
+            + "  eixos " + string(gamepad_axis_count(_s)) + "  hats " + string(gamepad_hat_count(_s)));
+        array_push(_lin, "     apertados: [" + _ap + "]  brutos: [" + _brutos + "]  hat " + string((gamepad_hat_count(_s) > 0) ? gamepad_hat_value(_s, 0) : 0)
+            + "  LX " + string_format(gamepad_axis_value(_s, gp_axislh), 1, 2) + "  LY " + string_format(gamepad_axis_value(_s, gp_axislv), 1, 2)
+            + "  RX " + string_format(gamepad_axis_value(_s, gp_axisrh), 1, 2));
+    }
+    if (array_length(_lin) == 1) array_push(_lin, "NENHUM CONTROLE: o GameMaker não vê nenhum dispositivo conectado.");
+    draw_set_alpha(0.82);
+    draw_set_color(c_black);
+    draw_rectangle(0, 0, _gw, 14 + array_length(_lin) * 18, false);
+    for (var _l = 0; _l < array_length(_lin); _l++) txt(10, 14 + _l * 18, _lin[_l], FONTE.MINI, make_color_rgb(120, 255, 140), 1, fa_left, fa_middle);
+    desenho_resetar();
 }
 
 // Estilo dos nomes/ícones: "ps" (PlayStation e genéricos) ou "xbox"
@@ -188,6 +235,8 @@ function input_atualizar()
         if (gamepad_hat_count(_pad) > 0) _hat = gamepad_hat_value(_pad, 0);
     }
     global.pad_eixo = abs(_ax);
+    // v1.12: analógico para CIMA (golpe pesado + cima = lançador)
+    global.inp_cima = (_pad >= 0 and _ay < -0.6 and abs(_ay) > abs(_ax));
 
     // analógico direito: um "toque" para o lado faz a esquiva (como no God of War 2)
     var _rx = (_pad >= 0) ? gamepad_axis_value(_pad, gp_axisrh) : 0;

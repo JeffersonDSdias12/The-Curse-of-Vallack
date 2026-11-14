@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_ataque_especial_2
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 7501d0271c532f445bad8c78c990ca1f, type: 3}
+  - {fileID: 21300000, guid: 03f26ba2aba8bba4695dde29bf29589d, type: 3}
+  - {fileID: 21300000, guid: 28715cdf3ff281948b1f8d091a8af2ce, type: 3}
+  - {fileID: 21300000, guid: dd1aee450bef4024b8a9b80b7fe94467, type: 3}
+  - {fileID: 21300000, guid: 0f69289918ba46f4597f52db92a08298, type: 3}
+  - {fileID: 21300000, guid: eee74b153ba3c184b9647faed3938d83, type: 3}
+  - {fileID: 21300000, guid: f0cc85accf90a6f4aa807a10ad1e6260, type: 3}
+  - {fileID: 21300000, guid: 3bde57af189fa1e45bcd7ec7e22f0037, type: 3}
+  velocidade: 10
+  porSegundo: 1
+  k: 3

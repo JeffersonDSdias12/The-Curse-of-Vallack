@@ -15,7 +15,16 @@ if (fase == "escurecer")
 draw_set_color(c_black);
 draw_rectangle(0, 0, _gw, _gh, false);
 
-var _sai = (fase == "sair") ? 1 - clamp(tempo / 50, 0, 1) : 1;
+// créditos com os nomes da equipe (subindo pela tela)
+if (fase == "creditos" or fase == "sair")
+{
+    desenhar_vinheta(_gw, _gh, 0.8, make_color_rgb(40, 0, 0));
+    var _ac = (fase == "creditos") ? clamp(tempo / 40, 0, 1) : max(0, 1 - tempo / 50);
+    creditos_desenhar((fase == "creditos") ? tempo : creditos_duracao() + 240, _ac);
+    exit;
+}
+
+var _sai = (fase == "continua_sai") ? 1 - clamp(tempo / 50, 0, 1) : 1;
 var _t = (fase == "continua") ? tempo : duracao_texto;
 
 // brilho vermelho pulsando atrás do texto

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_inimigo02_sofrendo_dano
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 29aacc6342e07e944b6b07fe0bca15c8, type: 3}
+  - {fileID: 21300000, guid: b415d6b357014634e88cc39d97631659, type: 3}
+  - {fileID: 21300000, guid: 86df5b46a79345b4c8014bf245ced69b, type: 3}
+  - {fileID: 21300000, guid: c30006377f965b94c8c7a0780842b8dd, type: 3}
+  - {fileID: 21300000, guid: b08955fbd5e58544abb0cae0079216de, type: 3}
+  - {fileID: 21300000, guid: 4c1ba57c5e87a15409e6d292c1d7d057, type: 3}
+  - {fileID: 21300000, guid: 0a6f8f14de19ba74eb84354b4a72cfc9, type: 3}
+  - {fileID: 21300000, guid: 53e3158277393074c824dc41ee6beb93, type: 3}
+  velocidade: 6
+  porSegundo: 1
+  k: 2

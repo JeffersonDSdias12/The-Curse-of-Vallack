@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <g fill="#ffffff">
+    <path d="M116 34 L133 110 L210 126 L133 142 L116 218 L99 142 L22 126 L99 110 Z"/>
+    <path d="M194 30 L201 58 L228 64 L201 70 L194 98 L187 70 L160 64 L187 58 Z" opacity="0.85"/>
+    <path d="M192 164 L197 182 L214 186 L197 190 L192 208 L187 190 L170 186 L187 182 Z" opacity="0.7"/>
+  </g>
+</svg>

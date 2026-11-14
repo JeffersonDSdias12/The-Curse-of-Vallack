@@ -53,15 +53,22 @@ if (fase == "resultado")
     }
 }
 
-if (fase == "obrigado" or fase == "sair")
+if (fase == "obrigado" or fase == "obrigado_sai")
 {
-    var _a = (fase == "obrigado") ? min(clamp(tempo / 50, 0, 1), 1) : max(0, 1 - tempo / 50);
+    var _a = (fase == "obrigado") ? clamp(tempo / 50, 0, 1) : max(0, 1 - tempo / 45);
+    var _tt = (fase == "obrigado") ? tempo : 999;
     desenhar_vinheta(_gw, _gh, 0.8, make_color_rgb(40, 0, 0));
     var _txt = "Obrigado por jogar nossa Demo.";
-    txt_amaldicoado(_cx, _gh * 0.44, _txt, FONTE.GRANDE, make_color_rgb(240, 225, 200), (fase == "obrigado") ? tempo : 999, 2, min(1, (_gw * 0.88) / max(1, txt_largura(_txt, FONTE.GRANDE))), _a);
-    txt(_cx, _gh * 0.44 + 62, JOGO_TITULO + "  ·  " + JOGO_SUBTITULO, FONTE.PEQUENA, _ouro, _a * clamp((tempo - 60) / 40, 0, 1), fa_center, fa_middle);
-    txt(_cx, _gh * 0.44 + 96, "Jefferson Dias  ·  Eduardo  ·  Isaac  ·  Alex  ·  Aldreon  —  Faculdade FAPAN", FONTE.MINI, make_color_rgb(200, 190, 180), _a * clamp((tempo - 90) / 40, 0, 1), fa_center, fa_middle);
-    txt(_cx, _gh * 0.44 + 124, "A jornada continua em breve...", FONTE.MINI, make_color_rgb(230, 120, 100), _a * clamp((tempo - 140) / 40, 0, 1), fa_center, fa_middle);
+    txt_amaldicoado(_cx, _gh * 0.44, _txt, FONTE.GRANDE, make_color_rgb(240, 225, 200), _tt, 2, min(1, (_gw * 0.88) / max(1, txt_largura(_txt, FONTE.GRANDE))), _a);
+    txt(_cx, _gh * 0.44 + 62, JOGO_TITULO + "  ·  " + JOGO_SUBTITULO, FONTE.PEQUENA, _ouro, _a * clamp((_tt - 60) / 40, 0, 1), fa_center, fa_middle);
+}
+
+// créditos com os nomes da equipe (subindo pela tela)
+if (fase == "creditos" or fase == "sair")
+{
+    desenhar_vinheta(_gw, _gh, 0.8, make_color_rgb(40, 0, 0));
+    var _ac = (fase == "creditos") ? clamp(tempo / 40, 0, 1) : max(0, 1 - tempo / 50);
+    creditos_desenhar((fase == "creditos") ? tempo : creditos_duracao() + 240, _ac);
 }
 
 // brasas

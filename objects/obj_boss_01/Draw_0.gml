@@ -35,6 +35,56 @@ if (furia_fx > 0)
     draw_set_alpha(1);
 }
 
+// v1.12: AVISO da bola de fogo: a mão acende em roxo antes de lançar
+if (estado_ia == "atacando" and !golpe_lancado and !morrendo)
+{
+    var _hk = clamp(image_index / 6, 0, 1);
+    var _hx = x + dir * 30 * escala;
+    var _hy = y - 36 * escala;
+    gpu_set_blendmode(bm_add);
+    draw_set_alpha(0.35 + 0.45 * _hk);
+    draw_set_color(make_color_rgb(150, 50, 255));
+    draw_circle(_hx, _hy, 10 + 26 * _hk + 3 * sin(_t / 2), false);
+    draw_set_alpha(0.6 * _hk);
+    draw_set_color(make_color_rgb(235, 200, 255));
+    draw_circle(_hx, _hy, 5 + 10 * _hk, false);
+    gpu_set_blendmode(bm_normal);
+    draw_set_alpha(1);
+}
+
+// v1.19: CHUVA DE BRASAS: o chão brilha onde cada brasa vai cair (cresce até ela sair)
+if (array_length(chuva_fila) > 0 and !morrendo)
+{
+    gpu_set_blendmode(bm_add);
+    for (var _c = 0; _c < array_length(chuva_fila); _c++)
+    {
+        var _cx = chuva_fila[_c][0];
+        var _ck = clamp(1 - chuva_fila[_c][1] / (CHUVA_AVISO + 20), 0, 1);   // 0 = acabou de marcar, 1 = vai cair
+        var _cy = chuva_fila[_c][2];
+        draw_set_alpha(0.25 + 0.5 * _ck + 0.15 * sin(_t / 2 + _c));
+        draw_set_color(make_color_rgb(255, 110, 30));
+        draw_ellipse(_cx - 10 - 18 * _ck, _cy - 3 - 3 * _ck, _cx + 10 + 18 * _ck, _cy + 3 + 3 * _ck, false);
+        draw_set_alpha(0.35 * _ck);
+        draw_rectangle(_cx - 2, _cy - 160 * _ck, _cx + 2, _cy, false);     // coluna de luz: a brasa vem daqui
+    }
+    gpu_set_blendmode(bm_normal);
+    draw_set_alpha(1);
+}
+
+// v1.17: CAMBALEANDO: brilho dourado no tronco e o ícone da execução sobre ela
+if (estado_ia == "vulneravel" and !morrendo and !em_qte)
+{
+    var _vk = 1 - vulneravel_t / 420;
+    gpu_set_blendmode(bm_add);
+    draw_set_alpha(0.25 + 0.2 * sin(_t / 3));
+    draw_set_color(make_color_rgb(255, 170, 60));
+    draw_circle(x - 10 * escala, y - 40 * escala, 60 + 10 * sin(_t / 4), false);
+    gpu_set_blendmode(bm_normal);
+    draw_set_alpha(1);
+    desenhar_icone_finalizador(x - 10 * escala, bbox_top - 14);
+    desenhar_anel(x - 10 * escala, bbox_top - 14, 26, 4, _vk, make_color_rgb(255, 200, 90), 0.9);
+}
+
 // chama nas raízes durante a invocação
 if (estado_ia == "invocando")
 {
@@ -61,7 +111,7 @@ if (global.debug_hitbox)
     draw_circle(x, y - 36 * escala, alcance_visao, true);
     draw_line(arena_esq, y_chao - 300, arena_esq, y_chao);
     gpu_set_texfilter(true);
-    txt(x, bbox_top - 20, estado_ia + "  vida " + string(vida) + "/" + string(vida_max) + "  onda " + string(onda_numero) + "  próxima " + string(floor(onda_tempo / 60)) + "s" + (furia ? "  FÚRIA" : ""), FONTE.MINI, c_yellow, 1, fa_center, fa_bottom, 0.5);
+    txt(x, bbox_top - 20, estado_ia + "  vida " + string(vida) + "/" + string(vida_max) + "  fase " + string(fase) + "  ataque " + string(ataque_n), FONTE.MINI, c_yellow, 1, fa_center, fa_bottom, 0.5);
     gpu_set_texfilter(false);
 }
 desenho_resetar();

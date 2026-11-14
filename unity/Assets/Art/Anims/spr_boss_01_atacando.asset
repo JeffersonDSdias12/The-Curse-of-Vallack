@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_boss_01_atacando
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 87278ca78aee9ce438ec47707991a3f5, type: 3}
+  - {fileID: 21300000, guid: 01a188b9f70ece94585966c05b4e405b, type: 3}
+  - {fileID: 21300000, guid: ad84845134f1ed447b1202855a2fc6f2, type: 3}
+  - {fileID: 21300000, guid: d09330dbb07677d4790377cd9893485f, type: 3}
+  - {fileID: 21300000, guid: 9a34c3cda31778c4388b5b06cc369d0a, type: 3}
+  - {fileID: 21300000, guid: 052d27446ff317546a07d5dd11d6526e, type: 3}
+  - {fileID: 21300000, guid: d149dd20c3bd4194dbb246dc57b7b3d8, type: 3}
+  - {fileID: 21300000, guid: f95ef10c9358cd144b5afd438d614a0f, type: 3}
+  - {fileID: 21300000, guid: df0903f292eeda54abf1e360dece5f92, type: 3}
+  - {fileID: 21300000, guid: f49e7651bb46c5e458591fb29edf0909, type: 3}
+  velocidade: 6
+  porSegundo: 1
+  k: 4

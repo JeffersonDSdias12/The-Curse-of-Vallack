@@ -20,6 +20,11 @@ window_set_caption(JOGO_TITULO + " - " + JOGO_SUBTITULO);
 // (Post Draw). Assim nunca sobram barras ou cantos sem imagem.
 application_surface_draw_enable(false);
 
+// v1.19: as texturas vão para a placa de vídeo já na abertura (o GameMaker as
+// carregava na primeira vez que algo aparecia: engasgo no meio da luta)
+texture_prefetch("Default");
+texture_prefetch("texturegroup1");
+
 global.dt = clamp(60 / max(1, game_get_speed(gamespeed_fps)), 0.5, 3);
 tela_atualizar();
 sala_preparar();

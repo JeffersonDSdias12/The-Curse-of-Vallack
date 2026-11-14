@@ -10,6 +10,7 @@ switch (estado)
             estado = "aviso";
             t = 0;
             if (view_camera[0] != -1) y_viga = camera_get_view_y(view_camera[0]) - 30;
+            som_em("viga_aviso", x, y, 1);          // v1.12: aviso sonoro imediato (madeira estalando)
             som_em("fogo_whoosh", x, y, 0.7);
         }
     break;

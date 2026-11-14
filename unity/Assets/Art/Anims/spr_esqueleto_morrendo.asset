@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_esqueleto_morrendo
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: e73a2d37988780b46a48284981a89ea8, type: 3}
+  - {fileID: 21300000, guid: aad0d72fc3e2dad46924f486c3c72c8e, type: 3}
+  - {fileID: 21300000, guid: a4b6f322093d3344ba873598772af259, type: 3}
+  - {fileID: 21300000, guid: 90cb0ac94152e284492ab94d8a5cd7fb, type: 3}
+  - {fileID: 21300000, guid: 8495ae7e4d55cea49881bd734562f39d, type: 3}
+  - {fileID: 21300000, guid: b3b5b3560220a594b8accd3f6a085f66, type: 3}
+  - {fileID: 21300000, guid: d5e6fd1cd03c9f94fa55356c7971c10f, type: 3}
+  - {fileID: 21300000, guid: 9a1a13c99f2f85941b0df629092f0573, type: 3}
+  - {fileID: 21300000, guid: 87a16025a6cf0c6419adae092538b37b, type: 3}
+  velocidade: 10
+  porSegundo: 1
+  k: 2

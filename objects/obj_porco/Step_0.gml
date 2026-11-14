@@ -79,7 +79,7 @@ else
     }
 
     // FÚRIA (metade da vida): ruge e invoca esqueletos assim que estiver no chão
-    if (furia_pendente and !invocou and _no_chao and (estado_ia == "perseguir" or estado_ia == "parado"))
+    if (furia_pendente and dif_golpe_liberado(DIF.DIFICIL) and !invocou and _no_chao and (estado_ia == "perseguir" or estado_ia == "parado"))
     {
         furia_pendente = false;
         estado_ia = "rugir";
@@ -105,7 +105,7 @@ else
         // --------------------------------------------------------------
         case "perseguir":
             if (!_dentro) { estado_ia = "parado"; velh = 0; break; }
-            if (_dx != 0) dir = sign(_dx);
+            inimigo_virar(_dx);
 
             if (_no_chao)
             {
@@ -118,7 +118,7 @@ else
                     golpe_som_i = 0;
                     contador_ataques += 1;
                     ataque_bloqueavel = (contador_ataques mod 3 != 0);    // um em cada três quebra a guarda
-                    fala_aleatoria(id, falas, cor_fala, 0.25);
+                    fala_ataque(id, falas, cor_fala, 0.4);       // v1.18: balão ao começar o golpe
                     velh = 0;
                     sprite_index = spr_ia_ataque;
                     image_index = 0;
@@ -133,11 +133,11 @@ else
                     sprite_index = spr_porco_salto;
                     image_index = 0;
                     image_speed = 0.55;
-                    fala_aleatoria(id, falas_porco_salto(), cor_fala, 0.5);
+                    fala_ataque(id, falas_porco_salto(), cor_fala, 0.5);    // v1.18
                     break;
                 }
                 // CORTE ROXO: onda de magia rente ao chão
-                if (recarga_onda <= 0 and _adx >= 150 and _adx <= 520 and abs(_dy) < 40 and inimigo_na_tela())
+                if (dif_golpe_liberado(DIF.MEDIO) and recarga_onda <= 0 and _adx >= 150 and _adx <= 520 and abs(_dy) < 40 and inimigo_na_tela())
                 {
                     estado_ia = "onda";
                     onda_solta = false;
@@ -145,7 +145,7 @@ else
                     sprite_index = spr_porco_roxo;
                     image_index = 0;
                     image_speed = 0.7;
-                    fala_aleatoria(id, falas_porco_onda(), cor_fala, 0.4);
+                    fala_ataque(id, falas_porco_onda(), cor_fala, 0.45);    // v1.18
                     break;
                 }
             }
@@ -153,13 +153,13 @@ else
             // corre atrás de Twilight
             if (_adx > alcance_ataque - 12 and inimigo_pode_andar(dir, 24))
             {
-                velh = dir * vel_correr;
+                velh_para(dir * vel_correr, 0.3, 0.5);
                 trocar_sprite(spr_ia_correr, furioso ? 1.25 : 1);
             }
             else
             {
-                velh = 0;
-                trocar_sprite(spr_ia_parado, 1);
+                velh_para(0, 0.3, 0.5);
+                trocar_sprite((abs(velh) > 0.6) ? spr_ia_correr : spr_ia_parado, 1);
             }
         break;
 
@@ -194,7 +194,7 @@ else
         // --------------------------------------------------------------
         case "salto_prep":
             velh = 0;
-            if (_tem_alvo and _dx != 0) dir = sign(_dx);
+            if (_tem_alvo) inimigo_virar(_dx, true);
             if (image_index >= 2)
             {
                 var _tar = 2 * forca_salto / grav_ia;

@@ -11,10 +11,9 @@ image_yscale = 1;
 dir = choose(-1, 1);     // as sprites olham para a direita
 
 // ===== COMBATE (ajustado pela dificuldade) =====
-vida_max = round(60 * dif_vida_inimigo());
-vida = vida_max;
-vida_atraso = vida;
-dano_ataque = max(1, round(8 * dif_dano_inimigo()));
+// v1.13: vida e dano pela dificuldade E pelo nível no mapa (a fase 2 é mais dura)
+inimigo_status(60);
+dano_ataque = inimigo_dano(8);
 contador_ataques = 0;
 ataque_bloqueavel = true;
 recarga = irandom(30);
@@ -29,7 +28,7 @@ campo_altura = 130;
 alcance_ataque = 50;
 alcance_ataque_y = 44;
 distancia_minima = 38;
-vel_correr = 1.9;      // a besta sempre corre (não anda mais)
+vel_correr = 1.9 * dif_velocidade();      // a besta sempre corre (não anda mais)
 separacao = 0;
 
 // ===== PULO (só quando o jogador está na zona próxima) =====
@@ -89,7 +88,7 @@ trocar_sprite = function(_spr, _vel)
 reagir_dano = function(_dano, _dir, _forca)
 {
     // empurrão pequeno: o inimigo continua ao alcance da espada
-    empurrao = _dir * _forca * 0.45;
+    empurrao = _dir * _forca * 0.25;          // v1.12: era 0.45 (os golpes jogavam o inimigo longe)
     inimigo_atordoar(30);
     if (vida <= 0) inimigo_morrer(_dir);
     else if (random(1) < 0.12) fala_dizer(id, choose("Argh!", "Grrr!", "Maldito!"), cor_fala);

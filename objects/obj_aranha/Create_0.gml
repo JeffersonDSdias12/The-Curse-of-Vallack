@@ -34,7 +34,7 @@ teia_quadros = dif_valor([60, 80, 95, 110]);     // tempo preso na teia
 estado_ia = "parado";
 campo = 520;
 campo_altura = 150;
-vel_andar = 2.5;
+vel_andar = 2.5 * dif_velocidade();
 dist_ideal_min = 120;
 dist_ideal_max = 230;
 alerta_fx = 0;
@@ -73,7 +73,7 @@ trocar_sprite = function(_spr, _vel)
 
 reagir_dano = function(_dano, _dir, _forca)
 {
-    empurrao = _dir * _forca * 0.55;
+    empurrao = _dir * _forca * 0.3;          // v1.12: era 0.55 (os golpes jogavam o inimigo longe)
     inimigo_atordoar(24);
     if (vida <= 0)
     {

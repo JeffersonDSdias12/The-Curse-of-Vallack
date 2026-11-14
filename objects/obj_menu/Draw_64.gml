@@ -1,3 +1,4 @@
+if (instance_exists(obj_mapa) or instance_exists(obj_perfil)) exit;     // v1.17: o mapa / o perfil cobrem a tela
 var _gw = display_get_gui_width();
 var _gh = display_get_gui_height();
 var _cx = _gw / 2;
@@ -7,11 +8,12 @@ var _cinza  = make_color_rgb(175, 172, 178);
 var _q      = global.cfg_qualidade;
 
 // =====================================================================
-// FUNDO ANIMADO DO MENU (panorama em movimento, névoa, tom amaldiçoado,
-// relâmpagos e tochas)
+// v1.14: CENA ÉPICA ATRÁS DO MENU — a Árvore Amaldiçoada gigante no
+// horizonte em chamas, Twilight em silhueta encarando-a, névoa, cinzas
+// caindo, brasas subindo e faixas pretas de cinema
 // =====================================================================
 var _fundo_a = 1;
-if (estado == "intro_creditos" or estado == "intro_aviso") _fundo_a = 0;
+if (estado == "intro_video" or estado == "intro_aviso") _fundo_a = 0;
 else if (estado == "intro_titulo") _fundo_a = clamp((tempo - (titulo_total - 45)) / 45, 0, 1);
 
 draw_set_alpha(1);
@@ -20,40 +22,88 @@ draw_rectangle(0, 0, _gw, _gh, false);
 
 if (_fundo_a > 0)
 {
+    // céu: o panorama antigo, bem escuro
     var _sw = sprite_get_width(spr_fundo);
     var _sh = sprite_get_height(spr_fundo);
     var _esc = max(_gw / _sw, _gh / _sh) * 1.12;
-    var _bw = _sw * _esc;
-    var _bh = _sh * _esc;
-    var _px = -(_bw - _gw) * (0.5 + 0.5 * sin(tempo_total / 1400));
-    var _py = -(_bh - _gh) * 0.5 + sin(tempo_total / 900) * 4;
-    // suavizado (a imagem é ampliada para a tela)
-    gpu_set_texfilter(global.cfg_fundo_hd == 1);
-    draw_sprite_ext(spr_fundo, 0, _px, _py, _esc, _esc, 0, make_color_rgb(150, 118, 124), _fundo_a);
-    gpu_set_texfilter(false);
-
+    var _px = -(_sw * _esc - _gw) * (0.5 + 0.5 * sin(tempo_total / 1400)) - paralaxe_x * 16;     // v1.17: segue o ponteiro
+    var _py = -(_sh * _esc - _gh) * 0.5 + sin(tempo_total / 900) * 4 - paralaxe_y * 8;
+    gpu_set_texfilter(true);
+    draw_sprite_ext(spr_fundo, 0, _px, _py, _esc, _esc, 0, make_color_rgb(92, 70, 80), _fundo_a);
+    retangulo_gradiente(0, 0, _gw, _gh * 0.55, make_color_rgb(6, 4, 10), 0.75 * _fundo_a, make_color_rgb(6, 4, 10), 0);
+    // o horizonte em chamas
+    var _pul = 0.85 + 0.15 * sin(tempo_total / 70) * sin(tempo_total / 23);
+    gpu_set_blendmode(bm_add);
+    draw_set_color(make_color_rgb(190, 54, 18));
+    draw_set_alpha(0.22 * _pul * _fundo_a);
+    draw_ellipse(_gw * 0.25, _gh * 0.62, _gw * 1.15, _gh * 1.12, false);
+    draw_set_color(make_color_rgb(255, 120, 40));
+    draw_set_alpha(0.12 * _pul * _fundo_a);
+    draw_ellipse(_gw * 0.45, _gh * 0.74, _gw * 0.98, _gh * 1.02, false);
+    gpu_set_blendmode(bm_normal);
+    // v1.14: a luz rompendo as nuvens atrás de Twilight (raios girando devagar)
+    var _lx = _gw * 0.66, _ly = _gh * 0.40;
+    gpu_set_blendmode(bm_add);
+    // camadas: o brilho cresce suave do centro para fora (sem borda de "oval")
+    var _cam = [0.80, 0.56, 0.38, 0.24, 0.13];
+    for (var _ci2 = 0; _ci2 < 5; _ci2++)
+    {
+        var _cr = _gh * _cam[_ci2];
+        draw_set_color(merge_color(make_color_rgb(255, 196, 150), make_color_rgb(255, 244, 228), _ci2 / 4));
+        draw_set_alpha(0.045 * _pul * _fundo_a);
+        draw_ellipse(_lx - _cr * 1.4, _ly - _cr, _lx + _cr * 1.4, _ly + _cr, false);
+    }
+    if (_q > 0)
+    {
+        draw_set_color(make_color_rgb(255, 220, 180));
+        for (var _ri = 0; _ri < 9; _ri++)
+        {
+            var _ra = tempo_total / 900 + _ri * 0.698;
+            draw_set_alpha((0.035 + 0.02 * sin(tempo_total / 50 + _ri * 2)) * _fundo_a);
+            draw_triangle(_lx, _ly, _lx + cos(_ra - 0.05) * _gw, _ly + sin(_ra - 0.05) * _gw, _lx + cos(_ra + 0.05) * _gw, _ly + sin(_ra + 0.05) * _gw, false);
+        }
+    }
+    gpu_set_blendmode(bm_normal);
     // névoa passando
     if (_q > 0)
     {
         gpu_set_blendmode(bm_add);
-        for (var _n = 0; _n < 5; _n++)
+        draw_set_color(make_color_rgb(170, 130, 130));
+        for (var _n = 0; _n < 6; _n++)
         {
-            var _fx = ((tempo_total * (0.22 + _n * 0.07) + _n * 420) mod (_gw + 700)) - 350;
-            var _fy = _gh * (0.52 + 0.08 * _n);
+            var _fx = ((tempo_total * (0.18 + _n * 0.06) + _n * 380) mod (_gw + 800)) - 400;
+            var _fy = _gh * (0.66 + 0.05 * _n);
             draw_set_alpha(0.035 * _fundo_a);
-            draw_set_color(make_color_rgb(150, 140, 165));
-            draw_ellipse(_fx - 330, _fy - 60, _fx + 330, _fy + 60, false);
+            draw_ellipse(_fx - 380, _fy - 50, _fx + 380, _fy + 50, false);
         }
         gpu_set_blendmode(bm_normal);
     }
-
-    // tom vermelho da maldição, pulsando
-    draw_set_alpha((0.16 + 0.06 * sin(tempo_total / 160)) * _fundo_a);
+    // o busto de Twilight à direita, olhando para o menu, recortado pela luz
+    if (variable_global_exists("img_retrato") and sprite_exists(global.img_retrato))
+    {
+        var _rh = _gh * 0.98;
+        var _re = _rh / sprite_get_height(global.img_retrato);
+        var _rw = sprite_get_width(global.img_retrato) * _re;
+        var _rx = min(_gw - _rw * 0.9, _gw * 0.83 - _rw / 2) + paralaxe_x * 12;     // v1.17: paralaxe
+        var _ry = _gh * 0.08 + sin(tempo_total / 80) * 2 + paralaxe_y * 5;
+        gpu_set_fog(true, make_color_rgb(255, 170, 110), 0, 1);
+        draw_sprite_ext(global.img_retrato, 0, _rx - 6, _ry, _re, _re, 0, c_white, 0.55 * _fundo_a);
+        gpu_set_fog(false, c_white, 0, 0);
+        draw_sprite_ext(global.img_retrato, 0, _rx, _ry, _re, _re, 0, make_color_rgb(178, 150, 150), _fundo_a);
+    }
+    else
+    {
+        // sem a imagem: Twilight em silhueta (a sprite do jogo)
+        var _her = spr_player_idle;
+        var _he = (_gh * 0.34) * hd_escala(_her) / max(1, sprite_get_yoffset(_her) - sprite_get_bbox_top(_her));
+        draw_sprite_hd(_her, (tempo_total / 10) mod sprite_get_number(_her), _gw * 0.62, _gh * 0.965, -_he, _he, 0, make_color_rgb(46, 30, 32), _fundo_a);
+    }
+    gpu_set_texfilter(false);    // chão escuro, tom da maldição e vinheta
+    retangulo_gradiente(0, _gh * 0.82, _gw, _gh, c_black, 0, c_black, 0.92 * _fundo_a);
+    draw_set_alpha((0.10 + 0.04 * sin(tempo_total / 160)) * _fundo_a);
     draw_set_color(make_color_rgb(110, 0, 10));
     draw_rectangle(0, 0, _gw, _gh, false);
-    retangulo_gradiente(0, _gh * 0.32, _gw, _gh, c_black, 0, c_black, 0.78 * _fundo_a);
-    desenhar_vinheta(_gw, _gh, 0.85 * _fundo_a);
-
+    desenhar_vinheta(_gw, _gh, 0.9 * _fundo_a);
     // relâmpago
     if (relampago > 0)
     {
@@ -62,20 +112,55 @@ if (_fundo_a > 0)
         draw_set_color(make_color_rgb(255, 205, 205));
         draw_rectangle(0, 0, _gw, _gh, false);
     }
-
-    // tochas nas laterais
-    if (_gw >= 900)
+    // cinzas caindo
+    draw_set_color(make_color_rgb(150, 140, 140));
+    for (var _i = 0; _i < array_length(cinzas); _i++)
     {
-        desenhar_tocha(_gw * 0.085, _gh * 0.6, _fundo_a);
-        desenhar_tocha(_gw * 0.915, _gh * 0.6, _fundo_a);
+        var _c = cinzas[_i];
+        draw_set_alpha(0.5 * _fundo_a);
+        draw_rectangle(_c.x, _c.y, _c.x + _c.r, _c.y + _c.r, false);
     }
+    // legibilidade: a coluna do menu escurece à esquerda; nas outras telas, tudo
+    if (estado == "menu") retangulo_gradiente_h(0, 0, _gw * 0.5, _gh, c_black, 0.6 * _fundo_a, c_black, 0);
+    else if (estado != "intro_titulo" and estado != "pressione")
+    {
+        draw_set_alpha(0.5 * _fundo_a);
+        draw_set_color(c_black);
+        draw_rectangle(0, 0, _gw, _gh, false);
+    }
+    // v1.17: braseiros, tochas ao lado da lista e as faíscas do ponteiro
+    if (estado == "menu" or estado == "pressione" or estado == "opcoes") menu_fogo_desenhar(_fundo_a * clamp(menu_aparece / 30, 0, 1), tempo_total, estado == "menu");
+    // faixas pretas de cinema
+    var _barra = _gh * 0.05 * _fundo_a;
     draw_set_alpha(1);
+    draw_set_color(c_black);
+    draw_rectangle(0, 0, _gw, _barra, false);
+    draw_rectangle(0, _gh - _barra, _gw, _gh, false);
+    draw_set_alpha(1);
+}
+// =====================================================================
+// ABERTURA 0: VÍDEO DO ESTÚDIO (inteiro na tela, sem cortar; barras pretas
+// se a proporção não bater)
+// =====================================================================
+if (estado == "intro_video")
+{
+    var _vd = video_draw();
+    if (_vd[0] == 0 and surface_exists(_vd[1]))
+    {
+        var _vs = _vd[1];
+        var _vw = surface_get_width(_vs);
+        var _vh = surface_get_height(_vs);
+        var _ve = min(_gw / _vw, _gh / _vh);
+        gpu_set_texfilter(true);
+        draw_surface_ext(_vs, (_gw - _vw * _ve) / 2, (_gh - _vh * _ve) / 2, _ve, _ve, 0, c_white, 1);
+        gpu_set_texfilter(false);
+    }
 }
 
 // =====================================================================
-// ABERTURA 0: IMAGEM DE INTRODUÇÃO ("este é um jogo fictício")
+// ABERTURA 1: IMAGEM DE INTRODUÇÃO ("este é um jogo fictício")
 // =====================================================================
-if (estado == "intro_aviso")
+else if (estado == "intro_aviso")
 {
     var _av = clamp(min(tempo / 40, (aviso_total - tempo) / 30), 0, 1);
     imagem_desenhar_ajustada(img_aviso, 0, 0, _gw, _gh, _av);
@@ -83,25 +168,6 @@ if (estado == "intro_aviso")
     {
         var _pa = _av * (0.55 + 0.25 * sin(current_time / 200));
         txt(_gw - 24, _gh - 22, nome_confirmar() + "  continua", FONTE.MINI, make_color_rgb(200, 190, 175), _pa, fa_right, fa_middle);
-    }
-}
-
-// =====================================================================
-// ABERTURA 1: CRÉDITOS
-// =====================================================================
-else if (estado == "intro_creditos")
-{
-    retangulo_gradiente(0, _gh * 0.5, _gw, _gh, make_color_rgb(70, 0, 8), 0, make_color_rgb(70, 0, 8), 0.25 + 0.08 * sin(current_time / 400));
-    var _saida = clamp((creditos_total - tempo) / 50, 0, 1);
-    for (var _c = 0; _c < array_length(creditos); _c++)
-    {
-        var _cr = creditos[_c];
-        var _ta = tempo - _cr.t;
-        if (_ta <= 0) continue;
-        var _a = clamp(_ta / 40, 0, 1) * _saida;
-        var _sobe = (1 - clamp(_ta / 40, 0, 1)) * 14;
-        var _escf = min(1, (_gw * 0.9) / max(1, txt_largura(_cr.texto, _cr.f)));
-        txt_sombra(_cx, _gh * _cr.y + _sobe, _cr.texto, _cr.f, _cr.cor, _a, fa_center, fa_middle, _escf);
     }
 }
 
@@ -172,12 +238,22 @@ else if (estado == "intro_titulo")
 
     var _da = clamp((_t - devs_inicio) / 40, 0, 1) * _saida_t;
     desenhar_divisor(_cx, _dv, 220, _da);
-    txt(_cx, _dv + _gh * 0.045, "UM JOGO DE", FONTE.MINI, _ouro2, _da, fa_center, fa_middle);
-    var _devs = "JEFFERSON DIAS  ·  EDUARDO  ·  ISAAC  ·  ALEX  ·  ALDREON";
-    txt_sombra(_cx, _dv + _gh * 0.095, _devs, FONTE.PEQUENA, c_white, _da, fa_center, fa_middle, min(1, (_gw * 0.9) / max(1, txt_largura(_devs, FONTE.PEQUENA))));
-    txt(_cx, _dv + _gh * 0.15, "FACULDADE FAPAN", FONTE.MINI, _cinza, _da, fa_center, fa_middle);
+    // os nomes da equipe passam nos créditos do fim da demo
+    txt(_cx, _dv + _gh * 0.045, "UM JOGO DA", FONTE.MINI, _ouro2, _da, fa_center, fa_middle);
+    txt_sombra(_cx, _dv + _gh * 0.095, "GAMBITECH STUDIO", FONTE.PEQUENA, c_white, _da, fa_center, fa_middle);
 }
 
+// =====================================================================
+// v1.14: PRESSIONE QUALQUER BOTÃO (a logo grande sobre a cena)
+// =====================================================================
+else if (estado == "pressione")
+{
+    var _pe = clamp(tempo / 40, 0, 1);
+    menu_cabecalho(_pe);
+    var _pa = (0.45 + 0.55 * (0.5 + 0.5 * sin(tempo_total / 22))) * _pe;
+    txt_sombra(menu_x() + 6, menu_y(0) + 20, "PRESSIONE QUALQUER BOTÃO", FONTE.PEQUENA, make_color_rgb(214, 44, 34), _pa, fa_left, fa_middle);
+    txt(_gw - 18, _gh - 16, JOGO_VERSAO, FONTE.MINI, make_color_rgb(110, 105, 110), _pe, fa_right, fa_middle);
+}
 // =====================================================================
 // MENU E TELAS DE OPÇÕES
 // =====================================================================
@@ -185,35 +261,8 @@ else
 {
     var _ma = clamp(menu_aparece / 30, 0, 1);
 
-    // ----- cabeçalho -----
-    if (estado == "tutorial")
-    {
-        // o pergaminho ocupa a tela; sem cabeçalho
-    }
-    else if (estado == "menu" and global.logo_img != -1 and sprite_exists(global.logo_img))
-    {
-        // LOGO do jogo no topo do menu, com uma aura que pulsa
-        var _lh2 = min(244, _gw * 0.3);
-        var _ly = 132 + sin(tempo_total / 90) * 2;
-        gpu_set_blendmode(bm_add);
-        logo_desenhar(_cx, _ly, _lh2 * 1.04, _ma * (0.10 + 0.06 * sin(tempo_total / 120)));
-        gpu_set_blendmode(bm_normal);
-        logo_desenhar(_cx, _ly, _lh2, _ma);
-    }
-    else if (estado == "menu")
-    {
-        var _esc_m = min(1.25, (_gw * 0.86) / max(1, txt_largura(JOGO_TITULO, FONTE.GRANDE)));
-        var _glitch = (irandom(90) == 0) ? random_range(-6, 6) : 0;
-        var _brilho = 0.45 + 0.25 * sin(tempo_total / 120);
-        gpu_set_blendmode(bm_add);
-        txt(_cx - 3 + _glitch, 112, JOGO_TITULO, FONTE.GRANDE, make_color_rgb(150, 8, 20), _ma * _brilho, fa_center, fa_middle, _esc_m * 1.02);
-        txt(_cx + 3 + _glitch, 112, JOGO_TITULO, FONTE.GRANDE, make_color_rgb(150, 8, 20), _ma * _brilho, fa_center, fa_middle, _esc_m * 1.02);
-        gpu_set_blendmode(bm_normal);
-        txt(_cx + 4, 116, JOGO_TITULO, FONTE.GRANDE, c_black, _ma * 0.8, fa_center, fa_middle, _esc_m);
-        txt(_cx + _glitch, 112, JOGO_TITULO, FONTE.GRANDE, make_color_rgb(230, 40, 40), _ma, fa_center, fa_middle, _esc_m);
-        txt_sombra(_cx, 172, JOGO_SUBTITULO, FONTE.MEDIA, _ouro, _ma, fa_center, fa_middle);
-        desenhar_divisor(_cx, 208, 250, _ma);
-    }
+    // ----- cabeçalho (o menu inicial desenha a logo na própria coluna) -----
+    if (estado == "menu") { }
     else
     {
         var _cab = "";
@@ -236,31 +285,47 @@ else
     {
         // ================= MENU INICIAL =================
         case "menu":
+            // v1.14: a lista logo abaixo da logo, sobre a pincelada de sangue: a
+            // escolhida em pergaminho claro, as outras em vermelho-sangue
+            menu_cabecalho(_ma);
+            var _mx = menu_x();
             for (var _o = 0; _o < array_length(opcoes_menu); _o++)
             {
                 var _oy = menu_y(_o);
-                var _e = clamp((menu_aparece - 12 - _o * 7) / 20, 0, 1);
+                var _e = clamp((menu_aparece - 14 - _o * 6) / 22, 0, 1);
                 var _ease = 1 - power(1 - _e, 3);
-                var _off = (1 - _ease) * 90 * ((_o mod 2 == 0) ? -1 : 1);
+                var _x0 = _mx + 6 - (1 - _ease) * 40 + 8 * anim[_o];
                 var _a = anim[_o];
-                var _dim = (_o == 1 and !tem_save) ? 0.45 : 1;
-                desenhar_painel(_cx - 230 + _off, _oy - 27, _cx + 230 + _off, _oy + 27, _a, _ease);
-                var _tx_cor = merge_color(c_white, _ouro, _a);
-                txt_sombra(_cx + _off, _oy, opcoes_menu[_o], FONTE.MEDIA, _tx_cor, _ease * _dim, fa_center, fa_middle, 1 + 0.08 * _a);
-                if (_a > 0.05)
+                var _sem_save = (opcoes_menu[_o] == "CARREGAR JOGO" and !tem_save);
+                if (_a > 0.02)
                 {
-                    draw_set_alpha(_a * _ease);
-                    desenhar_espada(_cx - 230 - 64 + 24 * _a + _off, _oy, 1);
-                    desenhar_espada(_cx + 230 + 64 - 24 * _a + _off, _oy, -1);
+                    // brilho quente atrás da escolhida
+                    gpu_set_blendmode(bm_add);
+                    draw_set_color(make_color_rgb(200, 60, 30));
+                    draw_set_alpha(0.16 * _a * _ease);
+                    draw_ellipse(_x0 - 30, _oy - 22, _x0 + txt_largura(opcoes_menu[_o], FONTE.MEDIA, 0.86) + 30, _oy + 22, false);
+                    gpu_set_blendmode(bm_normal);
                     draw_set_alpha(1);
+                    // v1.17: chamas pequenas lambendo a escolhida
+                    var _wl = txt_largura(opcoes_menu[_o], FONTE.MEDIA, 0.86);
+                    for (var _fl = 0; _fl < 5; _fl++) desenhar_chamas(_x0 + _wl * (_fl + 0.5) / 5, _oy + 21, 5 * _a, (8 + 4 * sin(tempo_total / 9 + _fl)) * _a, tempo_total + _fl * 13, 0.75 * _a * _ease, _fl, 2);
                 }
+                var _cor = merge_color(make_color_rgb(204, 38, 30), make_color_rgb(248, 234, 208), _a);
+                if (_sem_save) txt(_x0, _oy, opcoes_menu[_o], FONTE.MEDIA, make_color_rgb(120, 40, 36), _ease * 0.65, fa_left, fa_middle, 0.82);
+                else txt_sombra(_x0, _oy, opcoes_menu[_o], FONTE.MEDIA, _cor, _ease, fa_left, fa_middle, 0.82 + 0.04 * _a);
             }
-            var _fd = min(clamp(dica_tempo / 20, 0, 1), clamp((220 - dica_tempo) / 20, 0, 1)) * _ma;
-            txt_bloco(_cx, _gh - 98, "DICA  ·  " + dicas[dica_atual], FONTE.MINI, _ouro, _fd, min(_gw - 120, 900));
-            txt(_cx, _gh - 44, "Setas / WASD / D-pad + ENTER   ·   Mouse   ·   F11 tela cheia   ·   Controle: " + gamepad_descricao_conectado(), FONTE.MINI, _cinza, _ma * 0.9, fa_center, fa_middle, min(1, (_gw - 40) / max(1, txt_largura("Setas / WASD / D-pad + ENTER   ·   Mouse   ·   F11 tela cheia   ·   Controle: " + gamepad_descricao_conectado(), FONTE.MINI))));
+            // canto de baixo: o botão que seleciona (como nos menus de console)
+            var _by = _gh - 58;
+            draw_set_alpha(_ma * 0.9);
+            draw_set_color(make_color_rgb(70, 76, 100));
+            draw_circle(_mx + 8, _by, 10, false);
+            draw_set_color(make_color_rgb(200, 206, 230));
+            draw_line_width(_mx + 3, _by - 5, _mx + 13, _by + 5, 2);
+            draw_line_width(_mx + 13, _by - 5, _mx + 3, _by + 5, 2);
+            draw_set_alpha(1);
+            txt_sombra(_mx + 26, _by, "=  SELECIONAR   (" + nome_confirmar() + ")", FONTE.PEQUENA, make_color_rgb(232, 220, 200), _ma * 0.95, fa_left, fa_middle, 0.8);
             txt(_gw - 18, _gh - 16, JOGO_VERSAO, FONTE.MINI, make_color_rgb(110, 105, 110), _ma, fa_right, fa_middle);
         break;
-
         // ================= DIFICULDADE =================
         case "dificuldade":
             for (var _d = 0; _d < DIF.TOTAL; _d++)
@@ -285,10 +350,11 @@ else
             txt(_cx, 474, string_upper(NOME_GUERREIRO) + "  ·  " + dificuldade_nome(selecionado), FONTE.PEQUENA, dificuldade_cor(selecionado), 1, fa_center, fa_middle);
             for (var _l2 = 0; _l2 < array_length(_desc); _l2++)
                 txt(_cx, 508 + _l2 * 27, _desc[_l2], FONTE.MINI, c_white, 1, fa_center, fa_middle, min(1, (_pw4 - 30) / max(1, txt_largura(_desc[_l2], FONTE.MINI))));
-            // tutorial na fase: liga / desliga com « » (o mesmo de OPÇÕES)
-            var _tut_txt = "«  TUTORIAL NA FASE: " + (global.cfg_tutorial ? "LIGADO" : "DESLIGADO") + "  »";
+            // tutorial na tela de carregamento: liga / desliga com « » (o mesmo de OPÇÕES)
+            var _tut_txt = "«  DICAS NO CARREGAMENTO: " + (global.cfg_tutorial ? "LIGADO" : "DESLIGADO") + "  »";
             txt_sombra(_cx, 628, _tut_txt, FONTE.PEQUENA, global.cfg_tutorial ? _ouro : make_color_rgb(190, 150, 140), 1, fa_center, fa_middle);
-            txt(_cx, _gh - 40, nome_setas() + " escolhem   ·   « » tutorial   ·   " + nome_confirmar() + " começa a jornada   ·   " + nome_voltar() + " volta", FONTE.MINI, _cinza, 1, fa_center, fa_middle, min(1, (_gw - 40) / max(1, txt_largura(nome_setas() + " escolhem   ·   « » tutorial   ·   " + nome_confirmar() + " começa a jornada   ·   " + nome_voltar() + " volta", FONTE.MINI))));
+            var _aj = nome_setas() + " escolhem   ·   « » dicas   ·   " + nome_confirmar() + " começa a jornada   ·   " + nome_voltar() + " volta";
+            txt(_cx, _gh - 40, _aj, FONTE.MINI, _cinza, 1, fa_center, fa_middle, min(1, (_gw - 40) / max(1, txt_largura(_aj, FONTE.MINI))));
         break;
 
         // ================= SLOTS =================
@@ -310,20 +376,17 @@ else
                 txt(_sx, 284, "SLOT " + string(_s + 1), FONTE.MEDIA, _ouro, 1, fa_center, fa_middle);
                 if (_info.existe)
                 {
-                    txt(_sx, 324, string_upper(_info.nome), FONTE.PEQUENA, c_white, 1, fa_center, fa_middle, min(1, (_cw - 24) / max(1, txt_largura(string_upper(_info.nome), FONTE.PEQUENA))));
+                    // v1.20: o save é do PERFIL de quem joga (saves antigos mostram o herói)
+                    var _dono = string_upper((_info.perfil != "") ? _info.perfil : _info.nome);
+                    txt(_sx, 324, _dono, FONTE.PEQUENA, c_white, 1, fa_center, fa_middle, min(1, (_cw - 24) / max(1, txt_largura(_dono, FONTE.PEQUENA))));
                     txt(_sx, 350, dificuldade_nome(_info.dificuldade), FONTE.MINI, dificuldade_cor(_info.dificuldade), 1, fa_center, fa_middle);
                     txt(_sx, 378, "CAPÍTULO " + string(_info.fase), FONTE.MINI, _ouro2, 1, fa_center, fa_middle);
                     txt_bloco(_sx, 392, fase_nome(_info.fase), FONTE.MINI, make_color_rgb(220, 215, 210), 1, _cw - 24);
-                    if (_info.data != "") txt(_sx, 452, _info.data, FONTE.MINI, make_color_rgb(140, 140, 145), 1, fa_center, fa_middle, 0.85);
+                    if (_info.data != "") txt(_sx, 452, _info.data + "  ·  " + tempo_jogo_texto(_info.tempo), FONTE.MINI, make_color_rgb(140, 140, 145), 1, fa_center, fa_middle, 0.85);
                 }
                 else txt(_sx, 370, "VAZIO", FONTE.PEQUENA, make_color_rgb(140, 140, 145), 1, fa_center, fa_middle);
                 if (estado == "slot_novo" and confirmar_slot == _s)
                     txt(_sx, 500, "SOBRESCREVER?", FONTE.PEQUENA, make_color_rgb(255, 90, 70), 0.7 + 0.3 * sin(current_time / 90), fa_center, fa_middle);
-            }
-            if (estado == "carregar")
-            {
-                var _fd2 = min(clamp(dica_tempo / 20, 0, 1), clamp((220 - dica_tempo) / 20, 0, 1));
-                txt_bloco(_cx, _gh - 100, "DICA  ·  " + dicas[dica_atual], FONTE.MINI, _ouro, _fd2, min(_gw - 120, 900));
             }
             txt(_cx, _gh - 44, "« » escolhe o slot   ·   " + nome_confirmar() + " confirma   ·   " + nome_voltar() + " volta", FONTE.MINI, _cinza, 1, fa_center, fa_middle);
         break;
@@ -436,16 +499,6 @@ else
                 ? (_modo_pad ? "Aperte o novo botão (ou gatilho / direcional)   ·   START cancela" : "Aperte a nova tecla   ·   ESC cancela")
                 : (usando_controle() ? (nome_setas() + " escolhem   ·   " + nome_confirmar() + " altera   ·   " + nome_voltar() + " volta") : "Setas escolhem   ·   ENTER ou clique para alterar   ·   ESC volta");
             txt(_cx, _gh - 34, _rod, FONTE.MINI, _cinza, 1, fa_center, fa_middle);
-        break;
-
-        // ================= TUTORIAL (livro de pergaminhos) =================
-        case "tutorial":
-            var _tam = pergaminho_tamanho();
-            var _pg = tutorial_pagina(livro_pag);
-            var _ind = "«  " + string(livro_pag + 1) + " / " + string(TUT.TOTAL) + "  »";
-            var _rodp = (livro_pag < TUT.TOTAL - 1) ? "PRÓXIMA PÁGINA" : "VOLTAR AO MENU";
-            pergaminho_desenhar(_cx, _gh / 2 - 6, _tam[0], _tam[1], livro_abre, _pg, _ma, _rodp, _ind, 0.8 + 0.2 * sin(current_time / 160));
-            txt(_cx, _gh - 22, "«  »  trocam de página   ·   " + nome_voltar() + " volta ao menu", FONTE.MINI, _cinza, _ma, fa_center, fa_middle);
         break;
     }
 

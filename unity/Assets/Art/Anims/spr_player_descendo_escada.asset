@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_player_descendo_escada
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 6dda0e1e9b48aa849800950e109dc58b, type: 3}
+  - {fileID: 21300000, guid: 4792bb42bafb71f479a2aa3c2c6562a6, type: 3}
+  - {fileID: 21300000, guid: 084c939c2fafcfa47a005e1692af0998, type: 3}
+  - {fileID: 21300000, guid: f60a2e8c4f8c8d34f9104cb07aef3605, type: 3}
+  - {fileID: 21300000, guid: c97eae1c8d1ba4544b7118f4e2fc7be2, type: 3}
+  - {fileID: 21300000, guid: 70c6a4bcbdafa394fae7e0240aa20326, type: 3}
+  velocidade: 8
+  porSegundo: 1
+  k: 3

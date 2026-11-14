@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_ataque_2
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 84b1e92b5e3b3d44d8d57c63830d69f6, type: 3}
+  - {fileID: 21300000, guid: 81ad0bb3dbb339446819a561be42a1f9, type: 3}
+  - {fileID: 21300000, guid: 78434af0e0624ca4181fa3538c3843f2, type: 3}
+  - {fileID: 21300000, guid: 38f2e39fdece83a4d9b53cc28fda67ef, type: 3}
+  - {fileID: 21300000, guid: 83455714d1e92a0408955c1aa7916c2d, type: 3}
+  - {fileID: 21300000, guid: dc769e96163b70343b675786dccf940e, type: 3}
+  - {fileID: 21300000, guid: 9491d545c2c1c3c48b146f76e423573c, type: 3}
+  - {fileID: 21300000, guid: c9eec83d96ff93b4dbd6301a9418b483, type: 3}
+  - {fileID: 21300000, guid: c9786e79fd2d9d24298113e6170db3e4, type: 3}
+  - {fileID: 21300000, guid: dad7d2b10177aaf4cb867c2f3ad549ad, type: 3}
+  - {fileID: 21300000, guid: fa8c1f81909f8034b87e9a0830ce25c8, type: 3}
+  - {fileID: 21300000, guid: c64528e79f2bc8649b4a3868c28a839b, type: 3}
+  velocidade: 6
+  porSegundo: 1
+  k: 3

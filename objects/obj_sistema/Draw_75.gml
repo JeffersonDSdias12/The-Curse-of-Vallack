@@ -11,4 +11,7 @@ if (global.debug_hitbox)
     txt(10, GUI_ALTURA - 13, _info, FONTE.MINI, make_color_rgb(120, 255, 140), 1, fa_left, fa_middle);
     desenho_resetar();
 }
+gamepad_diagnostico_desenhar();  // v1.19: F2
+transicao_veu_desenhar();        // v1.19: a cortina que revela a tela nova (por cima de toda a GUI)
+conquistas_toast_desenhar();     // v1.17: aviso de conquista (por cima de tudo)
 gpu_set_texfilter(false);

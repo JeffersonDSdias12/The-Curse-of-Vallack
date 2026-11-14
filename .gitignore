@@ -60,3 +60,24 @@ Temporary Items
 
 # GMRT build directory
 Build
+
+# ===== Adicionado em 2026-11-14 (envio do projeto completo) =====
+# Builds e instaladores: os APKs e o instalador do Windows vão para as Releases do GitHub
+/build/
+/site/downloads/
+
+# Godot: cache gerado pelo editor
+/godot/.godot/
+
+# Unity: pastas geradas (são recriadas ao abrir o projeto)
+/unity/[Ll]ibrary/
+/unity/[Tt]emp/
+/unity/[Ll]ogs/
+/unity/[Oo]bj/
+/unity/[Bb]uild/
+/unity/[Uu]ser[Ss]ettings/
+/unity/.utmp/
+/unity/.vscode/
+
+# Configuração local do Claude Code
+/.claude/

@@ -1,0 +1,13 @@
+var _b = 0.7 + 0.3 * sin(current_time / 120 + fase);
+gpu_set_blendmode(bm_add);
+draw_set_alpha(0.35 * _b);
+draw_set_color(make_color_rgb(80, 160, 255));
+draw_circle(x, y, 9, false);
+gpu_set_blendmode(bm_normal);
+draw_set_alpha(1);
+draw_set_color(make_color_rgb(60, 130, 255));
+draw_triangle(x, y - 7, x + 5, y, x - 5, y, false);
+draw_triangle(x - 5, y, x + 5, y, x, y + 7, false);
+draw_set_color(make_color_rgb(210, 235, 255));
+draw_triangle(x, y - 7, x + 2, y - 1, x - 2, y - 1, false);
+draw_set_color(c_white);

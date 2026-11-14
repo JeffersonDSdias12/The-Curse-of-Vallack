@@ -25,7 +25,7 @@ if (flash_dano > 0 and !morrendo)
 }
 else
 {
-    var _cor2 = (imune_atordoar > 0) ? make_color_rgb(255, 170, 150) : c_white;
+    var _cor2 = (imune_atordoar > 0) ? merge_color(cor_ia, make_color_rgb(255, 170, 150), 0.7) : cor_ia;
     if (morrendo and morte_fim) _cor2 = make_color_rgb(170, 160, 160);
     if (executando) _tremor = random_range(-1.5, 1.5);
     inimigo_corpo_desenhar(sprite_index, image_index, x + _tremor, y, dir * escala, escala, 0, _cor2, image_alpha);   // morto: evapora na fumaça

@@ -3,7 +3,8 @@
 //  (o movimento/colisão acontece no End Step do pai obj_entidade)
 // =====================================================================
 var _dt = global.dt;
-var _chao = place_meeting(x, y + 1, obj_chao);
+if (atravessar_t > 0) atravessar_t -= _dt;
+var _chao = place_meeting(x, y + 1, obj_chao) or plataforma_sob_pes() != noone;
 
 // ----- ENTRADAS (teclado + controle + analógico, já mapeados) -----
 var _livre    = !instance_exists(obj_final) and !instance_exists(obj_loading) and !instance_exists(obj_resultado) and global.bloqueio_input <= 0;
@@ -36,6 +37,13 @@ if (_livre)
 // ----- Twilight SEMPRE CORRE: não existe mais "andar" nem botão de correr -----
 var _dir_agora = _right - _left;
 
+// ----- v1.12: LANÇADOR = PULAR + PESADO quase juntos (ou analógico para cima + PESADO) -----
+if (_botao == "T") pesado_t = 8; else pesado_t = max(0, pesado_t - _dt);
+if (_jump and (_chao or coyote > 0)) pulo_t = 8; else pulo_t = max(0, pulo_t - _dt);
+var _cima = _livre and global.inp_cima;
+// v1.14: escalando: sem golpes, defesa, esquiva, fúria nem interação
+if (escalando) { _botao = ""; _esp = -1; _esquiva = false; _bloqueio = false; _aparar = false; _furia_btn = false; _interagir = false; }
+
 // ----- MENUS: ESC / SELECT = pausa (opções) · TAB / START = armas e evolução -----
 if (_livre and !morto and !instance_exists(obj_pausa) and !instance_exists(obj_save_menu) and !instance_exists(obj_menu_armas))
 {
@@ -63,6 +71,7 @@ if (!morto and _chao and is_undefined(golpe) and !rolando)
         if (_sp != noone and point_distance(x, y, _sp.x, _sp.y) < 70) alvo_interacao = _sp;
     }
 }
+var _interagir_livre = _interagir and alvo_interacao == noone;      // v1.12: execução ou sub-arma
 if (_interagir and alvo_interacao != noone and !instance_exists(obj_save_menu) and !instance_exists(obj_pausa))
 {
     if (alvo_interacao.object_index == obj_bau)
@@ -114,6 +123,17 @@ if (array_length(debug_golpe) > 4)
     debug_golpe[4] -= _dt;
     if (debug_golpe[4] <= 0) debug_golpe = [];
 }
+// faíscas do corte: voam, caem e somem
+for (var _fe = array_length(faiscas_espada) - 1; _fe >= 0; _fe--)
+{
+    var _fs = faiscas_espada[_fe];
+    _fs.x += _fs.vx * _dt;
+    _fs.y += _fs.vy * _dt;
+    _fs.vy += (_fs.brasa ? 0.05 : 0.14) * _dt;
+    _fs.vx *= power(0.95, _dt);
+    _fs.vida -= _dt;
+    if (_fs.vida <= 0) array_delete(faiscas_espada, _fe, 1);
+}
 for (var _r = array_length(rastros) - 1; _r >= 0; _r--)
 {
     rastros[_r].vida -= _dt;
@@ -134,18 +154,8 @@ if (cura_restante > 0 and !morto)
     if (vida >= vida_max) cura_restante = 0;
 }
 
-// ----- TUTORIAL EM PERGAMINHO (fase 1) -----
+// tempo de jogo na fase (v1.13: os pergaminhos de tutorial saíram do jogo)
 if (_livre and !morto) tempo_fase += _dt;
-if (room == Room1 and !morto)
-{
-    if (tempo_fase > 20) tutorial_mostrar(TUT.INICIO);
-    if (global.inimigos_derrotados >= 2) tutorial_mostrar(TUT.ESPECIAIS);
-    if (global.orbs_coletados > 0) tutorial_mostrar(TUT.ORBS);
-    if (furia >= 100) tutorial_mostrar(TUT.FURIA);
-    if (alvo_finalizavel() != noone) tutorial_mostrar(TUT.FINALIZADOR);
-    var _cx_perto = instance_nearest(x, y, obj_destrutivel);
-    if (_cx_perto != noone and abs(_cx_perto.x - x) < 170) tutorial_mostrar(TUT.CENARIO);
-}
 
 // ----- BARRA DE MAGIA DOS ESPECIAIS: enche em 10 segundos -----
 if (!especial and especial_carga < ESPECIAL_SEGUNDOS)
@@ -155,8 +165,26 @@ if (!especial and especial_carga < ESPECIAL_SEGUNDOS)
     if (especial_carga >= ESPECIAL_SEGUNDOS and _antes < ESPECIAL_SEGUNDOS) especial_pronto_fx = 50;
 }
 
+// ----- v1.12: MODO FÚRIA: dura 12 s (a barra esvazia) -----
+if (furia_modo)
+{
+    furia -= 100 / FURIA_MODO_QUADROS * _dt;
+    if (random(1) < 0.3 * _dt)
+    {
+        var _fg = instance_create_depth(x + random_range(-14, 14), y - random_range(10, 60), depth - 1, obj_fagulha);
+        _fg.cor = choose(make_color_rgb(255, 40, 30), make_color_rgb(200, 10, 10));
+    }
+    if (furia <= 0)
+    {
+        furia = 0;
+        furia_modo = false;
+        som("furia_fim", 0.8);
+    }
+}
+
 // zoom dramático durante os especiais (finalizador e fúria controlam o próprio zoom)
-if (is_undefined(golpe) or (golpe.chave != "finalizador" and golpe.chave != "ira")) global.camera_zoom = especial ? 1.14 : 1;
+if (instance_exists(obj_qte)) global.camera_zoom = (obj_qte.estado == "falha") ? 1 : 1.24;     // v1.17: sequência de golpes de perto
+else if (is_undefined(golpe) or (golpe.chave != "finalizador" and golpe.chave != "ira")) global.camera_zoom = especial ? 1.14 : 1;
 
 if (!morto) tempo_sem_dano += _dt;
 
@@ -171,7 +199,7 @@ if (!morto and y > room_height + 160)
     machucado = false; bloqueando = false; rolando = false;
     golpe_cancelar();
     cadeia = "";
-    trocar_animacao(spr_player_idle, 1);
+    trocar_animacao(spr_player_parado, 1);
     global.cam_snap = true;
 }
 
@@ -237,6 +265,24 @@ if (enredado > 0)
 }
 
 // =====================================================================
+// v1.12: BACKDASH — salto rápido para trás, sem virar de costas
+// (ESQUIVA sem direção). Quadros 0-10 sem levar dano.
+// =====================================================================
+if (recuando)
+{
+    var _ra = recuar_t;
+    recuar_t += _dt;
+    var _rp = clamp(recuar_t / RECUAR_DURACAO, 0, 1);
+    velh = -facing * RECUAR_VEL * power(1 - _rp, 1.4);
+    if (floor(_ra / 3) != floor(recuar_t / 3)) array_push(fantasmas, { x: x, y: y, ang: 0, dir: facing, vida: 10, vmax: 10, spr: spr_player_jump, img: 1 });
+    if (!_chao) velv += grav * _dt; else if (velv > 0) velv = 0;
+    // depois do quadro 8 já dá para contra-atacar: o backdash vira golpe
+    if (recuar_t >= 8 and (_botao != "" or buffer_golpe != "")) { recuando = false; trocar_animacao(spr_player_parado, 1); }
+    else if (recuar_t >= RECUAR_DURACAO) { recuando = false; rolar_recarga = 2; trocar_animacao(_chao ? spr_player_parado : spr_player_fall, 1); }
+    if (recuando) exit;
+}
+
+// =====================================================================
 // ESQUIVA (rolagem): quadros 2-19 de 26 sem levar dano
 // =====================================================================
 if (rolando)
@@ -252,9 +298,9 @@ if (rolando)
     if (rolar_t >= ROLAR_DURACAO)
     {
         rolando = false;
-        rolar_recarga = 8;
+        rolar_recarga = 3;        // v1.12: dá para rolar de novo quase na hora
         if (_chao) fx_criar("poeira", x, y, 0.6);
-        trocar_animacao(spr_player_idle, 1);
+        trocar_animacao(spr_player_parado, 1);
     }
     // saiu da beirada: continua rolando no ar (cai com a gravidade)
     if (!_chao) velv += grav * _dt;
@@ -264,7 +310,29 @@ if (rolando)
 // esquiva apertada um pouco antes (fim de um golpe, no ar, na recarga): guarda o comando
 if (_esquiva) { rolar_buffer = ROLAR_BUFFER; rolar_buffer_dir = global.esquiva_stick; }
 else if (rolar_buffer > 0) rolar_buffer -= _dt;
-var _pode_rolar = _chao and _pode_agir and rolar_recarga <= 0 and (is_undefined(golpe) or (!golpe.armadura and golpe_i >= golpe.cancel));
+// v1.12: a esquiva cancela qualquer golpe que não seja especial, Fúria ou finalizador
+var _pode_rolar = _chao and _pode_agir and rolar_recarga <= 0 and (is_undefined(golpe) or !golpe.armadura);
+// v1.12: sem direção apertada, a esquiva vira BACKDASH
+if (rolar_buffer > 0 and _pode_rolar and rolar_buffer_dir == 0 and _dir_agora == 0)
+{
+    rolar_buffer = 0;
+    golpe_cancelar();
+    cadeia = "";
+    buffer_golpe = "";
+    recuando = true;
+    recuar_t = 0;
+    esquivou = false;
+    bloqueando = false;
+    agachado = false;
+    velv = -2.4;
+    _chao = false;
+    sprite_index = spr_player_jump;
+    image_index = 1;
+    image_speed = 0;
+    som("sfx_backdash", 0.8);
+    fx_criar("poeira", x + facing * 6, y, 0.4);
+    exit;
+}
 if (rolar_buffer > 0 and _pode_rolar)
 {
     rolar_buffer = 0;
@@ -297,10 +365,41 @@ if (_aparar and _chao and _pode_agir and aparar_recarga <= 0 and is_undefined(go
 // =====================================================================
 if (_botao != "") { buffer_golpe = _botao; buffer_golpe_t = 18; }
 
+// ----- v1.12: CONTRA-ATAQUE automático logo depois de aparar -----
+if (contra_t > 0)
+{
+    contra_t -= _dt;
+    if (contra_t <= 0 and instance_exists(contra_alvo) and !contra_alvo.morrendo and _pode_agir)
+    {
+        facing = sign(contra_alvo.x - x);
+        if (facing == 0) facing = 1;
+        golpe_cancelar();
+        golpe_iniciar("contra");
+        cadeia = "";
+        buffer_golpe = "";
+        popup_criar(x + facing * 30, y - 80, "CONTRA-ATAQUE!", make_color_rgb(140, 200, 255), 1);
+    }
+}
+
+// ----- v1.12: LANÇADOR — joga o inimigo para cima e Twilight sobe junto -----
+if (((pesado_t > 0 and pulo_t > 0) or (_botao == "T" and _cima)) and no_ar_tempo < 10 and _pode_agir and !bloqueando
+    and (is_undefined(golpe) or (!golpe.armadura and golpe.chave != "lancador")))
+{
+    golpe_cancelar();
+    golpe_iniciar("lancador");
+    golpe_letra = "T";
+    pesado_t = 0;
+    pulo_t = 0;
+    buffer_pulo = 0;
+    buffer_golpe = "";
+    cadeia = "";
+}
+
 var _livre_para_golpe = is_undefined(golpe) or (!golpe.armadura and !especial and golpe_i >= golpe.cancel);
 
-// ----- FINALIZADOR: BOLA perto de um inimigo atordoado (ícone sobre ele) -----
-if (buffer_golpe == "C" and _chao and _pode_agir and _livre_para_golpe)
+// ----- FINALIZADOR: BOLA (ou INTERAGIR, v1.12) perto de um inimigo marcado -----
+var _executou = false;
+if ((buffer_golpe == "C" or _interagir_livre) and _chao and _pode_agir and _livre_para_golpe)
 {
     var _fin = alvo_finalizavel();
     if (_fin != noone)
@@ -308,9 +407,37 @@ if (buffer_golpe == "C" and _chao and _pode_agir and _livre_para_golpe)
         facing = sign(_fin.x - x);
         if (facing == 0) facing = 1;
         golpe_cancelar();
-        alvo_final = _fin;
-        with (_fin) { executando = true; finalizavel = false; velh = 0; empurrao = 0; }
-        golpe_iniciar("finalizador");
+        // v1.17: Carrasco (com 1/4 da vida) e Árvore (cambaleando): SEQUÊNCIA DE GOLPES.
+        // Acima disso, o Carrasco aparado leva o finalizador de sempre (25% da vida).
+        if (_fin.usa_qte and (_fin.eh_boss or _fin.vida <= _fin.vida_max * 0.25 + 1)) qte_iniciar(_fin);
+        else
+        {
+            alvo_final = _fin;
+            with (_fin) { executando = true; finalizavel = false; velh = 0; empurrao = 0; }
+            golpe_iniciar("finalizador");
+        }
+        cadeia = "";
+        buffer_golpe = "";
+        _livre_para_golpe = false;
+        _executou = true;
+    }
+}
+
+// ----- v1.12: SUB-ARMAS (INTERAGIR longe de baús e cristais; gastam essência) -----
+// em pé: Lâmina Bumerangue (1)  ·  agachado: Chama de Sylla (2)
+if (_interagir_livre and !_executou and _pode_agir and _livre_para_golpe)
+{
+    var _agach = _abaixar and _chao;
+    var _custo = subarma_custo(_agach);
+    if (!_agach and instance_exists(obj_bumerangue)) { bloqueado_txt = "A LÂMINA AINDA NÃO VOLTOU"; bloqueado_aviso = 45; som("sfx_negado", 0.5, 0); }
+    else if (global.essencia < _custo) { bloqueado_txt = subarma_nome(_agach) + ": ESSÊNCIA INSUFICIENTE (" + string(_custo) + ")"; bloqueado_aviso = 70; som("sfx_negado", 0.6, 0); }
+    else
+    {
+        global.essencia -= _custo;
+        global.essencia_fx = 14;
+        if (_right != _left) facing = _right ? 1 : -1;
+        golpe_cancelar();
+        golpe_iniciar(_agach ? "arremesso_chama" : "arremesso");
         cadeia = "";
         buffer_golpe = "";
         _livre_para_golpe = false;
@@ -318,7 +445,7 @@ if (buffer_golpe == "C" and _chao and _pode_agir and _livre_para_golpe)
 }
 
 // ----- FÚRIA: barra cheia + botão de fúria -----
-if (_furia_btn and furia >= 100 and _chao and _pode_agir and _livre_para_golpe)
+if (_furia_btn and furia >= 100 and !furia_modo and _chao and _pode_agir and _livre_para_golpe)
 {
     golpe_cancelar();
     golpe_iniciar("ira");
@@ -326,7 +453,7 @@ if (_furia_btn and furia >= 100 and _chao and _pode_agir and _livre_para_golpe)
     buffer_golpe = "";
     _livre_para_golpe = false;
 }
-else if (_furia_btn and furia < 100 and _livre) { bloqueado_txt = "A FÚRIA AINDA NÃO ESTÁ CHEIA"; bloqueado_aviso = 70; som("sfx_negado", 0.6, 0); }
+else if (_furia_btn and furia < 100 and !furia_modo and _livre) { bloqueado_txt = "A FÚRIA AINDA NÃO ESTÁ CHEIA"; bloqueado_aviso = 70; som("sfx_negado", 0.6, 0); }
 
 // ----- ESPECIAIS (no chão; gastam parte da barra; liberados ao evoluir a espada) -----
 if (_esp != -1 and _pode_agir and (is_undefined(golpe) or (!especial and !golpe.armadura and golpe_i >= golpe.cancel)))
@@ -367,17 +494,41 @@ if (buffer_golpe != "" and _pode_golpear)
     {
         var _cad = (cadeia_janela > 0 or !is_undefined(golpe)) ? cadeia : "";
         var _prox = combo_proximo(_cad, buffer_golpe, !_chao, _abaixar and _chao);
+        if (_prox == "corte_aereo" and aereo_n >= AEREO_MAX) { _prox = ""; buffer_golpe = ""; }   // v1.12: até 3 cortes no ar
         if (_prox != "")
         {
+            if (_prox == "corte_aereo") aereo_n += 1;
+            var _letra_g = buffer_golpe;
             if (_right != _left) facing = _right ? 1 : -1;
             golpe_cancelar();
             golpe_iniciar(_prox);
             // a cadeia do combo: finalizadores e golpes no ar encerram a sequência
             var _letra = (_prox == "rasteira" and buffer_golpe == "Q") ? "C" : buffer_golpe;
-            cadeia = (golpe.combo > 0 or !_chao) ? "" : string_copy(_cad + _letra, max(1, string_length(_cad + _letra) - 1), 2);
+            cadeia = (golpe.combo > 0 or !_chao) ? "" : string_copy(_cad + _letra, max(1, string_length(_cad + _letra) - 2), 3);     // v1.17: 3 letras (4 toques)
             buffer_golpe = "";
+            golpe_letra = _letra_g;
         }
     }
+}
+
+// ----- v1.12: PULO CANCELA golpes no chão (menos especiais, Fúria e finalizador) -----
+// Apertar pular e golpear quase juntos: Twilight pula e o golpe sai no ar.
+if (buffer_pulo > 0 and _chao and !is_undefined(golpe) and !golpe.armadura and !golpe.no_ar and _pode_agir and !_abaixar
+    and (golpe_idade <= 7 or golpe_i >= golpe.cancel))
+{
+    var _lg = golpe_letra;
+    var _cedo = (golpe_idade <= 7);
+    golpe_cancelar();
+    cadeia = "";
+    velv = -vel_jump;
+    buffer_pulo = 0;
+    coyote = 0;
+    _chao = false;
+    pouso = 0;
+    sprite_index = spr_player_jump;
+    image_index = 1;
+    som("sfx_pulo", 0.5);
+    if (_cedo and _lg != "") { buffer_golpe = _lg; buffer_golpe_t = 10; }
 }
 
 // =====================================================================
@@ -388,19 +539,24 @@ if (!is_undefined(golpe))
     var _g = golpe;
     var _e = _g.seq[golpe_i];
     // golpes no chão param Twilight; os saltos mantêm o impulso no ar
+    // v1.17: ...mas o empurrão do quadro anterior sai antes de somar o deste (antes
+    // ele se acumulava a cada quadro e Twilight saía voando para trás ao bater num
+    // escudo / na estátua no meio do pulo)
     if (!_g.no_ar or _chao) velh = 0;
+    else velh -= empurrao_ult;
 
     // avanço do golpe (para frente), parando em paredes pelo End Step
     var _av = _e[$ "av"];
     if (!is_undefined(_av)) velh = facing * _av;
 
     // finalizador: o inimigo fica preso na frente de Twilight
-    if (_g.chave == "finalizador" and instance_exists(alvo_final))
+    if (_g.chave == "finalizador" and instance_exists(alvo_final) and !alvo_final.eh_boss)     // a Árvore não sai do lugar
     {
         with (alvo_final) { if (!morrendo) { x = lerp(x, other.x + other.facing * 34, 0.25); velh = 0; } }
     }
 
-    golpe_t += _dt;
+    golpe_t += _dt * (furia_modo ? 1.35 : 1);       // v1.12: no Modo Fúria os golpes saem mais rápidos
+    golpe_idade += _dt;
     var _seguro = 0;
     while (!is_undefined(golpe) and _seguro < 8)
     {
@@ -412,7 +568,7 @@ if (!is_undefined(golpe))
         var _ok = true;
         if (!is_undefined(_cond))
         {
-            var _no_chao = place_meeting(x, y + 1, obj_chao) and velv >= 0;
+            var _no_chao = (place_meeting(x, y + 1, obj_chao) or plataforma_sob_pes() != noone) and velv >= 0;
             if (_cond == "apice")    _ok = (velv >= 0);
             if (_cond == "descendo") _ok = (velv >= 0) or _no_chao;
             if (_cond == "chao")     _ok = _no_chao;
@@ -425,7 +581,7 @@ if (!is_undefined(golpe))
             // fim da animação = fim do golpe (tempo exato)
             golpe_cancelar();
             cadeia_janela = 16;
-            trocar_animacao(_chao ? spr_player_idle : spr_player_fall, 1);
+            trocar_animacao(_chao ? spr_player_parado : spr_player_fall, 1);
             break;
         }
         golpe_entrar_quadro();
@@ -474,6 +630,102 @@ for (var _o = array_length(ondas) - 1; _o >= 0; _o--)
 }
 
 // =====================================================================
+// v1.14: ESCALAR — escadas de mão, cordas e correntes (dados no obj_terreno).
+// PULO / cima segurado perto delas agarra e sobe; ▼ desce; PULO + lado salta
+// para fora; no alto, Twilight passa para a plataforma; um golpe o derruba.
+// =====================================================================
+var _sobe = _livre and (input_segurado(ACAO.PULAR) or global.inp_cima or (global.pad_slot >= 0 and gamepad_button_check(global.pad_slot, gp_padu)));
+if (!escalando and !morto and !machucado and !rolando and is_undefined(golpe) and variable_global_exists("escalaveis"))
+{
+    for (var _ei = 0; _ei < array_length(global.escalaveis); _ei++)
+    {
+        var _es = global.escalaveis[_ei];
+        if (abs(x - _es[0]) > 13) continue;
+        var _no_trecho = (y > _es[1] + 2 and y <= _es[2] + 2);
+        var _no_topo = (abs(y - _es[1]) <= 2 and _chao);
+        var _agarra = _no_trecho and _sobe and (_chao ? (_jump or global.inp_cima) : velv > -3);
+        if (_agarra or (_no_topo and _abaixar))
+        {
+            escalando = true;
+            escala_i = _ei;
+            escala_agarrar = (_es[3] == "escada") ? 0 : 18;    // v1.17: pula e agarra a corda / corrente
+            escala_desce = !_agarra;
+            if (!_agarra) y += 4;            // desce pela borda de cima
+            velh = 0; velv = 0; anda_v = 0;
+            buffer_pulo = 0; coyote = 0; atravessar_t = 10;
+            agachado = false;
+            break;
+        }
+    }
+}
+// Atingido (ou morto / em golpe) pendurado: solta ANTES de trocar a sprite.
+// Antes o bloco abaixo sobrescrevia spr_player_dano pela sprite da corda com
+// image_speed = 0; a animação de dano nunca terminava (Other_7) e Twilight
+// caía preso com machucado = true, sem poder fazer nada.
+if (escalando and (machucado or morto or !is_undefined(golpe)))
+{
+    escalando = false;
+    escala_i = -1;
+}
+if (escalando)
+{
+    var _es = global.escalaveis[escala_i];
+    x = lerp(x, _es[0], 0.4);
+    if (abs(x - _es[0]) < 0.6) x = _es[0];
+    var _vy = 0;
+    if (_sobe) _vy = -2.2;
+    else if (_abaixar) _vy = 2.6;
+    velh = 0;
+    velv = _vy;
+    empurrao = 0;
+    if (_vy != 0) escala_anim += abs(_vy) * _dt;
+    // v1.17: animações da equipe: de costas subindo / descendo a escada de mão;
+    // na corda e na corrente, primeiro pula e agarra, depois segura e sobe
+    image_speed = 0;
+    if (_es[3] == "escada")
+    {
+        if (_vy > 0) escala_desce = true; else if (_vy < 0) escala_desce = false;
+        sprite_index = escala_desce ? spr_player_descendo_escada : spr_player_subindo_escada;
+        image_index = floor(escala_anim / 9) mod sprite_get_number(sprite_index);
+    }
+    else if (escala_agarrar > 0)
+    {
+        escala_agarrar = max(0, escala_agarrar - _dt);
+        sprite_index = spr_player_pular_e_agarrar_cordas;
+        image_index = min(4, floor((1 - escala_agarrar / 18) * 5));
+    }
+    else
+    {
+        sprite_index = spr_player_segurando_e_subindo_cordas;
+        image_index = floor(escala_anim / 10) mod 6;
+    }
+    var _sai = false;
+    if (machucado or morto or !is_undefined(golpe)) _sai = true;
+    else if (_jump and (_left or _right))
+    {
+        // salta para fora da escada / corda
+        _sai = true;
+        facing = _right - _left;
+        velv = -vel_jump * 0.85;
+        velh = facing * vel_correr;
+        anda_v = velh;
+        som("sfx_pulo", 0.5);
+    }
+    else if (y + _vy * _dt <= _es[1])
+    {
+        // chegou ao alto: passa para a plataforma
+        _sai = true;
+        y = _es[1];
+        velv = 0;
+        x += _es[4] * 22;
+        if (_es[4] != 0) facing = _es[4];
+        pouso = 4;
+    }
+    else if (_vy > 0 and place_meeting(x, y + 2, obj_chao)) _sai = true;      // chegou embaixo
+    if (_sai) { escalando = false; escala_i = -1; }
+}
+
+// =====================================================================
 // DEFESA E AGACHAR (sem golpe em andamento)
 // =====================================================================
 var _em_golpe = !is_undefined(golpe);
@@ -484,12 +736,17 @@ if (bloqueando)
     trocar_animacao(sprite_defesa, 1);       // escudo mágico animado
 }
 agachado = _abaixar and _chao and !_em_golpe and _pode_agir and !bloqueando;
+// v1.14: abaixado, a caixa que leva golpes encolhe junto com o corpo (pés no lugar;
+// o desenho não usa image_yscale). Antes a flecha "acertava a cabeça" que já tinha descido.
+if (agachado or sprite_index == spr_player_agaichar or sprite_index == spr_player_atacar_agaichado) image_yscale = 0.65;
+else if (sprite_index == spr_player_atacar_agaichado_especial) image_yscale = 0.8;
+else image_yscale = 1;
 
 // =====================================================================
 // MOVIMENTO
 // =====================================================================
-if (_chao) coyote = 6; else coyote = max(0, coyote - _dt);
-if (_jump) buffer_pulo = 8;
+if (_chao) { coyote = 6; aereo_n = 0; } else coyote = max(0, coyote - _dt);
+if (_jump) buffer_pulo = 12;        // v1.12: o pulo apertado um pouco antes vale por mais tempo
 if (!_chao) no_ar_tempo += _dt;
 else
 {
@@ -497,15 +754,28 @@ else
     no_ar_tempo = 0;
 }
 
-if (!_em_golpe and !machucado and !bloqueando)
+if (!_em_golpe and !machucado and !bloqueando and !escalando)
 {
     var _mov = _right - _left;
     var _v = vel_correr;                       // sempre correndo
     if (agachado) _v = vel_agachado;
     if (enredado > 0) _v *= 0.35;              // preso na teia: arrasta os pés
-    velh = _mov * _v;
+    // v1.14: acelera e freia (para virar, freia até zero e acelera para o outro
+    // lado em ~0,1 s) em vez de trocar +v por -v num quadro; no ar, menos controle
+    if (_chao) velh_para(_mov * _v, 1.0, 1.3);
+    else velh_para(_mov * _v, 0.55, 0.5);
     if (_mov != 0) { facing = _mov; pouso = 0; }
 
+    // v1.13: ▼ + PULO numa passarela ou ilha de mão única: desce por ela
+    if (buffer_pulo > 0 and _abaixar and _chao and plataforma_sob_pes() != noone)
+    {
+        atravessar_t = 14;
+        buffer_pulo = 0;
+        coyote = 0;
+        y += 2;
+        velv = 1;
+        _chao = false;
+    }
     if (buffer_pulo > 0 and coyote > 0 and !_abaixar)
     {
         velv = -vel_jump;
@@ -525,11 +795,16 @@ if (!_em_golpe and !machucado and !bloqueando)
         {
             // a corrida avança a animação pela distância percorrida:
             // os pés acompanham o chão (sem "patinar")
-            if (sprite_index != spr_player_run) { sprite_index = spr_player_run; anim_passo = 0; }
+            // v1.19: abaixo de 60% da corrida (teia, arrancada, freada) ele anda;
+            // a fase do passo continua ao trocar entre andar e correr
+            var _andando = abs(velh) < vel_correr * 0.6;
+            var _spr_mov = _andando ? spr_player_andar : spr_player_corrida;
+            if (sprite_index != spr_player_andar and sprite_index != spr_player_corrida) anim_passo = 0;
+            sprite_index = _spr_mov;
             image_speed = 0;
-            anim_passo += abs(velh) * _dt;
-            var _ciclo = 92;                          // px corridos por ciclo completo (2 passadas)
-            image_index = (anim_passo mod _ciclo) / _ciclo * sprite_get_number(sprite_index);
+            var _ciclo = _andando ? 64 : 92;          // px por ciclo completo (2 passadas)
+            anim_passo = frac(anim_passo + abs(velh) * _dt / _ciclo);   // fração do ciclo (0..1)
+            image_index = anim_passo * sprite_get_number(sprite_index);
         }
         else if (pouso > 0)
         {
@@ -537,7 +812,7 @@ if (!_em_golpe and !machucado and !bloqueando)
             image_index = 3;
             image_speed = 0;
         }
-        else trocar_animacao(spr_player_idle, 1);
+        else trocar_animacao(spr_player_parado, 1);
     }
     else
     {
@@ -558,8 +833,12 @@ if (!_em_golpe and !machucado and !bloqueando)
 
 // ----- EMPURRÃO E GRAVIDADE -----
 velh += empurrao;
+empurrao_ult = empurrao;
 empurrao = lerp_dt(empurrao, 0, 0.12);
 if (abs(empurrao) < 0.2) empurrao = 0;
 
-if (!_chao) velv += grav * _dt;
-else if (velv > 0) velv = 0;
+if (!_chao and !escalando) velv += grav * _dt;
+else if (velv > 0 and !escalando) velv = 0;
+
+// ----- v1.17: RASTRO DE FOGO DA ESPADA (segue a lâmina de cada quadro) -----
+fogo_espada_step(_dt);

@@ -1,7 +1,7 @@
 // =====================================================================
 //  obj_resultado — FIM DA DEMO (depois de vencer o boss e seguir em frente)
 //  escurecer -> RESULTADO (tempo, inimigos, orbs...) -> "Obrigado por
-//  jogar nossa Demo." -> carregamento -> menu inicial
+//  jogar nossa Demo." -> CRÉDITOS (nomes da equipe) -> carregamento -> menu inicial
 // =====================================================================
 globais_iniciar();
 global.jogo_finalizado = true;
@@ -20,4 +20,11 @@ linhas = [
 mostrar_t = 0;
 pode_continuar = false;
 som("fase_concluida", 1, 0);         // som de passar de fase
-musica("mus_fase", 3000);
+// v1.17: CONQUISTAS do fim da fase 1
+perfil_somar("fases");
+conquista("fase1");
+if (global.dificuldade >= DIF.DIFICIL) conquista("dificil");
+if (global.dificuldade >= DIF.EXTREMO) conquista("extremo");
+if (global.tempo_jogo < 15 * 60) conquista("veloz");
+perfil_salvar();
+musica("bgm_main_menu", 3000);       // v1.16: o tema principal fecha a demo (resultado e créditos)

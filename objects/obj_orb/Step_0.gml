@@ -29,6 +29,14 @@ var _d = point_distance(x, y, _tx, _ty);
 var _vel = min(14, 3 + (t - espera) * 0.25);
 if (_d <= _vel * _dt + 6)
 {
+    if (tipo == "vida")
+    {
+        // v1.17: ORBE DE VIDA: cura Twilight
+        with (_p) { vida = min(vida_max, vida + other.valor); cura_fx = max(cura_fx, 20); }
+        if (global.orb_som_t <= 0) { som("sfx_cura", 0.4, 0.04); global.orb_som_t = 4; }
+        instance_destroy();
+        exit;
+    }
     orbs_ganhar(valor);
     // som em sequência sobe de tom (como no God of War)
     if (global.orb_som_t <= 0)

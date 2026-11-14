@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_player_segurando_e_subindo_cordas
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: f776397d4ac89dc43b6e36a718ef7b4f, type: 3}
+  - {fileID: 21300000, guid: 966c9084fcbbdfa4fa1fe9d5a968acd2, type: 3}
+  - {fileID: 21300000, guid: a761a942cbaaca843ae20e744581ff97, type: 3}
+  - {fileID: 21300000, guid: 7dd3cabe112d98040853afdbce30de25, type: 3}
+  - {fileID: 21300000, guid: d195e2c49a196fc41ad332963863d8ee, type: 3}
+  - {fileID: 21300000, guid: aba2814967a30f745b426119c4e6c36e, type: 3}
+  velocidade: 8
+  porSegundo: 1
+  k: 3

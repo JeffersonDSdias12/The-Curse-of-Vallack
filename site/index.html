@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Curse of Vallack · A Maldição de Vallack</title>
+<meta name="description" content="The Curse of Vallack: ação em pixel art contra a maldição do Rei dos Dragões. Baixe a Beta 0.5 para Android e Windows.">
+<meta property="og:title" content="The Curse of Vallack · A Maldição de Vallack">
+<meta property="og:description" content="Ação em pixel art contra a maldição do Rei dos Dragões. Beta 0.5 para Android e Windows.">
+<meta property="og:image" content="img/prologo_9.jpg">
+<meta name="theme-color" content="#0b0708">
+<link rel="icon" href="img/icone.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fundo:#0b0708; --fundo2:#140c0e; --painel:#1a1012; --borda:#3a2420;
+  --ouro:#ecba54; --ouro2:#b98a3a; --sangue:#c8201c; --brasa:#ff7a3c;
+  --texto:#efe6d8; --fraco:#b3a79a; --roxo:#a55cff;
+  --titulo:"Cinzel","Times New Roman",serif; --corpo:"Spectral",Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--fundo);color:var(--texto);font-family:var(--corpo);font-size:18px;line-height:1.65;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--ouro)}
+h1,h2,h3{font-family:var(--titulo);letter-spacing:.04em;line-height:1.2;margin:0}
+h2{font-size:clamp(1.7rem,4.2vw,2.6rem);color:var(--ouro);text-align:center}
+.sub{color:var(--fraco);text-align:center;max-width:760px;margin:.8rem auto 2.4rem}
+section{padding:clamp(56px,9vw,104px) 16px}
+.cx{max-width:1160px;margin:0 auto}
+.faixa{background:linear-gradient(180deg,var(--fundo2),var(--fundo))}
+.ornamento{display:flex;align-items:center;justify-content:center;gap:14px;margin:14px auto 0;color:var(--ouro2)}
+.ornamento::before,.ornamento::after{content:"";height:1px;width:min(22vw,160px);background:linear-gradient(90deg,transparent,var(--ouro2))}
+.ornamento::after{transform:scaleX(-1)}
+
+/* ---------- navegação ---------- */
+header.topo{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(11,7,8,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--borda)}
+.topo .cx{display:flex;align-items:center;gap:14px;height:60px;padding:0 16px}
+.topo .marca{display:flex;align-items:center;gap:10px;font-family:var(--titulo);font-weight:700;color:var(--texto);text-decoration:none;font-size:.95rem;white-space:nowrap}
+.topo .marca img{width:34px;height:34px;border-radius:8px}
+nav{margin-left:auto;display:flex;gap:4px;align-items:center}
+nav a{color:var(--fraco);text-decoration:none;font-family:var(--titulo);font-size:.78rem;padding:8px 10px;border-radius:6px}
+nav a:hover,nav a:focus-visible{color:var(--ouro);background:#22161a}
+nav a.cta{color:#1a0c08;background:linear-gradient(180deg,#ffd27a,var(--ouro2));font-weight:700}
+.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--borda);color:var(--ouro);border-radius:8px;width:44px;height:40px;font-size:1.3rem;cursor:pointer}
+@media (max-width:900px){
+  .menu-btn{display:block}
+  nav{position:fixed;top:60px;left:0;right:0;background:#0f090b;border-bottom:1px solid var(--borda);flex-direction:column;align-items:stretch;padding:8px 16px 16px;gap:2px;display:none}
+  nav.aberto{display:flex}
+  nav a{font-size:.95rem;padding:12px 10px}
+  nav a.cta{text-align:center;margin-top:6px}
+}
+
+/* ---------- herói ---------- */
+.heroi{position:relative;min-height:100svh;display:grid;place-items:center;padding:92px 16px 56px;text-align:center;
+  background:radial-gradient(ellipse at 50% 108%,rgba(200,60,20,.42),transparent 58%),
+             linear-gradient(180deg,rgba(11,7,8,.72),rgba(11,7,8,.5) 45%,var(--fundo) 100%),
+             url("img/prologo_9.jpg") center/cover no-repeat}
+#brasas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.heroi .dentro{position:relative;max-width:820px}
+.heroi .logo{width:min(74vw,400px);margin:0 auto;filter:drop-shadow(0 10px 34px rgba(200,32,28,.5));animation:flutua 6s ease-in-out infinite}
+@keyframes flutua{50%{transform:translateY(-8px)}}
+.heroi h1{font-size:clamp(1.05rem,3.4vw,1.5rem);color:var(--ouro);margin-top:6px;font-weight:500;letter-spacing:.22em}
+.heroi p{font-size:clamp(1rem,2.6vw,1.2rem);max-width:640px;margin:16px auto 0;text-shadow:0 2px 10px #000}
+.selo{display:inline-block;margin-top:18px;padding:5px 16px;border:1px solid var(--sangue);border-radius:999px;background:rgba(200,32,28,.18);font-family:var(--titulo);font-size:.8rem;letter-spacing:.2em;color:#ffb0a6}
+.botoes{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:12px;text-align:left;text-decoration:none;font-family:var(--titulo);border-radius:12px;padding:12px 22px;min-height:60px;border:1px solid var(--ouro2);color:var(--texto);background:linear-gradient(180deg,#2a1716,#170d0e);transition:transform .15s,box-shadow .15s,border-color .15s}
+.btn:hover,.btn:focus-visible{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,122,60,.28);border-color:var(--ouro)}
+.btn.primario{background:linear-gradient(180deg,#d8322a,#7c1210);border-color:#ff8a70}
+.btn svg{width:30px;height:30px;flex:none;fill:currentColor}
+.btn small{display:block;font-family:var(--corpo);font-size:.78rem;color:#f0d9c6;letter-spacing:0;line-height:1.1}
+.btn b{display:block;font-size:1.02rem;letter-spacing:.06em;line-height:1.25}
+.desce{margin-top:34px;display:inline-block;color:var(--fraco);text-decoration:none;font-family:var(--titulo);font-size:.76rem;letter-spacing:.2em}
+.desce span{display:block;font-size:1.3rem;animation:quica 1.6s infinite}
+@keyframes quica{50%{transform:translateY(6px)}}
+
+/* ---------- prólogo ---------- */
+.prologo{max-width:980px;margin:0 auto}
+.palco{position:relative;border:1px solid var(--borda);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 24px 70px rgba(0,0,0,.6);aspect-ratio:1280/714;touch-action:pan-y}
+.palco img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s}
+.palco img.ativa{opacity:1}
+.seta{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:64px;border:1px solid var(--ouro2);background:rgba(11,7,8,.72);color:var(--ouro);font-size:1.5rem;cursor:pointer;border-radius:10px;z-index:2}
+.seta:hover{background:rgba(200,32,28,.6)}
+.seta.ant{left:10px}.seta.prox{right:10px}
+.legenda{margin:18px auto 0;min-height:5.2em;text-align:center;font-size:1.08rem;max-width:820px}
+.legenda b{display:block;font-family:var(--titulo);color:var(--ouro);font-size:.78rem;letter-spacing:.22em;margin-bottom:4px}
+.pontos{display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.pontos button{width:34px;height:10px;border-radius:6px;border:0;background:#3a2420;cursor:pointer;padding:0}
+.pontos button.ativo{background:var(--ouro)}
+.controles{display:flex;justify-content:center;margin-top:14px}
+.mini{background:none;border:1px solid var(--borda);color:var(--fraco);font-family:var(--titulo);font-size:.74rem;letter-spacing:.14em;padding:8px 14px;border-radius:8px;cursor:pointer}
+.mini:hover{color:var(--ouro);border-color:var(--ouro2)}
+
+/* ---------- herói / twilight ---------- */
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,5vw,56px);align-items:center}
+@media (max-width:820px){.duas{grid-template-columns:1fr}}
+.duas h3{font-size:1.5rem;color:var(--ouro);margin-bottom:10px}
+.retrato{border-radius:16px;border:1px solid var(--borda);background:radial-gradient(circle at 50% 30%,#3a1414,#0e0809 72%);padding:8px;image-rendering:pixelated;max-height:520px;width:auto;margin:0 auto}
+blockquote{margin:18px 0 0;padding:10px 18px;border-left:3px solid var(--sangue);font-style:italic;color:#f3d9c8;background:rgba(200,32,28,.08)}
+
+/* ---------- cartões ---------- */
+.grade{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.cartao{background:linear-gradient(180deg,var(--painel),#110a0c);border:1px solid var(--borda);border-radius:14px;padding:20px}
+.cartao h3{font-size:1.02rem;color:var(--ouro);margin-bottom:6px}
+.cartao p{margin:0;color:#d9cdbf;font-size:.98rem;line-height:1.5}
+.cartao .ic{font-size:1.6rem;margin-bottom:8px}
+.novo{display:inline-block;font-family:var(--titulo);font-size:.62rem;letter-spacing:.16em;color:#1a0c08;background:var(--brasa);border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+
+/* ---------- bestiário ---------- */
+.filtros{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.filtros button{font-family:var(--titulo);font-size:.76rem;letter-spacing:.12em;padding:9px 16px;border-radius:999px;border:1px solid var(--borda);background:none;color:var(--fraco);cursor:pointer}
+.filtros button.ativo{background:var(--sangue);border-color:#ff8a70;color:#fff}
+.bestas{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.besta{position:relative;border:1px solid var(--borda);border-radius:14px;overflow:hidden;background:#0d0809;cursor:pointer;padding:0;color:inherit;text-align:left;transition:transform .2s,border-color .2s}
+.besta:hover,.besta:focus-visible{transform:translateY(-4px);border-color:var(--ouro)}
+.besta img{width:100%;aspect-ratio:4/3;object-fit:cover;image-rendering:pixelated}
+.besta span{display:block;padding:10px 12px;font-family:var(--titulo);font-size:.84rem}
+.besta em{position:absolute;top:8px;left:8px;font-style:normal;font-family:var(--titulo);font-size:.6rem;letter-spacing:.14em;padding:3px 7px;border-radius:4px;background:rgba(11,7,8,.85);color:var(--ouro);border:1px solid var(--ouro2)}
+.besta em.chefe{color:#fff;background:var(--sangue);border-color:#ff8a70}
+
+/* ---------- galeria ---------- */
+.galeria{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.galeria button{border:1px solid var(--borda);border-radius:12px;overflow:hidden;padding:0;background:#000;cursor:zoom-in;color:inherit}
+.galeria img{width:100%;aspect-ratio:16/9;object-fit:cover;transition:transform .4s}
+.galeria button:hover img{transform:scale(1.05)}
+.galeria span{display:block;padding:8px 10px;font-size:.86rem;color:var(--fraco);text-align:left;background:var(--painel)}
+
+/* ---------- mapa ---------- */
+.capitulos{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
+.cap{border:1px solid var(--borda);border-radius:12px;background:var(--painel);overflow:hidden}
+.cap summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:center;padding:12px 14px;font-family:var(--titulo);font-size:.86rem}
+.cap summary::-webkit-details-marker{display:none}
+.cap .num{flex:none;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--ouro2);color:var(--ouro);font-size:.74rem}
+.cap .estado{margin-left:auto;font-size:.6rem;letter-spacing:.12em;color:var(--fraco);white-space:nowrap}
+.cap.aberta{border-color:var(--ouro2);background:linear-gradient(180deg,#2a1513,var(--painel))}
+.cap.aberta .estado{color:#9be08a}
+.cap p{margin:0;padding:0 14px 14px 64px;color:#d9cdbf;font-size:.95rem}
+
+/* ---------- equipe ---------- */
+.equipe{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));text-align:center}
+.equipe .cartao small{display:block;font-family:var(--titulo);font-size:.68rem;letter-spacing:.2em;color:var(--ouro2);margin-bottom:8px}
+.equipe .cartao b{font-family:var(--titulo);font-size:1.08rem;line-height:1.5}
+.estudio{text-align:center;margin-top:34px;font-family:var(--titulo)}
+.estudio b{display:block;font-size:clamp(1.4rem,4vw,2.1rem);color:var(--brasa);letter-spacing:.1em}
+
+/* ---------- downloads ---------- */
+.baixar{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));max-width:920px;margin:0 auto}
+.pacote{border:1px solid var(--ouro2);border-radius:16px;padding:26px 22px;background:linear-gradient(180deg,#24130f,#120a0b);text-align:center}
+.pacote img{width:96px;height:96px;border-radius:22px;margin:0 auto 12px;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.pacote h3{font-size:1.2rem}
+.pacote .info{color:var(--fraco);font-size:.92rem;margin:4px 0 16px}
+.pacote .btn{width:100%;justify-content:center}
+.pacote ol{text-align:left;color:#d9cdbf;font-size:.92rem;padding-left:20px;margin:16px 0 0;line-height:1.5}
+.aviso{max-width:920px;margin:20px auto 0;font-size:.9rem;color:var(--fraco);text-align:center}
+
+/* ---------- comentários ---------- */
+.aval{display:grid;grid-template-columns:minmax(200px,280px) 1fr;gap:24px;align-items:center;max-width:860px;margin:0 auto 26px}
+@media (max-width:700px){.aval{grid-template-columns:1fr;text-align:center}}
+.nota{text-align:center}
+.nota b{font-family:var(--titulo);font-size:3.4rem;color:var(--ouro);line-height:1}
+.estrelas{color:var(--ouro);font-size:1.25rem;letter-spacing:.1em}
+.barras div{display:grid;grid-template-columns:38px 1fr 34px;gap:8px;align-items:center;font-size:.86rem;color:var(--fraco)}
+.barras i{display:block;height:8px;border-radius:5px;background:#2a1a1a;overflow:hidden}
+.barras i u{display:block;height:100%;background:linear-gradient(90deg,var(--ouro2),var(--ouro))}
+.form{max-width:860px;margin:0 auto;border:1px solid var(--borda);border-radius:14px;background:var(--painel);padding:18px}
+.form label{display:block;font-family:var(--titulo);font-size:.72rem;letter-spacing:.16em;color:var(--ouro2);margin:10px 0 4px}
+.form input,.form textarea{width:100%;background:#0d0809;border:1px solid var(--borda);border-radius:8px;color:var(--texto);font:inherit;padding:10px 12px}
+.form textarea{min-height:96px;resize:vertical}
+.form input:focus,.form textarea:focus{outline:2px solid var(--ouro2);outline-offset:1px}
+.escolhe{display:flex;gap:4px}
+.escolhe button{background:none;border:0;font-size:2rem;line-height:1;color:#4a3430;cursor:pointer;padding:2px 4px}
+.escolhe button.on{color:var(--ouro)}
+.form .linha{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:12px}
+.form .conta{font-size:.82rem;color:var(--fraco)}
+.enviar{font-family:var(--titulo);font-weight:700;letter-spacing:.08em;border:0;border-radius:10px;padding:12px 24px;cursor:pointer;color:#1a0c08;background:linear-gradient(180deg,#ffd27a,var(--ouro2))}
+.enviar:disabled{opacity:.5;cursor:not-allowed}
+.erro{color:#ff9a8a;font-size:.9rem;min-height:1.3em;margin-top:6px}
+.modo{max-width:860px;margin:0 auto 16px;border:1px dashed var(--ouro2);border-radius:10px;padding:10px 14px;font-size:.9rem;color:#f0d9a8;background:rgba(236,186,84,.07)}
+.lista{max-width:860px;margin:22px auto 0;display:grid;gap:12px}
+.com{border:1px solid var(--borda);border-radius:12px;background:var(--painel);padding:14px 16px}
+.com .cab{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--titulo);font-weight:700;color:#1a0c08;flex:none}
+.com .nome{font-family:var(--titulo);font-size:.95rem}
+.com .quando{color:var(--fraco);font-size:.8rem;margin-left:auto}
+.com .txt{margin:8px 0 6px;white-space:pre-wrap;overflow-wrap:anywhere}
+.acoes{display:flex;gap:6px;flex-wrap:wrap}
+.acoes button{background:none;border:1px solid var(--borda);border-radius:999px;color:var(--fraco);font:inherit;font-size:.84rem;padding:5px 12px;cursor:pointer}
+.acoes button:hover{color:var(--ouro);border-color:var(--ouro2)}
+.acoes button.curtido{color:#fff;background:var(--sangue);border-color:#ff8a70}
+.respostas{margin:10px 0 0 clamp(12px,5vw,46px);display:grid;gap:8px;border-left:2px solid var(--borda);padding-left:12px}
+.respostas .com{background:#130b0d}
+.resp-form{margin-top:10px}
+.resp-form textarea{min-height:70px}
+.vazio{text-align:center;color:var(--fraco)}
+.ordem{max-width:860px;margin:18px auto 0;display:flex;gap:8px;align-items:center;justify-content:flex-end;font-size:.86rem;color:var(--fraco)}
+.ordem select{background:#0d0809;color:var(--texto);border:1px solid var(--borda);border-radius:8px;padding:6px 8px;font:inherit}
+
+/* ---------- lightbox ---------- */
+.luz{position:fixed;inset:0;z-index:80;background:rgba(5,3,4,.94);display:none;align-items:center;justify-content:center;padding:16px}
+.luz.aberta{display:flex}
+.luz figure{margin:0;max-width:min(1100px,100%);max-height:100%;display:flex;flex-direction:column;gap:10px}
+.luz img{max-height:72vh;width:auto;margin:0 auto;border-radius:10px;border:1px solid var(--borda)}
+.luz figcaption{text-align:center}
+.luz figcaption b{font-family:var(--titulo);color:var(--ouro);display:block}
+.fechar{position:absolute;top:12px;right:12px;width:46px;height:46px;border-radius:50%;border:1px solid var(--ouro2);background:#170d0e;color:var(--ouro);font-size:1.4rem;cursor:pointer}
+
+footer{border-top:1px solid var(--borda);padding:34px 16px 44px;text-align:center;color:var(--fraco);font-size:.9rem}
+footer img{width:120px;margin:0 auto 10px;opacity:.9}
+.revela{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
+.revela.visto{opacity:1;transform:none}
+:focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.revela{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="cx">
+    <a class="marca" href="#inicio"><img src="img/icone.png" alt=""> THE CURSE OF VALLACK</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    <nav id="menu">
+      <a href="#historia">História</a>
+      <a href="#jogo">O jogo</a>
+      <a href="#bestiario">Bestiário</a>
+      <a href="#galeria">Imagens</a>
+      <a href="#mapa">Mapa</a>
+      <a href="#equipe">Equipe</a>
+      <a href="#comentarios">Comentários</a>
+      <a class="cta" href="#baixar">Baixar</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ===================== INÍCIO ===================== -->
+<section class="heroi" id="inicio">
+  <canvas id="brasas" aria-hidden="true"></canvas>
+  <div class="dentro">
+    <img class="logo" src="img/logo.png" alt="The Curse of Vallack">
+    <h1>A MALDIÇÃO DE VALLACK</h1>
+    <p>Duzentos anos depois de o Rei dos Dragões ser selado, o selo envelheceu e virou maldição. Vista a armadura de Twilight Vetrus e atravesse uma vila em chamas até o castelo.</p>
+    <span class="selo" data-versao>BETA 0.5</span>
+    <div class="botoes">
+      <a class="btn primario" data-baixar="android" href="#baixar">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.38.38 0 00-.66-.38l-1.86 3.22A11.4 11.4 0 0012 8.1c-1.76 0-3.42.38-4.92 1.04L5.22 5.92a.38.38 0 00-.66.38L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
+        <span><small>Baixar para</small><b>ANDROID</b></span>
+      </a>
+      <a class="btn" data-baixar="windows" href="#baixar">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5l7.5-1v7H3v-6zm8.5-1.15L21 3v8.5h-9.5V4.35zM3 12.5h7.5v7l-7.5-1v-6zm8.5 0H21V21l-9.5-1.35V12.5z"/></svg>
+        <span><small>Baixar para</small><b>WINDOWS</b></span>
+      </a>
+    </div>
+    <a class="desce" href="#historia">CONHEÇA A HISTÓRIA<span>⌄</span></a>
+  </div>
+</section>
+
+<!-- ===================== HISTÓRIA ===================== -->
+<section id="historia" class="faixa">
+  <div class="cx">
+    <h2 class="revela">Prólogo: o Herói e o Dragão</h2>
+    <div class="ornamento">◆</div>
+    <p class="sub revela">As nove cenas que abrem o jogo. Passe com as setas, com o dedo ou com as teclas ◄ ►.</p>
+    <div class="prologo revela">
+      <div class="palco" id="palco" tabindex="0" aria-roledescription="carrossel" aria-label="Prólogo em nove cenas">
+        <button class="seta ant" id="ant" aria-label="Cena anterior">‹</button>
+        <button class="seta prox" id="prox" aria-label="Próxima cena">›</button>
+      </div>
+      <p class="legenda" id="legenda" aria-live="polite"></p>
+      <div class="pontos" id="pontos"></div>
+      <div class="controles"><button class="mini" id="auto">▶ PASSAR SOZINHO</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TWILIGHT ===================== -->
+<section>
+  <div class="cx duas">
+    <img class="retrato revela" src="img/heroi.png" alt="Retrato de Twilight Vetrus, cavaleiro de armadura vermelha">
+    <div class="revela">
+      <h3>Twilight Vetrus</h3>
+      <p>O herói da jornada. Ele carrega a Lâmina de Sylla, que ganha runas e força a cada nível, e parte quando a chama maldita alcança a sua vila.</p>
+      <p>O caminho começa nas ruas em chamas, passa pelo Carrasco de Vallack e pela Árvore Amaldiçoada que guarda a estrada, e segue para o castelo onde a maldição espera.</p>
+      <blockquote>"Servos de Vallack... irão pagar com a vida!"</blockquote>
+      <p style="color:var(--fraco);font-style:italic;margin-top:14px">Uma jornada sobre força, escolha e legado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== O JOGO ===================== -->
+<section id="jogo" class="faixa">
+  <div class="cx">
+    <h2 class="revela">O jogo até aqui</h2>
+    <div class="ornamento">◆</div>
+    <p class="sub revela">A <b data-versao>Beta 0.5</b> traz o Capítulo I completo, do portão da vila ao chefe. É um jogo de ação e plataforma em pixel art, para celular e PC.</p>
+    <div class="grade">
+      <div class="cartao revela"><div class="ic">⚔️</div><h3>Combate com peso</h3><p>Combos, golpe pesado, rasteira, esquiva, defesa com aparo e execuções. Cada pancada trava a tela por um instante e empurra a câmera.</p></div>
+      <div class="cartao revela"><div class="ic">🔥</div><h3>Magias e sub-armas</h3><p>Onda, Queda e Tremor, a barra de Fúria, a lâmina bumerangue e a chama de Sylla.</p></div>
+      <div class="cartao revela"><div class="ic">🌉</div><h3>Pontes que desabam <span class="novo">NOVO</span></h3><p>A ponte de madeira e a ponte de pedra caem atrás de você. Lajes rachadas cedem se você demorar em cima delas.</p></div>
+      <div class="cartao revela"><div class="ic">🎥</div><h3>Câmera de ação <span class="novo">NOVO</span></h3><p>A câmera fecha no duelo, acompanha o inimigo e dá um soco de zoom a cada golpe. Suave, normal ou intensa.</p></div>
+      <div class="cartao revela"><div class="ic">📱</div><h3>HUD do seu jeito <span class="novo">NOVO</span></h3><p>No celular, escolha 2, 4 ou 8 dedos, mude o tamanho e arraste cada botão para onde quiser.</p></div>
+      <div class="cartao revela"><div class="ic">👑</div><h3>Chefes</h3><p>O Carrasco de Vallack no meio da vila e a Árvore Amaldiçoada, que invoca servos e faz chover fogo.</p></div>
+      <div class="cartao revela"><div class="ic">🏆</div><h3>Perfil e conquistas</h3><p>Crie o seu perfil, ganhe 21 conquistas, títulos e lâminas novas. Três espaços de save e CONTINUAR direto do menu.</p></div>
+      <div class="cartao revela"><div class="ic">🎮</div><h3>Jogue como quiser</h3><p>Toque, teclado ou controle de Xbox e PlayStation, com botões remapeáveis e níveis de desempenho para qualquer aparelho.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BESTIÁRIO ===================== -->
+<section id="bestiario">
+  <div class="cx">
+    <h2 class="revela">Bestiário</h2>
+    <div class="ornamento">◆</div>
+    <p class="sub revela">Os servos da maldição no Capítulo I. Toque num deles para ver de perto.</p>
+    <div class="filtros" id="filtros">
+      <button class="ativo" data-f="todos">TODOS</button>
+      <button data-f="inimigo">INIMIGOS</button>
+      <button data-f="chefe">CHEFES</button>
+    </div>
+    <div class="bestas" id="bestas"></div>
+  </div>
+</section>
+
+<!-- ===================== GALERIA ===================== -->
+<section id="galeria" class="faixa">
+  <div class="cx">
+    <h2 class="revela">Imagens do jogo</h2>
+    <div class="ornamento">◆</div>
+    <p class="sub revela">Capturas tiradas de dentro do jogo. Toque para ampliar.</p>
+    <div class="galeria" id="telas"></div>
+  </div>
+</section>
+
+<!-- ===================== MAPA ===================== -->
+<section id="mapa">
+  <div class="cx">
+    <h2 class="revela">O mapa de Vallack</h2>
+    <div class="ornamento">◆</div>
+    <p class="sub revela">Um caminho em chamas liga 18 capítulos. O primeiro está aberto na Beta 0.5; os outros estão em desenvolvimento.</p>
+    <div class="capitulos" id="capitulos"></div>
+  </div>
+</section>
+
+<!-- ===================== EQUIPE ===================== -->
+<section id="equipe" class="faixa">
+  <div class="cx">
+    <h2 class="revela">Quem fez</h2>
+    <div class="ornamento">◆</div>
+    <p class="sub revela">Um projeto acadêmico da Faculdade FAPAN.</p>
+    <div class="equipe">
+      <div class="cartao revela"><small>DESENVOLVIDO POR</small><b>Jefferson Dias</b></div>
+      <div class="cartao revela"><small>DESENVOLVIMENTO</small><b>Eduardo<br>Isaac<br>Alex<br>Aldreon</b></div>
+      <div class="cartao revela"><small>DESIGN</small><b>Alex<br>I.A. Claude</b></div>
+      <div class="cartao revela"><small>ROTEIRO</small><b>Isaac<br>Eduardo<br>I.A. Claude</b></div>
+    </div>
+    <p class="estudio revela"><span style="color:var(--fraco);font-size:.74rem;letter-spacing:.2em">UM JOGO DE</span><b>GAMBITECH STUDIO</b></p>
+  </div>
+</section>
+
+<!-- ===================== COMENTÁRIOS ===================== -->
+<section id="comentarios">
+  <div class="cx">
+    <h2 class="revela">Avaliações e comentários</h2>
+    <div class="ornamento">◆</div>
+    <p class="sub revela">Jogou? Conte o que achou, dê as suas estrelas e responda a outros jogadores.</p>
+    <p class="modo" id="modo" hidden></p>
+    <div class="aval revela">
+      <div class="nota"><b id="media">–</b><div class="estrelas" id="mediaEstrelas">☆☆☆☆☆</div><div id="total" style="color:var(--fraco);font-size:.9rem">Nenhuma avaliação ainda</div></div>
+      <div class="barras" id="barras"></div>
+    </div>
+    <form class="form revela" id="form" novalidate>
+      <label for="nome">SEU NOME DE JOGADOR</label>
+      <input id="nome" maxlength="24" autocomplete="nickname" placeholder="Como você quer aparecer">
+      <label id="rotEstrelas">SUA NOTA</label>
+      <div class="escolhe" id="escolhe" role="radiogroup" aria-labelledby="rotEstrelas"></div>
+      <label for="texto">SEU COMENTÁRIO</label>
+      <textarea id="texto" maxlength="600" placeholder="O que você achou do jogo?"></textarea>
+      <div class="linha"><span class="conta" id="conta">0 / 600</span><button class="enviar" type="submit">PUBLICAR</button></div>
+      <div class="erro" id="erro" role="alert"></div>
+    </form>
+    <div class="ordem"><label for="ordem">Ordenar por</label>
+      <select id="ordem"><option value="novos">Mais recentes</option><option value="curtidos">Mais curtidos</option><option value="nota">Maior nota</option></select></div>
+    <div class="lista" id="lista"></div>
+  </div>
+</section>
+
+<!-- ===================== BAIXAR ===================== -->
+<section id="baixar" class="faixa">
+  <div class="cx">
+    <h2 class="revela">Baixar a <span data-versao>Beta 0.5</span></h2>
+    <div class="ornamento">◆</div>
+    <p class="sub revela">Gratuito. Escolha a sua plataforma.</p>
+    <div class="baixar">
+      <div class="pacote revela">
+        <img src="img/icone.png" alt="Ícone do jogo">
+        <h3>Android</h3>
+        <p class="info" id="infoAndroid">Instalador APK</p>
+        <a class="btn primario" data-baixar="android" href="#"><span><small>The Curse of Vallack</small><b>BAIXAR APK</b></span></a>
+        <ol><li>Baixe o arquivo no celular.</li><li>Abra o arquivo e, se o Android pedir, permita instalar apps desta fonte.</li><li>Toque em Instalar e depois em Abrir.</li></ol>
+      </div>
+      <div class="pacote revela">
+        <img src="img/icone.png" alt="Ícone do jogo">
+        <h3>Windows</h3>
+        <p class="info" id="infoWindows">Instalador para PC</p>
+        <a class="btn" data-baixar="windows" href="#"><span><small>The Curse of Vallack</small><b>BAIXAR INSTALADOR</b></span></a>
+        <ol><li>Baixe e abra o instalador.</li><li>Se o Windows mostrar um aviso azul, clique em "Mais informações" e em "Executar assim mesmo".</li><li>Siga os passos e abra o jogo pelo atalho.</li></ol>
+      </div>
+    </div>
+    <p class="aviso">Versão de teste: pode haver falhas. Os saves ficam no seu aparelho.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <img src="img/logo.png" alt="">
+  <div>The Curse of Vallack · A Maldição de Vallack · <span data-versao>Beta 0.5</span></div>
+  <div>© 2026 Jefferson Dias · Gambitech Studio · Faculdade FAPAN</div>
+  <div style="margin-top:6px;font-style:italic">A jornada continua em breve...</div>
+</footer>
+
+<div class="luz" id="luz" role="dialog" aria-modal="true" aria-label="Imagem ampliada">
+  <button class="fechar" id="fechar" aria-label="Fechar">✕</button>
+  <figure><img id="luzImg" alt=""><figcaption><b id="luzTit"></b><span id="luzTxt"></span></figcaption></figure>
+</div>
+
+<script>
+/* =====================================================================
+   CONFIGURAÇÃO — tudo o que muda a cada versão fica aqui
+   ===================================================================== */
+const CONFIG = {
+  versao: "Beta 0.5",
+  android: { url: "downloads/TheCurseOfVallack-Beta0.5-Android.apk", info: "Instalador APK · Android 7 ou mais novo" },
+  windows: { url: "downloads/TheCurseOfVallack-Beta0.5-Windows-Setup.exe", info: "Instalador para Windows 10 e 11 (64 bits)" },
+  // Endereço do banco de comentários (Firebase Realtime Database), sem barra no fim.
+  // Vazio = os comentários ficam só no aparelho de quem escreve.
+  comentariosUrl: ""
+};
+
+// No GitHub Pages (usuario.github.io/repositorio) os instaladores vêm da Release mais
+// recente do mesmo repositório: os arquivos anexados lá precisam ter estes mesmos nomes.
+(() => {
+  const m = location.hostname.match(/^([a-z0-9-]+)\.github\.io$/i);
+  if (!m) return;
+  const repo = location.pathname.split("/").filter(Boolean)[0] || location.hostname;
+  const base = `https://github.com/${m[1]}/${repo}/releases/latest/download/`;
+  for (const k of ["android", "windows"]) CONFIG[k].url = base + CONFIG[k].url.split("/").pop();
+})();
+
+const $ = (s, r = document) => r.querySelector(s);
+const cria = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+
+document.querySelectorAll("[data-versao]").forEach(e => e.textContent = e.classList.contains("selo") ? CONFIG.versao.toUpperCase() : CONFIG.versao);
+document.querySelectorAll("[data-baixar]").forEach(a => {
+  const p = CONFIG[a.dataset.baixar];
+  if (a.closest(".pacote")) { a.href = p.url; a.setAttribute("download", ""); }
+});
+$("#infoAndroid").textContent = CONFIG.android.info;
+$("#infoWindows").textContent = CONFIG.windows.info;
+
+/* ---------- menu do celular ---------- */
+const menu = $("#menu"), menuBtn = $("#menuBtn");
+menuBtn.addEventListener("click", () => { const a = menu.classList.toggle("aberto"); menuBtn.setAttribute("aria-expanded", a); });
+menu.addEventListener("click", e => { if (e.target.tagName === "A") { menu.classList.remove("aberto"); menuBtn.setAttribute("aria-expanded", false); } });
+
+/* ---------- brasas do topo ---------- */
+(() => {
+  const c = $("#brasas"), x = c.getContext("2d");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  let w, h, ps = [];
+  const mede = () => { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; };
+  const nova = (emBaixo) => ({ x: Math.random() * w, y: emBaixo ? h + 8 : Math.random() * h, r: 0.8 + Math.random() * 2.2, vy: 0.3 + Math.random() * 1.1, vx: -0.3 + Math.random() * 0.6, a: 0.3 + Math.random() * 0.7, f: Math.random() * 6.28 });
+  mede(); addEventListener("resize", mede);
+  for (let i = 0; i < Math.min(90, Math.round(w / 14)); i++) ps.push(nova(false));
+  let visivel = true;
+  new IntersectionObserver(e => visivel = e[0].isIntersecting).observe(c);
+  (function passo(t) {
+    requestAnimationFrame(passo);
+    if (!visivel) return;
+    x.clearRect(0, 0, w, h);
+    for (const p of ps) {
+      p.y -= p.vy; p.x += p.vx + Math.sin(t / 700 + p.f) * 0.3;
+      if (p.y < -10) Object.assign(p, nova(true));
+      x.globalAlpha = p.a * Math.min(1, p.y / (h * 0.6));
+      x.fillStyle = p.r > 2 ? "#ffb060" : "#ff6a2c";
+      x.beginPath(); x.arc(p.x, p.y, p.r, 0, 6.283); x.fill();
+    }
+  })(0);
+})();
+
+/* ---------- prólogo ---------- */
+const CENAS = [
+  "Há mais de duzentos anos, o mundo conheceu uma criatura que nenhum exército era capaz de derrotar.",
+  "Seu nome era Valack Britus, o Rei dos Dragões. Seu corpo carregava uma força ancestral, anterior aos próprios reinos humanos.",
+  "Onde Valack passava, florestas desapareciam e cidades viravam ruínas. Reis, magos e cavaleiros tentaram enfrentá-lo... Todos falharam.",
+  "Até que surgiu um homem: Darius VI. Ele reuniu guerreiros de diferentes raças, conhecidos depois como Os Cinco da Aurora. Entre eles, um misterioso cavaleiro elfo.",
+  "Depois de anos de batalhas, Darius e seus companheiros finalmente encontraram Valack. A batalha durou sete dias.",
+  "No último dia, Darius estava de joelhos, ferido e com a espada quebrada. Valack, pronto para o golpe final, rugiu: \"Você não pode me matar, humano... Eu existirei depois do seu reino.\"",
+  "\"Estamos dando ao mundo mais duzentos anos.\" A magia explodiu e correntes de energia envolveram o dragão. Valack rugiu: \"EU VOLTAREI!\" E Darius respondeu: \"Então estaremos esperando.\" O dragão foi selado.",
+  "E Darius VI desapareceu. A paz voltou ao mundo, mas ninguém percebeu: o selo não estava ficando mais forte, estava envelhecendo. O que fora criado para proteger virou algo muito pior. Uma maldição. A Maldição de Vallack.",
+  "200 anos depois... A maldição começou a se espalhar. A jornada para quebrar o selo envelhecido começa agora."
+];
+(() => {
+  const palco = $("#palco"), pontos = $("#pontos"), leg = $("#legenda"), btnAuto = $("#auto");
+  let i = 0, timer = null;
+  const imgs = CENAS.map((t, k) => { const im = cria("img"); im.src = `img/prologo_${k + 1}.jpg`; im.alt = t; im.loading = k ? "lazy" : "eager"; palco.insertBefore(im, palco.firstChild); return im; });
+  const bts = CENAS.map((_, k) => { const b = cria("button"); b.setAttribute("aria-label", `Cena ${k + 1}`); b.onclick = () => vai(k, true); pontos.appendChild(b); return b; });
+  function vai(k, manual) {
+    i = (k + CENAS.length) % CENAS.length;
+    imgs.forEach((im, n) => im.classList.toggle("ativa", n === i));
+    bts.forEach((b, n) => b.classList.toggle("ativo", n === i));
+    leg.innerHTML = ""; leg.append(cria("b", "", `CENA ${i + 1} DE ${CENAS.length}`), document.createTextNode(CENAS[i]));
+    if (manual) para();
+  }
+  function para() { clearInterval(timer); timer = null; btnAuto.textContent = "▶ PASSAR SOZINHO"; }
+  $("#ant").onclick = () => vai(i - 1, true);
+  $("#prox").onclick = () => vai(i + 1, true);
+  btnAuto.onclick = () => { if (timer) return para(); btnAuto.textContent = "❚❚ PAUSAR"; timer = setInterval(() => vai(i + 1), 6500); };
+  palco.addEventListener("keydown", e => { if (e.key === "ArrowLeft") vai(i - 1, true); if (e.key === "ArrowRight") vai(i + 1, true); });
+  let x0 = null;
+  palco.addEventListener("touchstart", e => x0 = e.touches[0].clientX, { passive: true });
+  palco.addEventListener("touchend", e => { if (x0 == null) return; const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 40) vai(i + (d < 0 ? 1 : -1), true); x0 = null; });
+  vai(0);
+})();
+
+/* ---------- lightbox ---------- */
+const luz = $("#luz");
+function abrirLuz(src, tit, txt) { $("#luzImg").src = src; $("#luzImg").alt = tit; $("#luzTit").textContent = tit; $("#luzTxt").textContent = txt || ""; luz.classList.add("aberta"); $("#fechar").focus(); }
+function fecharLuz() { luz.classList.remove("aberta"); }
+$("#fechar").onclick = fecharLuz;
+luz.addEventListener("click", e => { if (e.target === luz) fecharLuz(); });
+addEventListener("keydown", e => { if (e.key === "Escape") fecharLuz(); });
+
+/* ---------- bestiário ---------- */
+const BESTAS = [
+  ["besta", "Besta", "inimigo", "Os javalis de guerra da maldição. Atacam em carga pelas ruas da vila."],
+  ["besta_escudeira", "Besta Escudeira", "inimigo", "Avança atrás do escudo. É preciso quebrar a guarda ou achar a brecha."],
+  ["esqueleto", "Esqueleto Guerreiro", "inimigo", "\"Ossos não morrem!\" Derrubado, ele pode se erguer de novo."],
+  ["arqueiro", "Arqueiro Esqueleto", "inimigo", "Fica no alto das torres de vigia e cobre a rua de flechas."],
+  ["aranha", "Mulher-Aranha", "inimigo", "Espreita perto do abismo da estrada e prende quem chega perto demais."],
+  ["estatua", "Estátua Enfeitiçada", "inimigo", "Parece parte do cenário, até a maldição acordá-la."],
+  ["porco", "Homem-Porco", "inimigo", "O Porco Corrompido. Bruto, pesado e difícil de derrubar."],
+  ["carrasco", "O Carrasco de Vallack", "chefe", "O mini-chefe do Capítulo I. Fecha a arena no meio da vila e só um dos dois sai."],
+  ["arvore", "A Árvore Amaldiçoada", "chefe", "A chefe que guarda a estrada do castelo. Invoca servos e faz chover fogo."]
+];
+(() => {
+  const g = $("#bestas");
+  BESTAS.forEach(([arq, nome, tipo, txt]) => {
+    const b = cria("button", "besta revela"); b.dataset.t = tipo;
+    const im = cria("img"); im.src = `img/${arq}.png`; im.alt = nome; im.loading = "lazy";
+    b.append(im, cria("em", tipo === "chefe" ? "chefe" : "", tipo === "chefe" ? "CHEFE" : "INIMIGO"), cria("span", "", nome));
+    b.onclick = () => abrirLuz(im.src, nome, txt);
+    g.appendChild(b);
+  });
+  $("#filtros").addEventListener("click", e => {
+    const f = e.target.dataset.f; if (!f) return;
+    document.querySelectorAll("#filtros button").forEach(b => b.classList.toggle("ativo", b === e.target));
+    g.querySelectorAll(".besta").forEach(b => b.hidden = f !== "todos" && b.dataset.t !== f);
+  });
+})();
+
+/* ---------- galeria ---------- */
+const TELAS = [
+  ["vila", "A vila em chamas", "O cenário do Capítulo I: casas ardendo na chama roxa da maldição."],
+  ["tela_combate", "Combate", "Golpe crítico em sequência contra as bestas, com a câmera fechada no duelo."],
+  ["tela_ponte_madeira", "A ponte de madeira", "Ela desaba atrás de Twilight. Quem para, cai junto."],
+  ["tela_ponte_pedra", "A ponte de pedra", "Os arcos caem um a um sobre o abismo."],
+  ["tela_hud", "Controles de toque", "A HUD no celular no modo 4 dedos."],
+  ["tela_editor_hud", "Editor da HUD", "Arraste cada botão para onde quiser e escolha o tamanho."],
+  ["tela_menu", "Menu inicial", "O menu do jogo."],
+  ["twilight", "Twilight Vetrus", "O herói e a Lâmina de Sylla."]
+];
+(() => {
+  const g = $("#telas");
+  TELAS.forEach(([arq, nome, txt]) => {
+    const b = cria("button", "revela"); const im = cria("img"); im.src = `img/${arq}.png`; im.alt = nome; im.loading = "lazy";
+    b.append(im, cria("span", "", nome)); b.onclick = () => abrirLuz(im.src, nome, txt); g.appendChild(b);
+  });
+})();
+
+/* ---------- mapa ---------- */
+const CAPITULOS = [
+  ["A CAMINHO DO CASTELO", "A vila de Twilight arde na maldição de Vallack. Atravesse as ruas em chamas, enfrente o Carrasco e derrube a Árvore Amaldiçoada que guarda a estrada."],
+  ["O SALÃO REAL EM RUÍNAS", "No coração do castelo, a maldição aguarda. O salão do rei virou ninho de monstros."],
+  ["AS MURALHAS DE VALLACK", "As muralhas tomadas por esqueletos e arqueiros. Escale as torres sob a chuva de flechas."],
+  ["O PÂNTANO DOS AFOGADOS", "Névoa venenosa e almas presas na lama. Nada sob a água está realmente morto."],
+  ["A FLORESTA DE ESPINHOS", "Árvores que sangram e raízes que caçam. Dizem que a maldição nasceu aqui."],
+  ["AS MINAS DE CINZA", "Túneis de carvão em brasa, onde os mineiros nunca pararam de cavar."],
+  ["A CATEDRAL PARTIDA", "Vitrais quebrados e um coro de mortos. A fé de Vallack virou pó."],
+  ["O CEMITÉRIO DOS REIS", "Tumbas abertas e reis sem descanso, ainda de coroa."],
+  ["A PONTE DO ABISMO", "Uma ponte de correntes sobre o nada. Cada passo acorda o que mora embaixo."],
+  ["AS TERRAS QUEIMADAS", "Campos de batalha que ainda ardem. O vento traz os gritos de guerras antigas."],
+  ["A FORJA DOS CONDENADOS", "Ferreiros acorrentados forjam, dia e noite, as armas da maldição."],
+  ["O LAGO DE GELO NEGRO", "Gelo escuro sobre um lago sem fundo. Os afogados olham de baixo."],
+  ["A TORRE DO ALQUIMISTA", "Frascos, venenos e experimentos que escaparam das jaulas."],
+  ["O LABIRINTO DE OSSOS", "Corredores erguidos com os restos de um exército inteiro."],
+  ["O PORTO FANTASMA", "Navios sem tripulação atracados na névoa. Os sinos tocam sozinhos."],
+  ["O SANTUÁRIO DE SYLLA", "O templo da chama sagrada, agora corrompida pela maldição."],
+  ["O TRONO DE VALLACK", "O salão do rei que trouxe a maldição. Ele ainda espera."],
+  ["O COVIL DO DRAGÃO", "Além do trono, sob o céu em chamas, o dragão de Vallack desperta. O chefão de toda a maldição."]
+];
+(() => {
+  const romano = n => ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII"][n];
+  const g = $("#capitulos");
+  CAPITULOS.forEach(([nome, txt], k) => {
+    const d = cria("details", "cap revela" + (k === 0 ? " aberta" : "")); if (k === 0) d.open = true;
+    const s = cria("summary"); s.append(cria("span", "num", romano(k)), cria("span", "", nome), cria("span", "estado", k === 0 ? "JOGÁVEL" : "🔒 EM DESENVOLVIMENTO"));
+    d.append(s, cria("p", "", txt)); g.appendChild(d);
+  });
+})();
+
+/* ---------- aparecer ao rolar ---------- */
+(() => {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visto"); io.unobserve(e.target); } }), { threshold: 0.08 });
+  document.querySelectorAll(".revela").forEach(e => io.observe(e));
+})();
+
+/* =====================================================================
+   COMENTÁRIOS: nome, estrelas, curtir e responder
+   Com CONFIG.comentariosUrl preenchido, todos veem os mesmos comentários
+   (Firebase Realtime Database pela API REST). Vazio: ficam só neste aparelho.
+   ===================================================================== */
+const Banco = (() => {
+  const url = CONFIG.comentariosUrl.replace(/\/+$/, "");
+  const CHAVE = "vallack_comentarios_v1";
+  const lerLocal = () => { try { return JSON.parse(localStorage.getItem(CHAVE) || "{}"); } catch { return {}; } };
+  const gravarLocal = d => { try { localStorage.setItem(CHAVE, JSON.stringify(d)); } catch {} };
+  return {
+    online: !!url,
+    async listar() {
+      if (!url) return lerLocal();
+      const r = await fetch(`${url}/comentarios.json`); if (!r.ok) throw new Error("falha ao ler");
+      return (await r.json()) || {};
+    },
+    async criar(c) {
+      if (!url) { const d = lerLocal(); const id = "l" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); d[id] = c; gravarLocal(d); return id; }
+      const r = await fetch(`${url}/comentarios.json`, { method: "POST", body: JSON.stringify(c) }); if (!r.ok) throw new Error("falha ao publicar");
+      return (await r.json()).name;
+    },
+    async curtir(id, delta) {
+      if (!url) { const d = lerLocal(); if (d[id]) { d[id].curtidas = Math.max(0, (d[id].curtidas || 0) + delta); gravarLocal(d); } return; }
+      const r = await fetch(`${url}/comentarios/${encodeURIComponent(id)}/curtidas.json`, { method: "PUT", body: JSON.stringify({ ".sv": { increment: delta } }) });
+      if (!r.ok) throw new Error("falha ao curtir");
+    }
+  };
+})();
+
+(() => {
+  const guarda = { get: (k, p) => { try { return JSON.parse(localStorage.getItem(k)) ?? p; } catch { return p; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
+  const lista = $("#lista"), form = $("#form"), nome = $("#nome"), texto = $("#texto"), erro = $("#erro"), escolhe = $("#escolhe"), ordem = $("#ordem");
+  let dados = {}, nota = 0, curtidos = new Set(guarda.get("vallack_curtidos", []));
+  nome.value = guarda.get("vallack_nome", "");
+
+  const modo = $("#modo");
+  if (!Banco.online) { modo.hidden = false; modo.textContent = "Modo local: os comentários que você escrever ficam salvos só neste aparelho. Eles passam a aparecer para todos quando o banco de comentários online for ligado."; }
+
+  // estrelas do formulário
+  for (let n = 1; n <= 5; n++) {
+    const b = cria("button", "", "★"); b.type = "button"; b.setAttribute("role", "radio"); b.setAttribute("aria-label", `${n} estrela${n > 1 ? "s" : ""}`);
+    b.onclick = () => { nota = n; pinta(); };
+    escolhe.appendChild(b);
+  }
+  const pinta = () => [...escolhe.children].forEach((b, k) => { b.classList.toggle("on", k < nota); b.setAttribute("aria-checked", k + 1 === nota); });
+  texto.addEventListener("input", () => $("#conta").textContent = `${texto.value.length} / 600`);
+
+  const limpa = s => String(s || "").replace(/[\u0000-\u0008\u000B-\u001F]/g, "").trim();
+  function valida(n, t, precisaNota) {
+    if (n.length < 2) return "Escreva o seu nome de jogador (pelo menos 2 letras).";
+    if (precisaNota && !nota) return "Escolha de 1 a 5 estrelas.";
+    if (t.length < 3) return "Escreva o seu comentário.";
+    return "";
+  }
+  const cor = n => { let h = 0; for (const ch of n) h = (h * 31 + ch.charCodeAt(0)) % 360; return `hsl(${h} 62% 62%)`; };
+  const quando = ms => { const d = (Date.now() - ms) / 1000; if (d < 60) return "agora"; if (d < 3600) return `há ${Math.floor(d / 60)} min`; if (d < 86400) return `há ${Math.floor(d / 3600)} h`; if (d < 2592000) return `há ${Math.floor(d / 86400)} d`; return new Date(ms).toLocaleDateString("pt-BR"); };
+
+  async function carrega() {
+    try { dados = await Banco.listar(); } catch { dados = {}; lista.replaceChildren(cria("p", "vazio", "Não foi possível carregar os comentários agora. Tente de novo em instantes.")); return; }
+    desenha();
+  }
+
+  function desenha() {
+    const todos = Object.entries(dados).map(([id, c]) => ({ id, ...c })).filter(c => c && c.nome && c.texto);
+    const pais = todos.filter(c => !c.pai);
+    const notas = pais.filter(c => c.estrelas >= 1 && c.estrelas <= 5);
+    // resumo
+    if (notas.length) {
+      const m = notas.reduce((s, c) => s + c.estrelas, 0) / notas.length;
+      $("#media").textContent = m.toFixed(1).replace(".", ",");
+      $("#mediaEstrelas").textContent = "★".repeat(Math.round(m)) + "☆".repeat(5 - Math.round(m));
+      $("#total").textContent = `${notas.length} avaliaç${notas.length > 1 ? "ões" : "ão"}`;
+    } else { $("#media").textContent = "–"; $("#mediaEstrelas").textContent = "☆☆☆☆☆"; $("#total").textContent = "Nenhuma avaliação ainda"; }
+    const barras = $("#barras"); barras.replaceChildren();
+    for (let n = 5; n >= 1; n--) {
+      const q = notas.filter(c => c.estrelas === n).length;
+      const l = cria("div"); const i = cria("i"); const u = cria("u"); u.style.width = (notas.length ? q / notas.length * 100 : 0) + "%"; i.appendChild(u);
+      l.append(cria("span", "", `${n} ★`), i, cria("span", "", String(q))); barras.appendChild(l);
+    }
+    // lista
+    const o = ordem.value;
+    pais.sort((a, b) => o === "curtidos" ? (b.curtidas || 0) - (a.curtidas || 0) || b.data - a.data : o === "nota" ? (b.estrelas || 0) - (a.estrelas || 0) || b.data - a.data : b.data - a.data);
+    lista.replaceChildren();
+    if (!pais.length) { lista.appendChild(cria("p", "vazio", "Seja o primeiro a comentar.")); return; }
+    pais.forEach(p => {
+      const el = cartao(p, p.id);
+      const rs = todos.filter(c => c.pai === p.id).sort((a, b) => a.data - b.data);
+      if (rs.length) { const box = cria("div", "respostas"); rs.forEach(r => box.appendChild(cartao(r, p.id))); el.appendChild(box); }
+      lista.appendChild(el);
+    });
+  }
+
+  function cartao(c, idPai) {
+    const el = cria("article", "com");
+    const cab = cria("div", "cab");
+    const av = cria("span", "avatar", c.nome.trim()[0].toUpperCase()); av.style.background = cor(c.nome);
+    cab.append(av, cria("span", "nome", c.nome));
+    if (!c.pai && c.estrelas) { const e = cria("span", "estrelas", "★".repeat(c.estrelas) + "☆".repeat(5 - c.estrelas)); e.setAttribute("aria-label", `${c.estrelas} de 5 estrelas`); cab.appendChild(e); }
+    cab.appendChild(cria("span", "quando", quando(c.data)));
+    const acoes = cria("div", "acoes");
+    const bc = cria("button", curtidos.has(c.id) ? "curtido" : "", `♥ ${c.curtidas || 0}`); bc.setAttribute("aria-pressed", curtidos.has(c.id)); bc.setAttribute("aria-label", "Curtir comentário");
+    bc.onclick = async () => {
+      const tinha = curtidos.has(c.id), delta = tinha ? -1 : 1;
+      bc.disabled = true;
+      try { await Banco.curtir(c.id, delta); tinha ? curtidos.delete(c.id) : curtidos.add(c.id); guarda.set("vallack_curtidos", [...curtidos]); dados[c.id].curtidas = Math.max(0, (dados[c.id].curtidas || 0) + delta); desenha(); }
+      catch { bc.disabled = false; }
+    };
+    const br = cria("button", "", "↩ Responder");
+    br.onclick = () => {
+      if (el.querySelector(".resp-form")) { el.querySelector(".resp-form").remove(); return; }
+      const f = cria("form", "resp-form"); const ta = cria("textarea"); ta.maxLength = 600; ta.placeholder = `Responder a ${c.nome}`; ta.setAttribute("aria-label", `Responder a ${c.nome}`);
+      if (c.pai) ta.value = `@${c.nome} `;
+      const li = cria("div", "linha"); const er = cria("span", "erro"); const ok = cria("button", "enviar", "RESPONDER"); ok.type = "submit"; li.append(er, ok);
+      f.className = "resp-form form"; f.append(ta, li);
+      f.onsubmit = async ev => {
+        ev.preventDefault();
+        const n = limpa(nome.value).slice(0, 24), t = limpa(ta.value).slice(0, 600), msg = valida(n, t, false);
+        if (msg) { er.textContent = msg; if (n.length < 2) nome.focus(); return; }
+        ok.disabled = true;
+        try { const novo = { nome: n, texto: t, estrelas: 0, pai: idPai, data: Date.now(), curtidas: 0 }; const id = await Banco.criar(novo); dados[id] = novo; guarda.set("vallack_nome", n); desenha(); }
+        catch { er.textContent = "Não foi possível publicar. Tente de novo."; ok.disabled = false; }
+      };
+      el.insertBefore(f, el.querySelector(".respostas")); ta.focus();
+    };
+    acoes.append(bc, br);
+    el.append(cab, cria("p", "txt", c.texto), acoes);
+    return el;
+  }
+
+  form.addEventListener("submit", async ev => {
+    ev.preventDefault();
+    const n = limpa(nome.value).slice(0, 24), t = limpa(texto.value).slice(0, 600), msg = valida(n, t, true);
+    erro.textContent = msg; if (msg) { if (n.length < 2) nome.focus(); return; }
+    const bt = form.querySelector(".enviar"); bt.disabled = true;
+    try {
+      const novo = { nome: n, texto: t, estrelas: nota, pai: "", data: Date.now(), curtidas: 0 };
+      const id = await Banco.criar(novo); dados[id] = novo; guarda.set("vallack_nome", n);
+      texto.value = ""; nota = 0; pinta(); $("#conta").textContent = "0 / 600"; desenha();
+    } catch { erro.textContent = "Não foi possível publicar. Tente de novo."; }
+    bt.disabled = false;
+  });
+  ordem.addEventListener("change", desenha);
+  carrega();
+})();
+</script>
+</body>
+</html>

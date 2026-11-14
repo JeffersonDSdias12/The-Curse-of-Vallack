@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_inimigo02_parado
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 54ece7ca906efb247b4eb83e8beaf33d, type: 3}
+  - {fileID: 21300000, guid: bc2f61f754fdf0d40b4a7a0540fdb393, type: 3}
+  - {fileID: 21300000, guid: c5c026e8c7b963148ab8262c702e1698, type: 3}
+  - {fileID: 21300000, guid: 6a8f9d670dbe40948b77cc50cd8d6005, type: 3}
+  - {fileID: 21300000, guid: b0a5b4b226dfb76478c6f017a9cfa638, type: 3}
+  - {fileID: 21300000, guid: 2fb4e27c350c3564da073e5f49e51a5e, type: 3}
+  - {fileID: 21300000, guid: 14ba196a066ffe74e9fdc722c5ea4485, type: 3}
+  - {fileID: 21300000, guid: 4cd8a53f2994d8c41b5180bdf0483940, type: 3}
+  - {fileID: 21300000, guid: 54427b43df1c8b9479d67a744203ecec, type: 3}
+  velocidade: 8
+  porSegundo: 1
+  k: 2

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="ouro" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0c0"/>
+      <stop offset="0.3" stop-color="#d9a64e"/>
+      <stop offset="0.55" stop-color="#7a4f1c"/>
+      <stop offset="0.8" stop-color="#e6c06a"/>
+      <stop offset="1" stop-color="#5e3a12"/>
+    </linearGradient>
+    <radialGradient id="pedra" cx="0.5" cy="0.45" r="0.62">
+      <stop offset="0" stop-color="#3a2a2c" stop-opacity="0.82"/>
+      <stop offset="1" stop-color="#120a0c" stop-opacity="0.82"/>
+    </radialGradient>
+  </defs>
+  <!-- cruz: braços com cantos arredondados -->
+  <path d="M90 10 H166 Q174 10 174 18 V82 H238 Q246 82 246 90 V166 Q246 174 238 174 H174 V238 Q174 246 166 246 H90 Q82 246 82 238 V174 H18 Q10 174 10 166 V90 Q10 82 18 82 H82 V18 Q82 10 90 10 Z"
+        fill="url(#pedra)" stroke="#0b0909" stroke-opacity="0.85" stroke-width="7"/>
+  <path d="M90 10 H166 Q174 10 174 18 V82 H238 Q246 82 246 90 V166 Q246 174 238 174 H174 V238 Q174 246 166 246 H90 Q82 246 82 238 V174 H18 Q10 174 10 166 V90 Q10 82 18 82 H82 V18 Q82 10 90 10 Z"
+        fill="none" stroke="url(#ouro)" stroke-width="4"/>
+  <!-- filetes separando os braços do centro -->
+  <g stroke="#d9b56a" stroke-opacity="0.35" stroke-width="2" fill="none">
+    <path d="M90 82 H166"/><path d="M90 174 H166"/><path d="M82 90 V166"/><path d="M174 90 V166"/>
+  </g>
+  <circle cx="128" cy="128" r="20" fill="#0c0909" fill-opacity="0.7" stroke="url(#ouro)" stroke-width="3"/>
+  <!-- setas -->
+  <g fill="#f2e6cc" stroke="#2a1a08" stroke-width="3" stroke-linejoin="round">
+    <path d="M128 26 L154 60 L102 60 Z"/>
+    <path d="M128 230 L154 196 L102 196 Z"/>
+    <path d="M26 128 L60 102 L60 154 Z"/>
+    <path d="M230 128 L196 102 L196 154 Z"/>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_porco_roxo
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: c50cd9a2f070c664e9ab2f87a5b29965, type: 3}
+  - {fileID: 21300000, guid: ead029f91c3687148858a7c8cfbc4b20, type: 3}
+  - {fileID: 21300000, guid: 2e308cd9e25c88a42a067aea6045496d, type: 3}
+  - {fileID: 21300000, guid: bfe6ce59ad8cfe741b8a902308032c3a, type: 3}
+  - {fileID: 21300000, guid: cbdd16355f11d174690896f0400ce5d1, type: 3}
+  - {fileID: 21300000, guid: 394355c45d30f10439d666c3d1427574, type: 3}
+  - {fileID: 21300000, guid: c2acfb6975800c6488bd84f9b7d789d9, type: 3}
+  - {fileID: 21300000, guid: a93a88a6f63c2bf45ac140bb7256b4a1, type: 3}
+  velocidade: 12
+  porSegundo: 1
+  k: 2

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_player_andar
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 25df8af8a4bb8b640a9081bdbe79fce3, type: 3}
+  - {fileID: 21300000, guid: e17067c5406725248a09e24d19d4d8d5, type: 3}
+  - {fileID: 21300000, guid: e01a80869cd031443a102eef2dc06958, type: 3}
+  - {fileID: 21300000, guid: 850f187edab8b924ba83575ef93c73a6, type: 3}
+  - {fileID: 21300000, guid: ba3d503fb0bc3074bbfb2846b22dfb0f, type: 3}
+  - {fileID: 21300000, guid: ed4533cc60624044cbf31d2d92939058, type: 3}
+  - {fileID: 21300000, guid: 933bd6a0ad8bcc14ea404664fd49f571, type: 3}
+  - {fileID: 21300000, guid: cdb8d85c6f11967418301c58b3e4c403, type: 3}
+  - {fileID: 21300000, guid: ccf4f73afc280984b9355b6464bfe89a, type: 3}
+  - {fileID: 21300000, guid: 3730797d71a487148ad6c6aab1db8049, type: 3}
+  - {fileID: 21300000, guid: 2d9c8f42901c0a84eb220fb6faee072f, type: 3}
+  - {fileID: 21300000, guid: 0ecdd27a1b70b3048a66d2115106b7c8, type: 3}
+  - {fileID: 21300000, guid: cfa98efe80851e245b90dd9d182652a6, type: 3}
+  - {fileID: 21300000, guid: 28a746db9cd029742bf20428da9038ee, type: 3}
+  - {fileID: 21300000, guid: caebee189fb9d664bb074a6170c9cb97, type: 3}
+  - {fileID: 21300000, guid: 25cdae5c7be10394c94001b5bf7e7a18, type: 3}
+  velocidade: 12
+  porSegundo: 1
+  k: 3

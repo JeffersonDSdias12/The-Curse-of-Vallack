@@ -103,7 +103,7 @@ if ((selecionado == PAUSA_MUSICA or selecionado == PAUSA_EFEITOS) and _passo != 
 if (_confirmou and tempo > 8 and selecionado != PAUSA_MUSICA and selecionado != PAUSA_EFEITOS)
 {
     // opções que perdem o progresso não salvo pedem confirmação
-    if (selecionado >= 4 and confirmar != selecionado)
+    if (selecionado >= 3 and confirmar != selecionado)
     {
         confirmar = selecionado;
         som("sfx_menu_mover", 0.7, 0);
@@ -115,18 +115,9 @@ if (_confirmou and tempo > 8 and selecionado != PAUSA_MUSICA and selecionado != 
         {
             case 0: fechar_com("continuar"); exit;
 
-            case 3:   // COMANDOS E COMBOS: o livro de pergaminhos do tutorial
-                if (mudou_config) { config_salvar(); mudou_config = false; }
-                var _g = instance_create_depth(0, 0, -10500, obj_pergaminho);
-                _g.paginas = tutorial_todas();
-                _g.modo_livro = true;
-                _g.veio_da_pausa = true;
-                _g.foto_externa = foto;
-                exit;
-
-            case 4: fechar_com("reiniciar"); exit;   // volta ao último checkpoint / save
-            case 5: fechar_com("menu"); exit;
-            case 6: fechar_com("sair"); exit;
+            case 3: fechar_com("reiniciar"); exit;   // volta ao último checkpoint / save
+            case 4: fechar_com("menu"); exit;
+            case 5: fechar_com("sair"); exit;
         }
     }
 }

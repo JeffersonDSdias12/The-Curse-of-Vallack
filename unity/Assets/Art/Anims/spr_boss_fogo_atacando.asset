@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_boss_fogo_atacando
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: dfa894ae40531764787f498642089c01, type: 3}
+  - {fileID: 21300000, guid: 0979c466206bf8a4796fc1915c80ac27, type: 3}
+  - {fileID: 21300000, guid: a164c0b5e5023e642be4121898a8a40d, type: 3}
+  - {fileID: 21300000, guid: 1cf27baa77d388b4fac59c35097c6d35, type: 3}
+  - {fileID: 21300000, guid: 2c48d4b4a0da12048bdfb2e1c2bb031b, type: 3}
+  - {fileID: 21300000, guid: 5f839f2d1232c424f8cba860eb419181, type: 3}
+  - {fileID: 21300000, guid: 21f9e4734804bec4dbb399f28e6ce596, type: 3}
+  - {fileID: 21300000, guid: 2551a9094a2cb564b8c34b0292760e2b, type: 3}
+  - {fileID: 21300000, guid: 2668ba47f34b5aa4bbab9f7459dfde2b, type: 3}
+  - {fileID: 21300000, guid: 91f3912e6c29997479602f7508eb93b9, type: 3}
+  velocidade: 6
+  porSegundo: 1
+  k: 4

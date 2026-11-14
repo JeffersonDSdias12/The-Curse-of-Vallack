@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <g transform="rotate(-35 128 128)" fill="#ffffff">
+    <rect x="120" y="30" width="16" height="200" rx="6"/>
+    <path d="M120 46 C 90 36, 54 54, 42 108 C 62 96, 94 96, 120 118 Z"/>
+    <path d="M136 46 C 166 36, 202 54, 214 108 C 194 96, 162 96, 136 118 Z"/>
+    <path d="M128 10 L140 34 L116 34 Z"/>
+    <rect x="114" y="196" width="28" height="10" rx="4"/>
+  </g>
+</svg>

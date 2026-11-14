@@ -1,7 +1,7 @@
 // =====================================================================
 //  obj_final — fim do jogo (Fase 2 sem nenhum inimigo)
-//  tela escurece -> "CONTINUA..." (efeito amaldiçoado) -> carregamento ->
-//  volta ao menu inicial.
+//  tela escurece -> "CONTINUA..." (efeito amaldiçoado) -> CRÉDITOS (nomes
+//  da equipe) -> carregamento -> volta ao menu inicial.
 // =====================================================================
 globais_iniciar();
 global.jogo_finalizado = true;

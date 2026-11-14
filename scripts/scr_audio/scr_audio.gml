@@ -5,17 +5,24 @@
 //  cópias, para o mesmo som poder tocar várias vezes ao mesmo tempo.
 //
 //  CADA SOM PERTENCE AO SEU AMBIENTE ("cena" atual do jogo):
-//   * "titulo"     tela inicial (abertura, menu, opções): tit_*  + mus_menu
+//   * "titulo"     tela inicial (abertura, menu, opções): tit_*  + bgm_main_menu
 //   * "cutscene"   prólogo antes da fase 1: cut_*                + mus_prologo
-//   * "carregamento" telas de carregamento                      + mus_carregamento
+//   * "carregamento" telas de carregamento                      + bgm_loading_screen
 //   * "fase"       jogando: ataques, especiais, acertos, cenário, fogo, chuva,
-//                  menus do jogo (pausa, armas, cristal)        + mus_fase / mus_boss
-//   * "transicao"  sons que atravessam a troca de tela (START do jogo)
+//                  menus do jogo (pausa, armas, cristal)
+//                  + bgm_battle_phase1 (fase 1) / mus_fase (fase 2)
+//                  + bgm_mini_boss (Carrasco) / bgm_final_boss_phase1 (Árvore)
+//   * "transicao"  sons que atravessam a troca de tela (START do jogo, a
+//                  mensagem importante)
 //  Ao trocar de cena, os efeitos da cena anterior param (com um fade curto)
 //  e a chuva / fogo só tocam com a fase rodando (nunca no carregamento).
 //
-//  Todos os sons foram sintetizados para o jogo; para trocar por outro,
-//  basta substituir o arquivo OGG mantendo o nome.
+//  v1.16: TRILHA SONORA NOVA (bgm_*). As músicas vêm prontas para o loop
+//  (ferramentas/converter_trilha.ps1: o fim se mistura ao começo, sem corte
+//  nem silêncio) e trocam com fade de 1,5 s (o fade-out da que sai junto
+//  com o fade-in da que entra).
+//  Os efeitos foram sintetizados para o jogo; para trocar um som, basta
+//  substituir o arquivo OGG mantendo o nome.
 // =====================================================================
 
 // [nome, ambiente, cópias]
@@ -55,7 +62,19 @@ function audio_lista_efeitos()
         ["porco_grunhido", "fase", 2], ["porco_impacto", "fase", 2], ["magia_onda", "fase", 2],
         ["pedra_tinido", "fase", 3], ["estatua_carga", "fase", 2], ["estatua_disparo", "fase", 2], ["pedra_desmorona", "fase", 2],
         // ----- v1.10: a maldição levando o corpo dos inimigos (fumaça negra) -----
-        ["maldicao_evaporar", "fase", 4], ["maldicao_grande", "fase", 1]
+        ["maldicao_evaporar", "fase", 4], ["maldicao_grande", "fase", 1],
+        // ----- v1.11: cenário (tocha acendendo, lampião levando pancada) -----
+        ["tocha_acender", "fase", 3], ["lampiao_bater", "fase", 2],
+        // ----- v1.12: combate novo, sub-armas, Modo Fúria, veneno, diálogos e avisos -----
+        ["sfx_critico", "fase", 3], ["sfx_contra", "fase", 2], ["sfx_backdash", "fase", 2], ["sfx_petrificar", "fase", 3],
+        ["furia_inicio", "fase", 1], ["furia_fim", "fase", 1], ["sangue_lamina", "fase", 3],
+        ["essencia", "fase", 3], ["bumerangue", "fase", 2], ["chama_sylla", "fase", 2],
+        ["veneno_frasco", "fase", 3], ["veneno_poca", "fase", 3], ["veneno_dano", "fase", 2],
+        ["dialogo_texto", "ui", 3], ["dialogo_abrir", "ui", 1],
+        ["viga_aviso", "fase", 2], ["raiz_aviso", "fase", 3], ["galho_aviso", "fase", 1], ["boss_carga", "fase", 2],
+        // ----- v1.16: mensagem importante (aviso, objetivo, alerta, tutorial) e o corte de espada -----
+        // (sfx_sword_slash é opcional: se o arquivo existir, vira o som dos cortes; ver golpe_som)
+        ["sfx_important_message", "transicao", 2], ["sfx_sword_slash", "fase", 3]
     ];
 }
 
@@ -72,7 +91,7 @@ function audio_iniciar()
     {
         var _nome = _lista[_i][0];
         var _arq = _nome + ".ogg";
-        if (!file_exists(_arq)) { show_debug_message("Som não encontrado: " + _arq); continue; }
+        if (!file_exists(_arq)) { if (_nome != "sfx_sword_slash") show_debug_message("Som não encontrado: " + _arq); continue; }
         var _copias = [];
         // se um arquivo não abrir, o jogo segue sem aquele som (não trava)
         try { repeat (_lista[_i][2]) array_push(_copias, audio_create_stream(_arq)); }
@@ -80,7 +99,8 @@ function audio_iniciar()
         if (array_length(_copias) > 0) global.sfx[$ _nome] = { s: _copias, prox: 0, amb: _lista[_i][1] };
     }
     global.streams = {};
-    var _ms = ["mus_menu", "mus_prologo", "mus_carregamento", "mus_fase", "mus_boss", "amb_chuva", "amb_fogo"];
+    var _ms = ["bgm_main_menu", "bgm_loading_screen", "bgm_battle_phase1", "bgm_mini_boss", "bgm_final_boss_phase1",
+               "mus_prologo", "mus_fase", "amb_chuva", "amb_fogo"];
     for (var _j = 0; _j < array_length(_ms); _j++)
     {
         var _arq2 = _ms[_j] + ".ogg";
@@ -188,6 +208,23 @@ function musica(_nome, _fade_ms = 1500)
 function musica_ganho()
 {
     return global.cfg_vol_musica * (global.audio_pausa ? 0.35 : 1);
+}
+
+// v1.16: a trilha de cada fase (fase 1: a batalha da vila; fase 2: a antiga)
+function musica_fase()
+{
+    return (room == Room1) ? "bgm_battle_phase1" : "mus_fase";
+}
+
+// v1.16: o som da MENSAGEM IMPORTANTE (aviso na tela, objetivo novo, alerta,
+// tutorial). Um intervalo curto evita dois toques quando o aviso e o
+// objetivo mudam no mesmo instante.
+function som_mensagem()
+{
+    if (!variable_global_exists("msg_som_t")) global.msg_som_t = -100000;
+    if (current_time - global.msg_som_t < 900) return -1;
+    global.msg_som_t = current_time;
+    return som("sfx_important_message", 0.9, 0);
 }
 
 // Sons de ambiente em loop (chuva, fogo): o volume vai até o alvo aos poucos.

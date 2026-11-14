@@ -1,5 +1,28 @@
 # The Curse of Vallack
-Game 2d Desenvolvido no gamemaker
+**A Maldição de Vallack** · jogo 2D de ação e plataforma em pixel art · **Beta 0.5**
+
+🌐 **Site oficial:** https://jeffersondsdias12.github.io/the-curse-of-vallack-web/
+⬇️ **Baixar (Android e Windows):** [Releases](https://github.com/JeffersonDSdias12/the-curse-of-vallack-web/releases/latest)
+
+## Estrutura do projeto
+
+| Pasta | O que é |
+|---|---|
+| `objects/`, `scripts/`, `rooms/`, `sprites/`, `tilesets/`, `shaders/`, `options/`, `datafiles/`, `The Curse of Vallack.yyp` | Versão **PC (Windows)**, feita no **GameMaker** (abra o `.yyp`) |
+| `godot/` | Versão **mobile (Android)**, feita no **Godot 4.7** (abra a pasta `godot/` no editor; ver `godot/LEIAME.md`) |
+| `unity/` | Versão mobile em **Unity 6**, em pausa (abra a pasta `unity/` no Unity Hub) |
+| `site/` | Código do site oficial (os instaladores ficam nas Releases, não aqui) |
+| `ferramentas/` | Scripts que geram cenário, peças, ícones e sprites, e a arte original da equipe |
+| `imagens_documento/` | Imagens do documento do jogo (personagens, inimigos, chefes, cenário) |
+
+Pastas geradas automaticamente (`unity/Library`, `godot/.godot`, `build/`) não vão para o repositório: elas são recriadas ao abrir cada projeto.
+
+## Equipe
+
+Desenvolvido por **Jefferson Dias** · Desenvolvimento: Eduardo, Isaac, Alex, Aldreon · Design: Alex, I.A. Claude · Roteiro: Isaac, Eduardo, I.A. Claude
+Um projeto acadêmico da **Faculdade FAPAN** · **Gambitech Studio**
+
+---
 
 
 ⚔️ As Crônicas de Sylla

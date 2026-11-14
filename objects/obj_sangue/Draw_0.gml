@@ -1,0 +1,10 @@
+gpu_set_blendmode(bm_add);
+draw_set_alpha(0.3);
+draw_set_color(make_color_rgb(255, 40, 30));
+draw_circle(x, y, 5, false);
+gpu_set_blendmode(bm_normal);
+draw_set_alpha(1);
+draw_set_color(make_color_rgb(170, 10, 15));
+draw_circle(x, y, 2.4, false);
+draw_line_width(x, y, x - vx * 2, y - vy * 2, 2);
+draw_set_color(c_white);

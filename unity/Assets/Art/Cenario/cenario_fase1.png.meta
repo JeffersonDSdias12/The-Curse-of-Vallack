@@ -1,0 +1,1796 @@
+fileFormatVersion: 2
+guid: 3426919dc116912448e82e1fb4d34741
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7080466565594268742
+    second: cenario_fase1_0
+  - first:
+      213: -3557213214043591253
+    second: cenario_fase1_1
+  - first:
+      213: -3176802621802304854
+    second: cenario_fase1_2
+  - first:
+      213: -820252058821165154
+    second: cenario_fase1_3
+  - first:
+      213: 5678450149516347181
+    second: cenario_fase1_4
+  - first:
+      213: -6156403891433974754
+    second: cenario_fase1_5
+  - first:
+      213: -2929649029211709956
+    second: cenario_fase1_6
+  - first:
+      213: 842087697746116083
+    second: cenario_fase1_7
+  - first:
+      213: -589117374060946886
+    second: cenario_fase1_8
+  - first:
+      213: -1466121802011462761
+    second: cenario_fase1_9
+  - first:
+      213: -4595615290576637936
+    second: cenario_fase1_10
+  - first:
+      213: 1691272829693487740
+    second: cenario_fase1_11
+  - first:
+      213: 6616380904043036813
+    second: cenario_fase1_12
+  - first:
+      213: 4376692972633075885
+    second: cenario_fase1_13
+  - first:
+      213: 3730833471173998817
+    second: cenario_fase1_14
+  - first:
+      213: 581834282720525683
+    second: cenario_fase1_15
+  - first:
+      213: -882589023102945417
+    second: cenario_fase1_16
+  - first:
+      213: -38871621454532579
+    second: cenario_fase1_17
+  - first:
+      213: 7243845700603189906
+    second: cenario_fase1_18
+  - first:
+      213: 5207155194490020056
+    second: cenario_fase1_19
+  - first:
+      213: 2948363765988167645
+    second: cenario_fase1_20
+  - first:
+      213: 5306005986157092068
+    second: cenario_fase1_21
+  - first:
+      213: 3507074941006823338
+    second: cenario_fase1_22
+  - first:
+      213: 5598273821206539969
+    second: cenario_fase1_23
+  - first:
+      213: -545468814078080866
+    second: cenario_fase1_24
+  - first:
+      213: -5340486629504588238
+    second: cenario_fase1_25
+  - first:
+      213: -4258277826429692365
+    second: cenario_fase1_26
+  - first:
+      213: 6106466167948329407
+    second: cenario_fase1_27
+  - first:
+      213: 3485949178466287958
+    second: cenario_fase1_28
+  - first:
+      213: 6159813910815994732
+    second: cenario_fase1_29
+  - first:
+      213: 8332387305467579286
+    second: cenario_fase1_30
+  - first:
+      213: -1752269079691229592
+    second: cenario_fase1_31
+  - first:
+      213: 5774252954746573993
+    second: cenario_fase1_32
+  - first:
+      213: 148600368225057168
+    second: cenario_fase1_33
+  - first:
+      213: -5602740214796740250
+    second: cenario_fase1_34
+  - first:
+      213: -8170212754112276576
+    second: cenario_fase1_35
+  - first:
+      213: -7971066816460459540
+    second: cenario_fase1_36
+  - first:
+      213: -5336769893450710692
+    second: cenario_fase1_37
+  - first:
+      213: 8176524651858404874
+    second: cenario_fase1_38
+  - first:
+      213: 5417880508388731663
+    second: cenario_fase1_39
+  - first:
+      213: -9128820164218540274
+    second: cenario_fase1_40
+  - first:
+      213: 7941971247742151948
+    second: cenario_fase1_41
+  - first:
+      213: -1124645274465257021
+    second: cenario_fase1_42
+  - first:
+      213: 7296773615342677013
+    second: cenario_fase1_43
+  - first:
+      213: 3226883352055230611
+    second: cenario_fase1_44
+  - first:
+      213: -715260614998053249
+    second: cenario_fase1_45
+  - first:
+      213: -7369069542528669614
+    second: cenario_fase1_46
+  - first:
+      213: 3248919406451237610
+    second: cenario_fase1_47
+  - first:
+      213: -6042963069191493062
+    second: cenario_fase1_48
+  - first:
+      213: 7055410643076214623
+    second: cenario_fase1_49
+  - first:
+      213: 6221809533995504979
+    second: cenario_fase1_50
+  - first:
+      213: -3790087089749375214
+    second: cenario_fase1_51
+  - first:
+      213: -2182680949156398418
+    second: cenario_fase1_52
+  - first:
+      213: -9006969414796220321
+    second: cenario_fase1_53
+  - first:
+      213: -752788473197685778
+    second: cenario_fase1_54
+  - first:
+      213: 311967875840288217
+    second: cenario_fase1_55
+  - first:
+      213: 3363964280864863522
+    second: cenario_fase1_56
+  - first:
+      213: 5768447874018478272
+    second: cenario_fase1_57
+  - first:
+      213: -7822097181097553124
+    second: cenario_fase1_58
+  - first:
+      213: 2018511107963989153
+    second: cenario_fase1_59
+  - first:
+      213: -2764454360858771232
+    second: cenario_fase1_60
+  - first:
+      213: -6280931551539643919
+    second: cenario_fase1_61
+  - first:
+      213: 532318712369226685
+    second: cenario_fase1_62
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: cenario_fase1_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 582
+        width: 298
+        height: 315
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 644c646d3ded24260800000000000000
+      internalID: 7080466565594268742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_1
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 684
+        width: 1026
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bad2b92cd6d32aec0800000000000000
+      internalID: -3557213214043591253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_2
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 714
+        width: 148
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaaa1fdc8dab9e3d0800000000000000
+      internalID: -3176802621802304854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 420
+        width: 1025
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9f7eaf2911ed94f0800000000000000
+      internalID: -820252058821165154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_4
+      rect:
+        serializedVersion: 2
+        x: 1028
+        y: 430
+        width: 48
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d278fa44358edce40800000000000000
+      internalID: 5678450149516347181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_5
+      rect:
+        serializedVersion: 2
+        x: 1084
+        y: 438
+        width: 105
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e14de3d574f009aa0800000000000000
+      internalID: -6156403891433974754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_6
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 446
+        width: 103
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfd9449dabbc757d0800000000000000
+      internalID: -2929649029211709956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_7
+      rect:
+        serializedVersion: 2
+        x: 1300
+        y: 446
+        width: 103
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fd32edac42bfab00800000000000000
+      internalID: 842087697746116083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_8
+      rect:
+        serializedVersion: 2
+        x: 1404
+        y: 447
+        width: 126
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3a161c9ed803d7f0800000000000000
+      internalID: -589117374060946886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_9
+      rect:
+        serializedVersion: 2
+        x: 1532
+        y: 447
+        width: 126
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 793b6a92df947abe0800000000000000
+      internalID: -1466121802011462761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_10
+      rect:
+        serializedVersion: 2
+        x: 1660
+        y: 448
+        width: 101
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01073d8ed381930c0800000000000000
+      internalID: -4595615290576637936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_11
+      rect:
+        serializedVersion: 2
+        x: 1762
+        y: 448
+        width: 101
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7a66288dab987710800000000000000
+      internalID: 1691272829693487740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_12
+      rect:
+        serializedVersion: 2
+        x: 1864
+        y: 449
+        width: 120
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d80c92c806b12db50800000000000000
+      internalID: 6616380904043036813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 287
+        width: 120
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da03eb4e1132dbc30800000000000000
+      internalID: 4376692972633075885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_14
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 287
+        width: 99
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e8b675764596c330800000000000000
+      internalID: 3730833471173998817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_15
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 288
+        width: 118
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37d73bb8237131800800000000000000
+      internalID: 581834282720525683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_16
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 288
+        width: 97
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7773a4ba5f960c3f0800000000000000
+      internalID: -882589023102945417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_17
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 288
+        width: 118
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d10fb5b5776e57ff0800000000000000
+      internalID: -38871621454532579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_18
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 288
+        width: 93
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29a9130094f478460800000000000000
+      internalID: 7243845700603189906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_19
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 288
+        width: 118
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d068e98f08834840800000000000000
+      internalID: 5207155194490020056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_20
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 288
+        width: 97
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddf8b5c5931bae820800000000000000
+      internalID: 2948363765988167645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_21
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 289
+        width: 95
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ec5dfcf458b2a940800000000000000
+      internalID: 5306005986157092068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_22
+      rect:
+        serializedVersion: 2
+        x: 976
+        y: 289
+        width: 114
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aafb26bd312aba030800000000000000
+      internalID: 3507074941006823338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_23
+      rect:
+        serializedVersion: 2
+        x: 1092
+        y: 289
+        width: 95
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ce6264216011bd40800000000000000
+      internalID: 5598273821206539969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_24
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 289
+        width: 114
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9882dce00b1e68f0800000000000000
+      internalID: -545468814078080866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_25
+      rect:
+        serializedVersion: 2
+        x: 1304
+        y: 291
+        width: 110
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 236e7a0a4b7c2e5b0800000000000000
+      internalID: -5340486629504588238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_26
+      rect:
+        serializedVersion: 2
+        x: 1416
+        y: 291
+        width: 110
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3365cb0d0ee87e4c0800000000000000
+      internalID: -4258277826429692365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_27
+      rect:
+        serializedVersion: 2
+        x: 1531
+        y: 304
+        width: 81
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb1408550a68eb450800000000000000
+      internalID: 6106466167948329407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 201
+        width: 304
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6514c87fe44906030800000000000000
+      internalID: 3485949178466287958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_29
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 180
+        width: 219
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6372b4ad1e0c7550800000000000000
+      internalID: 6159813910815994732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_30
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 236
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69b8e518b1692a370800000000000000
+      internalID: 8332387305467579286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_31
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 193
+        width: 48
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8668a125e80bea7e0800000000000000
+      internalID: -1752269079691229592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_32
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 180
+        width: 99
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a45be21874422050800000000000000
+      internalID: 5774252954746573993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_33
+      rect:
+        serializedVersion: 2
+        x: 1178
+        y: 180
+        width: 99
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 099fb816f3fef0200800000000000000
+      internalID: 148600368225057168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_34
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 181
+        width: 100
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6699e3095711f32b0800000000000000
+      internalID: -5602740214796740250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_35
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 181
+        width: 114
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a795cba9c29d9e80800000000000000
+      internalID: -8170212754112276576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_36
+      rect:
+        serializedVersion: 2
+        x: 1496
+        y: 183
+        width: 116
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce178f386f4116190800000000000000
+      internalID: -7971066816460459540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_37
+      rect:
+        serializedVersion: 2
+        x: 1614
+        y: 183
+        width: 116
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c510fdcae0cffe5b0800000000000000
+      internalID: -5336769893450710692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_38
+      rect:
+        serializedVersion: 2
+        x: 1732
+        y: 187
+        width: 106
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a06ae3b89d9d87170800000000000000
+      internalID: 8176524651858404874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_39
+      rect:
+        serializedVersion: 2
+        x: 1840
+        y: 187
+        width: 106
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0be5020e9d203b40800000000000000
+      internalID: 5417880508388731663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_40
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 197
+        width: 86
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0fa45d5d6aef4180800000000000000
+      internalID: -9128820164218540274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_41
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 197
+        width: 154
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0d690e75cc873e60800000000000000
+      internalID: 7941971247742151948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_42
+      rect:
+        serializedVersion: 2
+        x: 1047
+        y: 175
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c93d2dd4157460f0800000000000000
+      internalID: -1124645274465257021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_43
+      rect:
+        serializedVersion: 2
+        x: 1595
+        y: 93
+        width: 130
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51c61f471f8534560800000000000000
+      internalID: 7296773615342677013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 75
+        width: 106
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 390bfdadf4138cc20800000000000000
+      internalID: 3226883352055230611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_45
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 77
+        width: 102
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7ea631a242e216f0800000000000000
+      internalID: -715260614998053249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_46
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 77
+        width: 1026
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 258ad684b4ecbb990800000000000000
+      internalID: -7369069542528669614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_47
+      rect:
+        serializedVersion: 2
+        x: 1238
+        y: 77
+        width: 102
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae226659cfa761d20800000000000000
+      internalID: 3248919406451237610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_48
+      rect:
+        serializedVersion: 2
+        x: 1342
+        y: 96
+        width: 45
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3a69060b15132ca0800000000000000
+      internalID: -6042963069191493062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_49
+      rect:
+        serializedVersion: 2
+        x: 1388
+        y: 89
+        width: 96
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5f6115499ad9e160800000000000000
+      internalID: 7055410643076214623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_50
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 89
+        width: 108
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 355d0fd7ece485650800000000000000
+      internalID: 6221809533995504979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_51
+      rect:
+        serializedVersion: 2
+        x: 1730
+        y: 97
+        width: 112
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 217c1b36fd7e66bc0800000000000000
+      internalID: -3790087089749375214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_52
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 97
+        width: 96
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaa3587bd3f85b1e0800000000000000
+      internalID: -2182680949156398418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_53
+      rect:
+        serializedVersion: 2
+        x: 1360
+        y: 79
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f586348c901d00380800000000000000
+      internalID: -9006969414796220321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 234
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee31b004fde8d85f0800000000000000
+      internalID: -752788473197685778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_55
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 15
+        width: 124
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d52bc45125545400800000000000000
+      internalID: 311967875840288217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_56
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 17
+        width: 19
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2257d0eb0b33fae20800000000000000
+      internalID: 3363964280864863522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_57
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 28
+        width: 55
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c88a3467c4ad0050800000000000000
+      internalID: 5768447874018478272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_58
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 28
+        width: 55
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c13981a9e04527390800000000000000
+      internalID: -7822097181097553124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_59
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 32
+        width: 40
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1acaf5d7821330c10800000000000000
+      internalID: 2018511107963989153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_60
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 45
+        width: 39
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e0cb3fc76fa2a9d0800000000000000
+      internalID: -2764454360858771232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_61
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 45
+        width: 98
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f9bfeb1806a5d8a0800000000000000
+      internalID: -6280931551539643919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cenario_fase1_62
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 47
+        width: 66
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db3af0e6c0d236700800000000000000
+      internalID: 532318712369226685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      cenario_fase1_0: 7080466565594268742
+      cenario_fase1_1: -3557213214043591253
+      cenario_fase1_10: -4595615290576637936
+      cenario_fase1_11: 1691272829693487740
+      cenario_fase1_12: 6616380904043036813
+      cenario_fase1_13: 4376692972633075885
+      cenario_fase1_14: 3730833471173998817
+      cenario_fase1_15: 581834282720525683
+      cenario_fase1_16: -882589023102945417
+      cenario_fase1_17: -38871621454532579
+      cenario_fase1_18: 7243845700603189906
+      cenario_fase1_19: 5207155194490020056
+      cenario_fase1_2: -3176802621802304854
+      cenario_fase1_20: 2948363765988167645
+      cenario_fase1_21: 5306005986157092068
+      cenario_fase1_22: 3507074941006823338
+      cenario_fase1_23: 5598273821206539969
+      cenario_fase1_24: -545468814078080866
+      cenario_fase1_25: -5340486629504588238
+      cenario_fase1_26: -4258277826429692365
+      cenario_fase1_27: 6106466167948329407
+      cenario_fase1_28: 3485949178466287958
+      cenario_fase1_29: 6159813910815994732
+      cenario_fase1_3: -820252058821165154
+      cenario_fase1_30: 8332387305467579286
+      cenario_fase1_31: -1752269079691229592
+      cenario_fase1_32: 5774252954746573993
+      cenario_fase1_33: 148600368225057168
+      cenario_fase1_34: -5602740214796740250
+      cenario_fase1_35: -8170212754112276576
+      cenario_fase1_36: -7971066816460459540
+      cenario_fase1_37: -5336769893450710692
+      cenario_fase1_38: 8176524651858404874
+      cenario_fase1_39: 5417880508388731663
+      cenario_fase1_4: 5678450149516347181
+      cenario_fase1_40: -9128820164218540274
+      cenario_fase1_41: 7941971247742151948
+      cenario_fase1_42: -1124645274465257021
+      cenario_fase1_43: 7296773615342677013
+      cenario_fase1_44: 3226883352055230611
+      cenario_fase1_45: -715260614998053249
+      cenario_fase1_46: -7369069542528669614
+      cenario_fase1_47: 3248919406451237610
+      cenario_fase1_48: -6042963069191493062
+      cenario_fase1_49: 7055410643076214623
+      cenario_fase1_5: -6156403891433974754
+      cenario_fase1_50: 6221809533995504979
+      cenario_fase1_51: -3790087089749375214
+      cenario_fase1_52: -2182680949156398418
+      cenario_fase1_53: -9006969414796220321
+      cenario_fase1_54: -752788473197685778
+      cenario_fase1_55: 311967875840288217
+      cenario_fase1_56: 3363964280864863522
+      cenario_fase1_57: 5768447874018478272
+      cenario_fase1_58: -7822097181097553124
+      cenario_fase1_59: 2018511107963989153
+      cenario_fase1_6: -2929649029211709956
+      cenario_fase1_60: -2764454360858771232
+      cenario_fase1_61: -6280931551539643919
+      cenario_fase1_62: 532318712369226685
+      cenario_fase1_7: 842087697746116083
+      cenario_fase1_8: -589117374060946886
+      cenario_fase1_9: -1466121802011462761
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

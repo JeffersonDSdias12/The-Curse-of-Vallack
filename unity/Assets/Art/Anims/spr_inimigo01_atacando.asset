@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_inimigo01_atacando
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: bd8c0162d676293498efd8a24723c6e2, type: 3}
+  - {fileID: 21300000, guid: 207f7ff61637cab438e80f4537ec89ec, type: 3}
+  - {fileID: 21300000, guid: b6329c9e17dc29c4ea400ae45e5badfd, type: 3}
+  - {fileID: 21300000, guid: 9b4208c61ac1a254dabb0d8a1eca3d64, type: 3}
+  - {fileID: 21300000, guid: 965f6622e80dddd4da4db4b61e97d6aa, type: 3}
+  - {fileID: 21300000, guid: 44afaf17ed434c6469a3f14669119d53, type: 3}
+  - {fileID: 21300000, guid: 374edec9849576b4b9cb07c7bd7a53f1, type: 3}
+  - {fileID: 21300000, guid: b2b1c38480cff4d4da998ea4d1691419, type: 3}
+  - {fileID: 21300000, guid: cffb4abdd15fccc428cd4db1f0b0adfa, type: 3}
+  - {fileID: 21300000, guid: 5b6f4285d945b034ba29d6807d333de6, type: 3}
+  velocidade: 30
+  porSegundo: 1
+  k: 3

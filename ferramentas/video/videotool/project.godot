@@ -1,0 +1,21 @@
+config_version=5
+
+[application]
+
+config/name="videotool"
+run/main_scene="res://video.tscn"
+
+[display]
+
+window/size/viewport_width=848
+window/size/viewport_height=480
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+
+[editor]
+
+movie_writer/ogv/video_quality=0.85
+movie_writer/ogv/audio_quality=0.6

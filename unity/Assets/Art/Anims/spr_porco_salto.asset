@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_porco_salto
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: b8646255643f7584ba160e3d0ac45d41, type: 3}
+  - {fileID: 21300000, guid: 5c4032ac7e3e6b441b39ad334e2332f2, type: 3}
+  - {fileID: 21300000, guid: 77117b7310e5d4244b2d40dc2c67415a, type: 3}
+  - {fileID: 21300000, guid: 0489032237455954cb3ed0cc68527fbb, type: 3}
+  - {fileID: 21300000, guid: 6b2d25c80f48e59459a7966733055906, type: 3}
+  - {fileID: 21300000, guid: 5c3808b2fba471041b313a2ae09ff873, type: 3}
+  - {fileID: 21300000, guid: 5e8e0f20c4a396d42bb5c385dfbb080f, type: 3}
+  - {fileID: 21300000, guid: e82dd46e3071d2346b83a87756a3c363, type: 3}
+  - {fileID: 21300000, guid: 244a0f37e3663694596b9513f930179a, type: 3}
+  - {fileID: 21300000, guid: 32bd3f4d4802fb04690db361ddc3462f, type: 3}
+  velocidade: 12
+  porSegundo: 1
+  k: 2

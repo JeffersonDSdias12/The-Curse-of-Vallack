@@ -9,15 +9,19 @@ if (place_meeting(x, y + 2, obj_chao))
 }
 var _tremor = (atordoado > 0) ? sin(atordoado_anim * 1.4) * 1.5 : 0;
 if (executando) _tremor = random_range(-2, 2);
+var _renasce = (estado_ia == "renascer" and !morrendo);
+if (_renasce) _tremor = random_range(-2.5, 2.5);       // v1.19: segunda vida se erguendo
 var _cor = enfurecido ? merge_color(cor_base, make_color_rgb(255, 120, 110), 0.45) : cor_base;
 if (estado_ia == "dormindo") _cor = merge_color(cor_base, c_black, 0.25);
 if (morrendo and morte_fim) _cor = merge_color(cor_base, make_color_rgb(90, 80, 80), 0.4);
 
-// brilho vermelho antes da investida e na fúria
+// brilho vermelho antes da investida e na fúria (v1.19: forte ao renascer)
 if (!morrendo and (estado_ia == "investida_preparo" or enfurecido))
 {
     gpu_set_blendmode(bm_add);
     var _ia = (estado_ia == "investida_preparo") ? 0.45 + 0.25 * sin(_t / 2) : 0.18 + 0.08 * sin(_t / 6);
+    if (_renasce) _ia = 0.5 + 0.3 * sin(_t / 2);
+    else if (na_segunda_vida) _ia += 0.1;
     draw_sprite_hd(sprite_index, image_index, x + _tremor, y, dir * escala * 1.05, escala * 1.03, 0, make_color_rgb(220, 30, 10), _ia);
     gpu_set_blendmode(bm_normal);
 }
@@ -32,6 +36,23 @@ else inimigo_corpo_desenhar(sprite_index, image_index, x + _tremor, y, dir * esc
 if (morrendo) exit;
 var _topo = y - 72 * escala;
 
+// v1.12: AVISO claro antes de cada ataque: clarão e um "!" grande
+var _prep = (estado_ia == "atacar" and image_index < 4) or estado_ia == "salto_preparo" or estado_ia == "investida_preparo";
+if (_prep)
+{
+    var _pa2 = 0.7 + 0.3 * sin(current_time / 50);
+    if (t_estado < 8)
+    {
+        gpu_set_blendmode(bm_add);
+        gpu_set_fog(true, c_white, 0, 0);
+        draw_sprite_hd(sprite_index, image_index, x + _tremor, y, dir * escala, escala, 0, c_white, 0.5 * (1 - t_estado / 8));
+        gpu_set_fog(false, c_white, 0, 0);
+        gpu_set_blendmode(bm_normal);
+    }
+    gpu_set_texfilter(true);
+    txt_sombra(x, _topo - 16, "!", FONTE.GRANDE, make_color_rgb(255, 80, 50), _pa2, fa_center, fa_bottom, 0.8);
+    gpu_set_texfilter(false);
+}
 // aviso de quebra-guarda
 if (estado_ia == "atacar" and !ataque_bloqueavel and image_index < 6)
 {

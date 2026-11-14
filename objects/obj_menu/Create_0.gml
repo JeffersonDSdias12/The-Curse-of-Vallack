@@ -1,24 +1,39 @@
 // =====================================================================
-//  obj_menu — abertura (créditos + título), menu inicial e opções
+//  obj_menu — abertura (vídeo do estúdio + aviso + título), menu inicial e opções
+//  Os créditos com os nomes da equipe passam no FIM da demo (creditos_desenhar).
 // =====================================================================
 globais_iniciar();
+// vídeo do estúdio (GAMBITECH STUDIO) ao abrir o jogo: definido ANTES de criar o
+// obj_sistema, para a trilha do menu não começar por cima do vídeo
+global.video_intro_ativo = (!global.intro_vista) and file_exists("intro_estudio.mp4");
 if (!instance_exists(obj_sistema)) instance_create_depth(0, 0, 0, obj_sistema);
 audio_cena_definir("titulo");                             // sons da tela inicial
-musica("mus_menu", global.intro_vista ? 1500 : 3000);     // trilha do menu inicial (só aqui)
+if (!global.video_intro_ativo) musica("bgm_main_menu", global.intro_vista ? 1500 : 3000);     // trilha do menu inicial (só aqui)
 
 // ----- imagens da tela inicial (em datafiles; se faltarem, o jogo usa o título em texto) -----
 if (!variable_global_exists("logo_img")) global.logo_img = -1;
 if (global.logo_img == -1 or !sprite_exists(global.logo_img)) global.logo_img = imagem_carregar("logo_vallack.png");
+// v1.14: o busto de Twilight e a pincelada de sangue atrás da logo (ferramentas/gerar_menu.ps1)
+if (!variable_global_exists("img_retrato") or !sprite_exists(global.img_retrato)) global.img_retrato = imagem_carregar("heroi_retrato.png");
+if (!variable_global_exists("img_mancha") or !sprite_exists(global.img_mancha)) global.img_mancha = imagem_carregar("mancha_sangue.png");
 img_aviso = global.intro_vista ? -1 : imagem_carregar("intro_aviso.jpg");   // "este é um jogo fictício"
 
 // ----- estados -----
-// intro_aviso -> intro_creditos -> intro_titulo -> menu
+// intro_video -> intro_aviso -> intro_titulo -> pressione ("pressione qualquer botão") -> menu
 // menu -> dificuldade -> (slot_novo) -> cutscene -> jogo | carregar | tutorial | opcoes -> teclado / controle
-estado = global.intro_vista ? "menu" : ((img_aviso != -1) ? "intro_aviso" : "intro_creditos");
+if (global.intro_vista) estado = "menu";
+else if (global.video_intro_ativo) estado = "intro_video";
+else estado = (img_aviso != -1) ? "intro_aviso" : "intro_titulo";
+// o vídeo passa inteiro: não pode ser pulado (o menu só aparece quando ele termina)
+if (estado == "intro_video")
+{
+    video_open("intro_estudio.mp4");
+    video_enable_loop(false);
+    video_set_volume(global.cfg_volume);
+}
 aviso_total = 360;      // v1.8: imagem de introdução fica os 6 s inteiros (entra, fica e sai)
 som_estado = estado;    // para tocar o som de "mover" quando a seleção muda
 som_sel = 0;
-som_pag = 0;
 tempo = 0;              // tempo no estado atual (quadros de 60 FPS)
 tempo_total = 0;
 selecionado = 0;
@@ -26,15 +41,13 @@ selecionado_antes = -1;
 mouse_antes_x = -1;
 mouse_antes_y = -1;
 
-opcoes_menu = ["NOVO JOGO", "CARREGAR JOGO", "TUTORIAL", "OPÇÕES", "SAIR"];
-opcoes_cfg  = ["QUALIDADE VISUAL", "TAXA DE QUADROS", "MODO DE TELA", "PROPORÇÃO", "RESOLUÇÃO", "VOLUME GERAL", "VOLUME DA MÚSICA", "VOLUME DOS EFEITOS", "FUNDO HD (FASE 1)", "TUTORIAL NA FASE", "TECLADO", "CONTROLE", "VOLTAR"];
+opcoes_menu = ["NOVO JOGO", "CARREGAR JOGO", "CONQUISTAS", "OPÇÕES", "SAIR"];     // v1.17: CONQUISTAS (perfil e recompensas)
+if (!variable_global_exists("perfil")) perfil_carregar(); else perfil_salvar_se_mudou();
+opcoes_cfg  = ["QUALIDADE VISUAL", "TAXA DE QUADROS", "MODO DE TELA", "PROPORÇÃO", "RESOLUÇÃO", "VOLUME GERAL", "VOLUME DA MÚSICA", "VOLUME DOS EFEITOS", "FUNDO HD (FASE 1)", "DICAS NO CARREGAMENTO", "TECLADO", "CONTROLE", "VOLTAR"];
 acoes = acoes_nomes();
 acoes_tela = acoes_ordem_tela();     // ordem das ações na tela de remapeamento (2 colunas)
 anim = array_create(24, 0);
 
-// tutorial (livro de pergaminhos)
-livro_pag = 0;
-livro_abre = 0;
 
 // remapeamento
 capturando = false;
@@ -52,6 +65,7 @@ tem_save = false;
 
 // efeitos
 faiscas = [];
+cinzas = [];            // v1.14: cinzas caindo sobre a cena do menu
 relampago = 0;
 proximo_relampago = irandom_range(300, 600);
 gotas = [];             // sangue escorrendo das letras do título
@@ -59,27 +73,16 @@ titulo_x1 = 0;
 titulo_x2 = 0;
 titulo_base = 0;
 menu_aparece = 0;       // tempo desde que o menu apareceu (entrada animada)
-dicas = dicas_tutorial();
-dica_atual = irandom(array_length(dicas) - 1);
-dica_tempo = 0;
+// v1.17: menu mais vivo: tochas, braseiros e faíscas que seguem o ponteiro / o dedo
+fogo_part = [];
+fogo_ondas = [];
+ponteiro_x = display_get_gui_width() / 2;
+ponteiro_y = display_get_gui_height() / 2;
+paralaxe_x = 0;
+paralaxe_y = 0;
 
 // ----- linha do tempo da abertura (não pode ser pulada) -----
-// Créditos: as linhas surgem uma a uma; quando a animação termina,
-// ficam mais 5 s na tela.
-creditos = [
-    { t: 0, texto: "UMA JORNADA SOBRE FORÇA, ESCOLHA E LEGADO", f: FONTE.MEDIA,   cor: make_color_rgb(255, 210, 90),  y: 0.14 },
-    { t: 45, texto: "DESENVOLVIDO POR",                           f: FONTE.MINI,    cor: make_color_rgb(190, 190, 195), y: 0.27 },
-    { t: 75, texto: "JEFFERSON DIAS",                             f: FONTE.GRANDE,  cor: c_white,                       y: 0.345 },
-    { t: 140, texto: "DESENVOLVIMENTO",                            f: FONTE.MINI,    cor: make_color_rgb(255, 210, 90),  y: 0.46 },
-    { t: 160, texto: "EDUARDO  ·  ISAAC  ·  ALEX  ·  ALDREON",     f: FONTE.PEQUENA, cor: c_white,                       y: 0.51 },
-    { t: 230, texto: "DESIGN",                                     f: FONTE.MINI,    cor: make_color_rgb(255, 210, 90),  y: 0.60 },
-    { t: 250, texto: "ALEX  ·  I.A. CLAUDE",                       f: FONTE.PEQUENA, cor: c_white,                       y: 0.65 },
-    { t: 320, texto: "ROTEIRO",                                    f: FONTE.MINI,    cor: make_color_rgb(255, 210, 90),  y: 0.74 },
-    { t: 340, texto: "ISAAC  ·  EDUARDO  ·  I.A. CLAUDE",          f: FONTE.PEQUENA, cor: c_white,                       y: 0.79 },
-    { t: 410, texto: "FACULDADE FAPAN",                            f: FONTE.PEQUENA, cor: make_color_rgb(190, 190, 195), y: 0.89 }
-];
-creditos_anim_fim = 410 + 40;                  // última linha terminou de aparecer
-creditos_total    = creditos_anim_fim + 300 + 50;   // + 5 s parado + saída
+// (os créditos com os nomes da equipe saíram daqui: passam no fim da demo)
 
 // Título: letra por letra, depois o subtítulo e os desenvolvedores;
 // quando tudo terminou, o nome fica 5 s na tela e então vem o menu.
@@ -97,6 +100,9 @@ atualizar_slots = function()
 {
     slots = [slot_info(1), slot_info(2), slot_info(3)];
     tem_save = slots[0].existe or slots[1].existe or slots[2].existe;
+    // v1.20: com progresso salvo, CONTINUAR vem primeiro (como nos jogos de console)
+    opcoes_menu = ["NOVO JOGO", "CARREGAR JOGO", "CONQUISTAS", "OPÇÕES", "SAIR"];
+    if (tem_save) array_insert(opcoes_menu, 0, "CONTINUAR");
 };
 atualizar_slots();
 
@@ -109,6 +115,7 @@ mudar_estado = function(_novo, _sel, _com_som = true)
             or (_novo == "dificuldade" and estado == "slot_novo");
         som(_volta ? "tit_voltar" : "tit_selecao", 0.8, 0.02);
     }
+    if (_novo != estado) transicao_revelar(20);     // v1.19: a tela nova surge atrás da cortina em brasa
     estado = _novo;
     selecionado = _sel;
     selecionado_antes = -1;
@@ -117,12 +124,26 @@ mudar_estado = function(_novo, _sel, _com_som = true)
     confirmar_slot = -1;
     mensagem = "";
     if (_novo == "menu" or _novo == "carregar" or _novo == "slot_novo") atualizar_slots();
+    if (_novo == "menu" and tem_save) selecionado = _sel + 1;     // v1.20: CONTINUAR empurra as outras opções uma linha
 };
 
 aviso_menu = function(_txt)
 {
     mensagem = _txt;
     mensagem_tempo = 150;
+};
+
+// v1.17: o MAPA escolheu a fase e a dificuldade: acha um slot livre (ou pede
+// para sobrescrever) e começa
+comecar_pelo_mapa = function()
+{
+    var _livre = slot_vazio_primeiro();
+    if (_livre != -1) iniciar_jogo(_livre);
+    else
+    {
+        mudar_estado("slot_novo", 0);
+        aviso_menu("Os 3 slots estão ocupados. Escolha qual sobrescrever.");
+    }
 };
 
 // Começa a partida no slot escolhido
@@ -135,6 +156,7 @@ iniciar_jogo = function(_slot)
     // som de START e a cutscene do prólogo; depois dela vem o carregamento da fase 1
     som("tit_start", 1, 0);
     instance_create_depth(0, 0, -10500, obj_cutscene);
+    transicao_revelar(30);     // v1.19: o prólogo surge atrás da cortina em brasa
 };
 
 // Texto do valor de cada linha das opções
@@ -182,7 +204,7 @@ descricao_opcao = function(_i)
         case 6: return "Volume das músicas (fase e chefe).";
         case 7: return "Volume dos efeitos: espada, golpes, trovões, chuva e fogo.";
         case 8: return "Fundo da fase 1 em alta definição (imagem ampliada e suavizada). Se notar qualquer falha, desligue para voltar ao fundo original.";
-        case 9: return "Pergaminhos de tutorial durante a fase (movimento, combate, especiais...). Desligue se já conhece o jogo. O livro de TUTORIAL do menu continua disponível.";
+        case 9: return "Dicas de combos e ataques passando embaixo da tela de carregamento das fases (v1.17: o carregamento leva 30 s).";
         case 10: return "Escolha as teclas de cada ação.";
         case 11:
             if (global.pad_slot >= 0 and global.pad_botoes <= 0) return "Controle conectado, mas sem botões reconhecidos. Use um programa como DS4Windows ou x360ce para que ele funcione como controle de Xbox.";
@@ -228,7 +250,37 @@ alterar_opcao = function(_i, _passo)
 };
 
 // ----- layout (usado no Step para o mouse e no Draw) -----
-menu_y = function(_i) { return 296 + _i * 60; };
+// v1.14: menu épico: logo e opções numa coluna à esquerda (a cena fica à direita)
+// (v1.14: lista curta logo abaixo da logo, sobre a pincelada de sangue; o busto de Twilight à direita)
+menu_x = function() { return max(70, display_get_gui_width() * 0.075); };
+menu_y = function(_i) { return 330 + _i * 42; };
+// área de clique de cada opção do menu inicial: [x1, y1, x2, y2]
+menu_caixa = function(_i) { var _mx = menu_x(); return [_mx - 24, menu_y(_i) - 19, _mx + 330, menu_y(_i) + 19]; };
+// pincelada de sangue + logo no alto, à esquerda (menu inicial e "pressione")
+menu_cabecalho = function(_a)
+{
+    var _mx = menu_x();
+    var _mw = min(display_get_gui_width() * 0.6, 760);
+    var _f = gpu_get_texfilter();
+    gpu_set_texfilter(true);
+    if (variable_global_exists("img_mancha") and sprite_exists(global.img_mancha))
+    {
+        var _me = _mw / sprite_get_width(global.img_mancha);
+        draw_sprite_ext(global.img_mancha, 0, _mx - 56, 34, _me, _me, 0, c_white, 0.92 * _a);
+    }
+    gpu_set_texfilter(_f);
+    var _lh = min(232, display_get_gui_height() * 0.32);
+    var _lx = _mx + _mw * 0.36;
+    var _ly = 156 + sin(tempo_total / 90) * 2;
+    if (global.logo_img != -1 and sprite_exists(global.logo_img))
+    {
+        gpu_set_blendmode(bm_add);
+        logo_desenhar(_lx, _ly, _lh * 1.04, _a * (0.08 + 0.05 * sin(tempo_total / 120)));
+        gpu_set_blendmode(bm_normal);
+        logo_desenhar(_lx, _ly, _lh, _a);
+    }
+    else txt_sombra(_lx, _ly, JOGO_TITULO, FONTE.GRANDE, make_color_rgb(240, 200, 120), _a, fa_center, fa_middle, min(1.1, (_mw * 0.8) / max(1, txt_largura(JOGO_TITULO, FONTE.GRANDE))));
+};
 cfg_y  = function(_i) { return 154 + _i * 35; };
 dif_y  = function(_i) { return 196 + _i * 60; };
 

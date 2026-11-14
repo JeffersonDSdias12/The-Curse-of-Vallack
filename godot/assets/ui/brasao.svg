@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="240" viewBox="0 0 200 240">
+  <defs>
+    <linearGradient id="ouro" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0c0"/>
+      <stop offset="0.25" stop-color="#d9a64e"/>
+      <stop offset="0.5" stop-color="#7a4f1c"/>
+      <stop offset="0.75" stop-color="#e6c06a"/>
+      <stop offset="1" stop-color="#5e3a12"/>
+    </linearGradient>
+    <linearGradient id="ferro" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a5054"/>
+      <stop offset="0.5" stop-color="#2a2325"/>
+      <stop offset="1" stop-color="#151112"/>
+    </linearGradient>
+    <radialGradient id="joia" cx="0.42" cy="0.35" r="0.65">
+      <stop offset="0" stop-color="#ff8a6a"/>
+      <stop offset="0.45" stop-color="#b3121a"/>
+      <stop offset="1" stop-color="#3d0408"/>
+    </radialGradient>
+  </defs>
+  <path fill="url(#ferro)" stroke="#0b0909" stroke-width="4" fill-rule="evenodd"
+        d="M100 3 L194 30 L190 120 C 184 177, 148 214, 100 237 C 52 214, 16 177, 10 120 L6 30 Z
+           M100 24 L174 44 L171 118 C 166 162, 138 194, 100 212 C 62 194, 34 162, 29 118 L26 44 Z"/>
+  <path fill="none" stroke="url(#ouro)" stroke-width="6" stroke-linejoin="round"
+        d="M100 11 L186 35 L182 120 C 177 172, 143 206, 100 228 C 57 206, 23 172, 18 120 L14 35 Z"/>
+  <path fill="none" stroke="url(#ouro)" stroke-width="4" stroke-linejoin="round"
+        d="M100 24 L174 44 L171 118 C 166 162, 138 194, 100 212 C 62 194, 34 162, 29 118 L26 44 Z"/>
+  <circle cx="100" cy="206" r="24" fill="url(#ferro)" stroke="url(#ouro)" stroke-width="5"/>
+  <circle cx="100" cy="206" r="16" fill="url(#joia)"/>
+  <g fill="#f3d48a" stroke="#4a2e0e" stroke-width="1.5">
+    <circle cx="16" cy="40" r="4"/>
+    <circle cx="184" cy="40" r="4"/>
+    <circle cx="100" cy="14" r="4"/>
+  </g>
+</svg>

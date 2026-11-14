@@ -2,7 +2,7 @@
 //  obj_fx — efeitos dos golpes e especiais (desenhados por código)
 //  tipos: poeira, onda_chao, rachaduras, faiscas_tela, carga, pedras
 //         (v1.4) faiscas_golpe, sangue, aparar, escudo_quebrado, lascas,
-//         fumaca, brasas, entulho
+//         fumaca, brasas, entulho, corte
 // =====================================================================
 tipo = "";
 tam = 1;
@@ -13,6 +13,16 @@ parts = [];
 fendas = [];
 flash = 0;              // brilho no ponto do impacto
 gen = false;            // partículas genéricas (gravidade, giro, cor própria)
+forte = false;          // corte de golpe pesado / especial (vermelho e maior)
+angulo = 0;             // direção do risco do corte
+// v1.17: efeitos de espada (lua crescente, cortes em X, explosão de fogo, rajada)
+a1 = 0;                 // arco da lua crescente (graus, para quem olha para a direita)
+a2 = 0;
+raio = 40;
+raios = [];             // pontas da estrela / raios de tinta / zigue-zague da rajada
+angulo_x = [0, 0];      // inclinação de cada risco do corte em X
+estilo = undefined;     // cores do estilo de lâmina (scr_v117)
+descartado = false;     // v1.18: cortado pelo orçamento de efeitos (some no próximo passo)
 
 // partícula genérica
 part_add = function(_x, _y, _vx, _vy, _r, _v, _cor, _g, _forma, _add)
@@ -25,6 +35,12 @@ fx_iniciar = function()
 {
     var _q = global.cfg_qualidade;           // 0 baixa, 1 média, 2 alta
     var _mult = (_q == 0) ? 0.4 : (_q == 1 ? 0.7 : 1);
+    // v1.18: orçamento dos efeitos de combate (scr_cenario). Descartado, a instância
+    // não desenha nada e se destrói no próximo passo (quem a criou ainda pode
+    // escrever nela, como o "corte" faz com .forte, sem erro).
+    var _orc = fx_orcamento(tipo, x, y);
+    if (_orc <= 0) { descartado = true; return; }
+    _mult *= _orc;
     switch (tipo)
     {
         case "poeira":
@@ -38,6 +54,87 @@ fx_iniciar = function()
 
         case "onda_chao":
             vida = 28;
+        break;
+
+        case "corte":
+            // risco de luz no ponto do acerto, na diagonal do golpe
+            vida = 13;
+            depth = -130;
+            angulo = ((dir == 1) ? -28 : 208) + random_range(-14, 14);
+            estilo = espada_estilo_atual();
+        break;
+
+        // ----- v1.17: EFEITOS DE ESPADA (cores do estilo de lâmina do PERFIL) -----
+        case "corte_lua":           // a lua crescente do corte
+            vida = forte ? 13 : 11;
+            estilo = espada_estilo_atual();
+        break;
+        case "corte_x":             // dois riscos finos cruzados e o clarão no meio
+            vida = 13;
+            estilo = espada_estilo_atual();
+            angulo_x = [random_range(-12, 12), random_range(-12, 12)];
+        break;
+        // ----- v1.17: FOGO (a espada em chamas) -----
+        case "explosao_fogo":       // o golpe acerta: bola de fogo, línguas de fogo e brasas
+            vida = 20;
+            flash = 6;
+            estilo = espada_estilo_atual();
+            angulo = random(360);
+            var _nl = (_q == 0) ? 7 : ((_q == 1) ? 10 : 13);
+            for (var _s = 0; _s < _nl; _s++) array_push(raios, { ang: _s * 360 / _nl + random_range(-14, 14), len: random_range(0.7, 1.25), larg: random_range(0.7, 1.2) });
+            repeat (round((6 + 6 * tam) * _mult))
+            {
+                var _ab = random(360);
+                var _vb = random_range(1.2, 4.2) * tam;
+                array_push(parts, { x: x, y: y, vx: lengthdir_x(_vb, _ab) + dir * 0.6, vy: lengthdir_y(_vb, _ab) - 1.2, r: random_range(1, 2.2), v: random_range(16, 30), vmax: 30 });
+            }
+        break;
+        case "chamas_corpo":        // o inimigo derrotado ardendo (no lugar da fumaça negra)
+            gen = true;
+            vida = 10;
+            var _rt3 = (tam <= 1.5) ? tam : 1.5 + (tam - 1.5) * 0.45;
+            repeat (max(1, round((2 + 1.2 * tam) * _mult)))
+                part_add(x + random_range(-12, 12) * tam, y + random_range(-8, 8) * tam, random_range(-0.35, 0.35), random_range(-1.9, -0.8),
+                    random_range(3.5, 6.5) * _rt3, random_range(18, 30), c_white, -0.02, "chama", true);
+            repeat (irandom_range(1, 2))
+                part_add(x + random_range(-12, 12) * tam, y + random_range(-6, 6) * tam, random_range(-0.6, 0.6), random_range(-2.6, -1.1), random_range(0.9, 1.8), random_range(30, 55),
+                    choose(make_color_rgb(255, 200, 90), make_color_rgb(255, 130, 40), make_color_rgb(255, 80, 30)), -0.012, "circulo", true);
+        break;
+        case "chamas_estouro":      // o último lampejo: o que sobrou do corpo vira brasa e some
+            gen = true;
+            vida = 10;
+            flash = 7;
+            var _rt4 = (tam <= 1.5) ? tam : 1.5 + (tam - 1.5) * 0.45;
+            repeat (round((4 + 3 * tam) * _mult) + 2)
+            {
+                var _a5 = random(360);
+                var _v5 = random_range(0.5, 2) * (0.8 + 0.25 * tam);
+                part_add(x + lengthdir_x(random(10) * tam, _a5), y + lengthdir_y(random(14) * tam, _a5), lengthdir_x(_v5, _a5), lengthdir_y(_v5 * 0.6, _a5) - 1.2,
+                    random_range(4, 7.5) * _rt4, random_range(18, 30), c_white, -0.025, "chama", true);
+            }
+            repeat (round((4 + 3 * tam) * _mult) + 2)
+                part_add(x + random_range(-14, 14) * tam, y + random_range(-20, 20) * tam, random_range(-1.6, 1.6), random_range(-3.4, -1), random_range(1, 2.4), random_range(35, 70),
+                    choose(make_color_rgb(255, 210, 100), make_color_rgb(255, 140, 40), make_color_rgb(255, 90, 30)), -0.012, "circulo", true);
+        break;
+        case "rajada":              // rajada de energia nas investidas (com relâmpagos)
+            vida = 15;
+            estilo = espada_estilo_atual();
+            var _fz = 0;
+            while (_fz < 1) { array_push(raios, { f: _fz, o: random_range(-14, 14) }); _fz += random_range(0.06, 0.12); }
+            array_push(raios, { f: 1, o: 0 });
+        break;
+
+        case "chamas_morte":
+            // golpe fatal (Castlevania): clarão e línguas de fogo subindo do corpo
+            vida = 36;
+            flash = 9;
+            repeat (round(6 * tam * _mult) + 3)
+            {
+                var _vf = random_range(22, 36);
+                array_push(parts, { x: x + random_range(-16, 16) * tam, y: y + random_range(-12, 24) * tam,
+                    vy: random_range(-1.7, -0.6), h: random_range(18, 34) * tam, w: random_range(5, 9) * tam,
+                    v: _vf, vmax: _vf, fase: random(10) });
+            }
         break;
 
         case "rachaduras":
@@ -161,7 +258,7 @@ fx_iniciar = function()
             repeat (max(1, round(4 * tam * _mult)))
             {
                 part_add(x + random_range(-16, 16) * tam, y, random_range(-0.6, 0.9), random_range(-2.6, -0.8), random_range(1, 2), random_range(40, 80),
-                    choose(make_color_rgb(255, 160, 50), make_color_rgb(255, 90, 30), make_color_rgb(255, 220, 120)), -0.01, "circulo", true);
+                    choose(make_color_rgb(190, 110, 255), make_color_rgb(150, 50, 255), make_color_rgb(235, 200, 255)), -0.01, "circulo", true);   // v1.12: brasas da chama maldita
             }
         break;
 
@@ -169,14 +266,15 @@ fx_iniciar = function()
             gen = true;
             vida = 10;
             // nos chefes a nuvem cresce mais em quantidade do que no tamanho de cada sopro
+            // fumaça discreta: poucos sopros pequenos e curtos (não esconde o cenário)
             var _rt = (tam <= 1.5) ? tam : 1.5 + (tam - 1.5) * 0.45;
-            repeat (max(2, round((2 + 1.5 * tam) * _mult)))
+            repeat (max(1, round((1 + 0.8 * tam) * _mult)))
             {
                 part_add(x + random_range(-10, 10) * tam, y + random_range(-8, 8) * tam, random_range(-0.45, 0.45), random_range(-1.7, -0.6) * (0.8 + 0.2 * _rt),
-                    random_range(8, 13) * _rt, random_range(60, 95),
-                    choose(make_color_rgb(8, 4, 10), make_color_rgb(18, 6, 20), make_color_rgb(26, 8, 24)), -0.004, "maldita", false);
+                    random_range(5, 8.5) * _rt, random_range(28, 44),
+                    choose(make_color_rgb(40, 30, 48), make_color_rgb(52, 38, 60), make_color_rgb(64, 46, 70)), -0.004, "maldita", false);   // v1.12: mais clara (só visual, não fere)
             }
-            repeat (irandom_range(1, 2))
+            repeat (irandom_range(0, 1))
             {
                 part_add(x + random_range(-10, 10) * tam, y + random_range(-6, 6) * tam, random_range(-0.5, 0.5), random_range(-2.4, -1.0), random_range(1, 2.2), random_range(30, 60),
                     choose(make_color_rgb(190, 40, 255), make_color_rgb(255, 40, 70), make_color_rgb(150, 20, 200)), -0.01, "circulo", true);
@@ -186,17 +284,18 @@ fx_iniciar = function()
         case "fumaca_maldita_estouro":     // v1.10: o último sopro, quando o corpo some
             gen = true;
             vida = 10;
-            flash = 8;
+            flash = 6;
             var _rt2 = (tam <= 1.5) ? tam : 1.5 + (tam - 1.5) * 0.45;
-            repeat (round((14 + 10 * tam) * _mult) + 4)
+            // o último sopro também ficou pequeno: some rápido
+            repeat (round((5 + 3 * tam) * _mult) + 2)
             {
                 var _ang = random(360);
-                var _vel = random_range(0.6, 2.6) * (0.8 + 0.25 * tam);
+                var _vel = random_range(0.6, 2.2) * (0.8 + 0.25 * tam);
                 part_add(x + lengthdir_x(random(10) * tam, _ang), y + lengthdir_y(random(14) * tam, _ang), lengthdir_x(_vel, _ang), lengthdir_y(_vel * 0.7, _ang) - 0.8,
-                    random_range(10, 18) * _rt2, random_range(70, 110),
+                    random_range(6, 11) * _rt2, random_range(38, 60),
                     choose(make_color_rgb(8, 4, 10), make_color_rgb(18, 6, 20), make_color_rgb(30, 8, 28)), -0.006, "maldita", false);
             }
-            repeat (round((6 + 4 * tam) * _mult) + 2)
+            repeat (round((3 + 2 * tam) * _mult) + 1)
             {
                 part_add(x + random_range(-14, 14) * tam, y + random_range(-20, 20) * tam, random_range(-1.4, 1.4), random_range(-3, -0.8), random_range(1.2, 2.6), random_range(35, 70),
                     choose(make_color_rgb(200, 50, 255), make_color_rgb(255, 50, 80), make_color_rgb(170, 30, 220)), -0.012, "circulo", true);
@@ -212,6 +311,8 @@ fx_iniciar = function()
             }
         break;
     }
+    // v1.18: um clarão decorativo por vez
+    if (flash > 0 and fx_decorativo(tipo) and !fx_flash_livre()) flash = 0;
 };
 
 // faíscas subindo por toda a largura da tela (a partir do chão e da base da tela)

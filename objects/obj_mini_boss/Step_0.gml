@@ -1,5 +1,10 @@
 var _dt = global.dt;
-if (morrendo) { inimigo_corpo_step(_dt); exit; }
+if (morrendo)
+{
+    if (dialogo_fim_t > 0) { dialogo_fim_t -= _dt; if (dialogo_fim_t <= 0) dialogo_iniciar("carrasco_fim"); }
+    inimigo_corpo_step(_dt);
+    exit;
+}
 
 if (tempo_invencivel > 0) tempo_invencivel = max(0, tempo_invencivel - _dt);
 if (recarga > 0) recarga -= _dt;
@@ -42,26 +47,47 @@ if (_estava and estado_ia != "dormindo")
 {
     if (estado_ia == "exausto")
     {
-        // não foi finalizado: levanta enfurecido
+        // não foi executado: levanta enfurecido, com um pouco de vida de volta (v1.17:
+        // ele só cai pela sequência de golpes, então pode cair de joelhos de novo)
+        vida = max(vida, round(vida_max * 0.35));
+        vida_atraso = vida;
+        exausto_usado = false;
         enfurecido = true;
         som("sfx_rugido", 0.9, 0);
-        fala_dizer(id, "Agora você vai ver!", make_color_rgb(150, 20, 20), true);
         global.camera_impact = max(global.camera_impact, 10);
     }
     mudar("perseguir");
     recarga = 20;
 }
 
-// falas de vez em quando
-if (acordado)
-{
-    fala_t -= _dt;
-    if (fala_t <= 0) { fala_t = irandom_range(420, 720); fala_dizer(id, choose("Sua cabeça é minha!", "Pela maldição de Vallack!", "Fique parado!", "Hahaha!"), make_color_rgb(120, 20, 20)); }
-}
 
-var _vel = enfurecido ? 1.9 : 1.35;
+var _vel = na_segunda_vida ? 2.3 : (enfurecido ? 1.9 : 1.35);
 switch (estado_ia)
 {
+    // v1.19: SEGUNDA VIDA: de pé, invulnerável, a barra enche de novo (~1,5 s)
+    case "renascer":
+        velh = 0;
+        tempo_invencivel = max(tempo_invencivel, 10);
+        trocar_sprite(spr_ia_parado, 2);
+        if (_tem and _dx != 0) dir = sign(_dx);
+        vida = min(vida_max, vida + vida_max / 90 * _dt);
+        vida_atraso = vida;
+        if (random(1) < 0.35 * _dt) fx_em("fumaca_maldita", x + random_range(-30, 30), y - random(110), 0.9);
+        if (vida >= vida_max and t_estado >= 100)
+        {
+            vida = vida_max;
+            vida_atraso = vida;
+            mudar("perseguir");
+            recarga = 20;
+            // o grito do renascimento empurra Twilight para longe
+            som("sfx_rugido", 1, 0);
+            global.camera_impact = max(global.camera_impact, 16);
+            fx_em("onda_chao", x, y, 1.4);
+            if (_tem and _adx < 260) with (_p) empurrao = sign(x - other.x) * 6;
+            dialogo_iniciar("carrasco_fase2");
+        }
+    break;
+
     case "dormindo":
         trocar_sprite(spr_ia_parado, 0.5);
         velh = 0;
@@ -77,7 +103,7 @@ switch (estado_ia)
 
     case "perseguir":
         if (!_tem) { velh = 0; trocar_sprite(spr_ia_parado, 0.6); break; }
-        if (_dx != 0) dir = sign(_dx);
+        inimigo_virar(_dx);
         if (acoes >= 3) { acoes = 0; mudar("cansado"); velh = 0; break; }
         if (recarga <= 0 and _no_chao)
         {
@@ -89,8 +115,8 @@ switch (estado_ia)
                 velh = 0;
                 sprite_index = spr_ia_ataque;
                 image_index = 0;
-                image_speed = enfurecido ? 0.36 : 0.28;
-                if (random(1) < 0.35) fala_dizer(id, choose("Toma!", "Morra!", "Hrraaa!"), make_color_rgb(120, 20, 20));
+                image_speed = na_segunda_vida ? 0.42 : (enfurecido ? 0.36 : 0.28);
+                som_em("boss_carga", x, y, 0.5);          // v1.12: aviso sonoro do golpe
                 break;
             }
             if (_adx >= 130 and _adx <= 340 and random(1) < 0.6)
@@ -111,8 +137,8 @@ switch (estado_ia)
                 break;
             }
         }
-        if (_adx > 64) { velh = dir * _vel; trocar_sprite(spr_ia_andar, 1.1); }
-        else { velh = 0; trocar_sprite(spr_ia_parado, 0.8); }
+        if (_adx > 64) { velh_para(dir * _vel, 0.3, 0.5); trocar_sprite(spr_ia_andar, 1.1); }
+        else { velh_para(0, 0.3, 0.5); trocar_sprite((abs(velh) > 0.5) ? spr_ia_andar : spr_ia_parado, 0.8); }
     break;
 
     case "atacar":
@@ -191,7 +217,7 @@ switch (estado_ia)
 
     case "investida":
         dir = investida_dir;
-        velh = dir * (enfurecido ? 6 : 5.2);
+        velh = dir * (na_segunda_vida ? 6.8 : (enfurecido ? 6 : 5.2));
         if (random(1) < 0.5 * _dt) fx_em("poeira", x - dir * 18, y, 0.35);
         if (!golpe_dado and _tem and rectangle_in_rectangle(x - 26, y - 90, x + 26, y, _p.bbox_left, _p.bbox_top, _p.bbox_right, _p.bbox_bottom))
         {
@@ -229,7 +255,7 @@ switch (estado_ia)
     case "cansado":
         velh = 0;
         trocar_sprite(spr_ia_parado, 0.35);
-        if (t_estado >= (enfurecido ? 55 : 85)) { mudar("perseguir"); recarga = 10; }
+        if (t_estado >= (na_segunda_vida ? 38 : (enfurecido ? 55 : 85))) { mudar("perseguir"); recarga = 10; }
     break;
 }
 

@@ -15,7 +15,7 @@ mouse_antes_y = -1;
 confirmar = -1;          // opção que está pedindo confirmação
 mudou_config = false;
 
-opcoes = ["CONTINUAR", "VOLUME DA MÚSICA", "VOLUME DOS EFEITOS", "COMANDOS E COMBOS", "REINICIAR DO CHECKPOINT", "VOLTAR AO MENU", "SAIR DO JOGO"];
+opcoes = ["CONTINUAR", "VOLUME DA MÚSICA", "VOLUME DOS EFEITOS", "REINICIAR DO CHECKPOINT", "VOLTAR AO MENU", "SAIR DO JOGO"];     // v1.13: COMANDOS E COMBOS saiu
 anim = array_create(array_length(opcoes), 0);
 faiscas = [];
 

@@ -7,12 +7,10 @@
 // =====================================================================
 event_inherited();       // obj_inimigo_01
 
-vida_max = round(85 * dif_vida_inimigo());
-vida = vida_max;
-vida_atraso = vida;
-dano_ataque = max(1, round(10 * dif_dano_inimigo()));
+inimigo_status(85);
+dano_ataque = inimigo_dano(10);
 recarga_max = round(60 * dif_recarga_inimigo());
-vel_correr = 1.5;      // com o escudo, corre um pouco mais devagar que a besta comum
+vel_correr = 1.5 * dif_velocidade();      // com o escudo, corre um pouco mais devagar que a besta comum
 zona_pulo_max = 0;           // pesada demais para o salto de ataque
 escudo_max = dif_valor([3, 4, 5, 6]);
 escudo_vida = escudo_max;

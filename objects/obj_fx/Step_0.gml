@@ -1,3 +1,4 @@
+if (descartado) { instance_destroy(); exit; }    // v1.18: cortado pelo orçamento de efeitos
 var _dt = global.dt;
 t += _dt;
 
@@ -53,6 +54,17 @@ for (var _i = array_length(parts) - 1; _i >= 0; _i--)
             _p.ang += 6 * _dt;
             _p.x = x + lengthdir_x(_p.d, _p.ang);
             _p.y = y + lengthdir_y(_p.d, _p.ang);
+        break;
+        case "chamas_morte":
+            _p.y += _p.vy * _dt;
+            _p.vy *= power(0.96, _dt);
+            _p.x += sin((t + _p.fase) / 5) * 0.35 * _dt;
+        break;
+        case "explosao_fogo":       // v1.17: brasas da explosão (freiam e sobem com o calor)
+            _p.x += _p.vx * _dt;
+            _p.y += _p.vy * _dt;
+            _p.vx *= power(0.95, _dt);
+            _p.vy = _p.vy * power(0.95, _dt) - 0.03 * _dt;
         break;
         case "pedras":
             _p.vy += 0.3 * _dt;

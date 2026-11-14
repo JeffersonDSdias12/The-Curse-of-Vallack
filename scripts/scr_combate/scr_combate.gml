@@ -23,7 +23,7 @@
 #macro ROLAR_INVENC_INI 2
 #macro ROLAR_INVENC_FIM 19
 #macro ROLAR_VEL        6.6
-#macro ROLAR_BUFFER     10      // apertou um pouco antes de poder rolar: rola assim que der
+#macro ROLAR_BUFFER     14      // apertou um pouco antes de poder rolar: rola assim que der (v1.12: 10 -> 14)
 
 // Ângulo do corpo na rolagem (gira rápido no começo e assenta no fim)
 function rolar_angulo(_p)
@@ -34,21 +34,11 @@ function rolar_angulo(_p)
 #macro APARAR_JANELA    10
 #macro APARAR_RECARGA   26
 
+// A arte nova do Alex (ferramentas/importar_arte.ps1) já sai com o corpo do
+// mesmo tamanho em todas as animações (a escala de cada folha foi medida pelo
+// rosto do herói). Fica a função para um ajuste fino, se precisar.
 function sprite_fator(_spr, _quadro = 0)
 {
-    switch (_spr)
-    {
-        case spr_player_ataque:                    return 1.05;
-        case spr_player_especial:                  return 1.05;
-        case spr_player_atacar_agaichado:          return 1.10;
-        case spr_player_agaichar:                  return 1.25;
-        case spr_player_atacar_agaichado_especial: return 1.40;
-        case spr_ataque_especial_2:                return 1.30;
-        case spr_ataque_2:
-            // quadros 0-2 e 9-11 vieram grandes; o 7 e o 8 vieram pequenos
-            var _f = [0.80, 0.80, 0.80, 0.95, 0.95, 0.95, 0.95, 1.18, 1.50, 0.88, 0.84, 0.84];
-            return _f[clamp(floor(_quadro), 0, 11)];
-    }
     return 1;
 }
 
@@ -79,7 +69,73 @@ function dano_golpe(_g, _alvo, _dm)
         if (_bruto) return max(1, round(_alvo.vida_max * _p * 0.6));
         return max(1, ceil(_alvo.vida_max * _p));
     }
-    return max(1, round(_g.dano * _dm * espada_dano_mult()));
+    // v1.12: CONTRA-ATAQUE depois de aparar: uma parte da vida máxima do inimigo
+    var _fm = (object_index == obj_player and furia_modo) ? 1.5 : 1;     // MODO FÚRIA: golpes mais brutais
+    if (_g.chave == "contra")
+    {
+        var _pc = 0.35;
+        if (_alvo.eh_boss) _pc = 0.05; else if (_mini) _pc = 0.08; else if (_bruto) _pc = 0.15;
+        return max(18, round(_alvo.vida_max * _pc * espada_dano_mult() * _fm));
+    }
+    return max(1, round(_g.dano * _dm * espada_dano_mult() * _fm));
+}
+
+// ---------------------------------------------------------------------
+// GOLPES NOVOS DA v1.12
+// ---------------------------------------------------------------------
+function golpe_criar_v112(_chave)
+{
+    switch (_chave)
+    {
+        // LANÇADOR: PULAR + PESADO quase juntos (ou para cima + PESADO).
+        // Um corte de baixo para cima que joga o inimigo no ar; Twilight sobe
+        // junto e pode continuar com até 3 CORTES AÉREOS.
+        case "lancador":
+            return { nome: "LANÇADOR", spr: spr_ataque_2, pesado: true, no_ar: true, dano: 12, forca: 0.6, atordoa: 55, lanca: 0, cancel: 4,
+                arco: [-70, 115, 58, 44], cor: make_color_rgb(255, 170, 110),
+                seq: [
+                    { q: 0, d: 3 },
+                    { q: 1, d: 3 },
+                    { q: 2, d: 4, ev: "lancar", hit: [-8, 54, -100, 2] },
+                    { q: 3, d: 4, hit: [-8, 46, -120, -24] },
+                    { q: 4, d: 4 },
+                    { q: 5, d: 5 }
+                ] };
+
+        // CONTRA-ATAQUE: sai sozinho logo depois de um APARAR perfeito
+        case "contra":
+            return { nome: "CONTRA-ATAQUE", spr: spr_player_ataque, pesado: true, armadura: true, dano: 1, forca: 1.4, atordoa: 90, lanca: 0, cancel: 99,
+                arco: [80, -50, 64, 38], cor: make_color_rgb(150, 210, 255),
+                seq: [
+                    { q: 1, d: 2, ev: "contra", av: 3.2 },
+                    { q: 2, d: 3, hit: [0, 70, -70, 0], av: 2.4 },
+                    { q: 3, d: 4, hit: [0, 86, -66, 0] },
+                    { q: 4, d: 4, hit: [0, 60, -62, 0] },
+                    { q: 5, d: 8 }
+                ] };
+
+        // SUB-ARMA: LÂMINA BUMERANGUE (custa 1 essência)
+        case "arremesso":
+            return { nome: "LÂMINA BUMERANGUE", spr: spr_player_ataque, dano: 0, forca: 0, atordoa: 0, lanca: 0, cancel: 3,
+                seq: [
+                    { q: 0, d: 3 },
+                    { q: 2, d: 3, ev: "bumerangue" },
+                    { q: 3, d: 4 },
+                    { q: 5, d: 6 }
+                ] };
+
+        // SUB-ARMA: CHAMA DE SYLLA (agachado; custa 2 essências)
+        case "arremesso_chama":
+            return { nome: "CHAMA DE SYLLA", spr: spr_player_atacar_agaichado, dano: 0, forca: 0, atordoa: 0, lanca: 0, cancel: 4,
+                seq: [
+                    { q: 0, d: 3 },
+                    { q: 1, d: 3 },
+                    { q: 2, d: 4, ev: "chama" },
+                    { q: 3, d: 4 },
+                    { q: 5, d: 7 }
+                ] };
+    }
+    return undefined;
 }
 
 // ---------------------------------------------------------------------
@@ -92,7 +148,7 @@ function dano_golpe(_g, _alvo, _dm)
 function combos_lista()
 {
     return [
-        { nome: "LÂMINA DE VALLACK",  seq: [ACAO.ATACAR, ACAO.ATACAR, ACAO.ATACAR],       desc: "Dois cortes e a Execução: golpe por cima que derruba." },
+        { nome: "LÂMINA DE VALLACK",  seq: [ACAO.ATACAR, ACAO.ATACAR, ACAO.ATACAR, ACAO.ATACAR], desc: "Rápido, duplo, triplo e o ATAQUE FRENÉTICO: uma tempestade de cortes." },
         { nome: "QUEBRA-ESCUDO",      seq: [ACAO.ATACAR, ACAO.ATACAR, ACAO.ATAQUE_FORTE], desc: "Dois cortes e um salto que cai com um impacto em área." },
         { nome: "RASTEIRA SANGRENTA", seq: [ACAO.ATACAR, ACAO.ATACAR, ACAO.ATAQUE_SALTO], desc: "Dois cortes e uma rasteira que lança os inimigos ao ar." }
     ];
@@ -108,13 +164,16 @@ function combo_proximo(_cadeia, _botao, _no_ar, _agachado)
         return "";
     }
     if (_agachado and _botao == "Q") return "rasteira";
-    // a cadeia guarda as 2 últimas letras: termina em "QQ" -> finalizador
+    // v1.17: a cadeia guarda as 3 últimas letras: Q, QQ, QQQ e o 4º Q = frenético
     var _n = string_length(_cadeia);
     var _ultima = (_n >= 1) ? string_char_at(_cadeia, _n) : "";
-    if (_cadeia == "QQ")
+    var _f2 = (_n >= 2) ? string_copy(_cadeia, _n - 1, 2) : "";
+    var _f3 = (_n >= 3) ? string_copy(_cadeia, _n - 2, 3) : "";
+    if (_f3 == "QQQ" and _botao == "Q") return "frenetico";
+    if (_f2 == "QQ" and _f3 != "QQQ")
     {
         // combos 2 e 3 só depois de evoluir a espada (tela de armas)
-        if (_botao == "Q") return "execucao";
+        if (_botao == "Q") return "corte3";
         if (_botao == "T" and combo_liberado(2)) return "quebra_escudo";
         if (_botao == "C" and combo_liberado(3)) return "rasteira_sangrenta";
     }
@@ -140,17 +199,27 @@ function combo_proximo(_cadeia, _botao, _no_ar, _agachado)
 // nos eventos da animação (carga, onda, impacto, tremor, fúria).
 function golpe_som(_chave)
 {
+    // v1.16: se existir um sfx_sword_slash.ogg, ele vira o som dos cortes de espada
+    // (o tom varia ±0.05 a cada golpe, no som() do obj_player)
+    if ((_chave == "corte1" or _chave == "corte2" or _chave == "corte_aereo" or _chave == "contra")
+        and variable_global_exists("sfx") and !is_undefined(global.sfx[$ "sfx_sword_slash"])) return "sfx_sword_slash";
     switch (_chave)
     {
         case "corte1":             return "atk_corte_1";
         case "corte2":             return "atk_corte_2";
         case "corte_aereo":        return "atk_aereo";
         case "execucao":           return "atk_pesado";
+        case "corte3":             return "atk_pesado";
+        case "frenetico":          return "atk_pesado";
         case "carrasco":           return "atk_pesado";
         case "quebra_escudo":      return "atk_pesado";
         case "mergulho":           return "atk_mergulho";
         case "rasteira":           return "atk_rasteira";
         case "rasteira_sangrenta": return "atk_rasteira";
+        case "lancador":           return "atk_pesado";
+        case "contra":             return "atk_corte_2";
+        case "arremesso":          return "atk_corte_1";
+        case "arremesso_chama":    return "atk_rasteira";
     }
     return "";
 }
@@ -161,33 +230,78 @@ function golpe_criar(_chave)
     switch (_chave)
     {
         // ===================== QUADRADO =====================
+        // v1.17: a sequência do QUADRADO usa as animações novas da equipe:
+        // 1 toque = ATAQUE RÁPIDO (estocada, meia-lua e estocada), 2º = ATAQUE DUPLO
+        // (a segunda metade da animação), 3º = ATAQUE TRIPLO (o golpe que crava no
+        // chão) e o 4º solta o ATAQUE FRENÉTICO inteiro (o combo LÂMINA DE VALLACK)
         case "corte1":
-            _g = { nome: "CORTE", spr: spr_player_ataque, dano: 10, forca: 2.5, atordoa: 30, lanca: 0, cancel: 4,
-                arco: [75, -45, 50, 36], cor: make_color_rgb(255, 235, 220),
+            _g = { nome: "ATAQUE RÁPIDO", spr: spr_player_ataque_rapido, dano: 8, forca: 2.2, atordoa: 30, lanca: 0, cancel: 3,
+                arco: [70, -40, 50, 36], cor: make_color_rgb(255, 235, 220),
                 seq: [
-                    { q: 0, d: 3 },
+                    { q: 0, d: 2 },
                     { q: 1, d: 3, av: 0.8 },
-                    { q: 2, d: 3, hit: [4, 46, -60, -6], av: 0.8 },
-                    { q: 3, d: 4, hit: [4, 60, -58, -8] },
-                    { q: 4, d: 4, hit: [4, 38, -58, -6] },
-                    { q: 5, d: 7 }
-                ] };
-        break;
-
-        case "corte2":
-            _g = { nome: "CORTE DUPLO", spr: spr_player_ataque, dano: 12, forca: 2.5, atordoa: 32, lanca: 0, cancel: 3,
-                arco: [-55, 70, 52, 30], cor: make_color_rgb(255, 210, 160),
-                seq: [
-                    { q: 1, d: 2, av: 1.2 },
-                    { q: 2, d: 3, hit: [4, 46, -60, -6], av: 1.2 },
-                    { q: 3, d: 3, hit: [4, 60, -58, -8] },
-                    { q: 4, d: 4, hit: [4, 38, -58, -6] },
+                    { q: 2, d: 3, hit: [4, 58, -58, -34], av: 1.0, dm: 0.45 },
+                    { q: 3, d: 4, hit: [4, 64, -70, -6], grupo: 1, dm: 0.6 },
+                    { q: 4, d: 3, hit: [4, 64, -50, -24], grupo: 2, dm: 0.4 },
                     { q: 5, d: 6 }
                 ] };
         break;
 
+        case "corte2":
+            _g = { nome: "ATAQUE DUPLO", spr: spr_player_ataque_duplo, dano: 12, forca: 2.5, atordoa: 32, lanca: 0, cancel: 3,
+                arco: [80, -50, 52, 34], cor: make_color_rgb(255, 210, 160),
+                seq: [
+                    { q: 6, d: 3, hit: [4, 58, -62, -42], av: 1.2, dm: 0.45 },
+                    { q: 7, d: 4, hit: [-24, 54, -80, -6], grupo: 1, dm: 0.6 },
+                    { q: 8, d: 3, hit: [4, 56, -52, -18], grupo: 1 },
+                    { q: 9, d: 3 },
+                    { q: 10, d: 3, hit: [4, 66, -46, -26], grupo: 2, dm: 0.45, av: 1.0 },
+                    { q: 11, d: 6 }
+                ] };
+        break;
+
+        case "corte3":
+            _g = { nome: "ATAQUE TRIPLO", spr: spr_player_ataque_triplo, pesado: true, dano: 18, forca: 5, atordoa: 50, lanca: 1, cancel: 4,
+                arco: [110, -60, 58, 40], cor: make_color_rgb(255, 150, 100),
+                seq: [
+                    { q: 11, d: 3, av: 1.5 },
+                    { q: 12, d: 4, hit: [-12, 62, -84, -4] },
+                    { q: 13, d: 6, hit: [4, 58, -42, 6], grupo: 1, dm: 0.5, ev: "impacto_leve" },
+                    { q: 14, d: 4 },
+                    { q: 15, d: 4 },
+                    { q: 16, d: 4 },
+                    { q: 17, d: 5 }
+                ] };
+        break;
+
+        case "frenetico":
+            _g = { nome: "ATAQUE FRENÉTICO", spr: spr_player_ataque_frenetico, pesado: true, dano: 30, forca: 6, atordoa: 60, lanca: 2, cancel: 99,
+                combo: 1, arco: [120, -60, 60, 40], cor: make_color_rgb(255, 90, 60),
+                seq: [
+                    { q: 0, d: 3, hit: [-30, 58, -64, -10], dm: 0.12, av: 1.2 },
+                    { q: 1, d: 3, hit: [-40, 60, -80, -4], grupo: 1, dm: 0.12 },
+                    { q: 2, d: 3 },
+                    { q: 3, d: 3, hit: [-30, 60, -58, -14], grupo: 2, dm: 0.12, av: 0.8 },
+                    { q: 4, d: 3 },
+                    { q: 5, d: 3, hit: [-40, 52, -86, -4], grupo: 3, dm: 0.12 },
+                    { q: 6, d: 3, hit: [4, 56, -62, -4], grupo: 4, dm: 0.1 },
+                    { q: 7, d: 3, hit: [4, 60, -52, -32], grupo: 5, dm: 0.1, av: 1.0 },
+                    { q: 8, d: 4, hit: [4, 74, -52, -22], grupo: 6, dm: 0.12, av: 2.4 },
+                    { q: 9, d: 3 },
+                    { q: 10, d: 3, hit: [-30, 60, -86, -4], grupo: 7, dm: 0.12 },
+                    { q: 11, d: 3, hit: [4, 58, -82, -4], grupo: 8, dm: 0.1 },
+                    { q: 12, d: 4, hit: [-8, 62, -98, 4], grupo: 9, dm: 0.3, ev: "impacto_leve" },
+                    { q: 13, d: 6, hit: [-20, 66, -42, 6], grupo: 10, dm: 0.2 },
+                    { q: 14, d: 4 },
+                    { q: 15, d: 4 },
+                    { q: 16, d: 4 },
+                    { q: 17, d: 6 }
+                ] };
+        break;
+
         case "corte_aereo":
-            _g = { nome: "CORTE AÉREO", spr: spr_player_ataque, dano: 10, forca: 2.5, atordoa: 30, lanca: 0, cancel: 99, no_ar: true,
+            // v1.12: cancel 3 = dá para encadear até 3 cortes no ar (combo aéreo)
+            _g = { nome: "CORTE AÉREO", spr: spr_player_ataque_ar, dano: 10, forca: 1.2, atordoa: 30, lanca: 0, cancel: 3, no_ar: true,
                 arco: [75, -45, 50, 36], cor: make_color_rgb(255, 235, 220),
                 seq: [
                     { q: 0, d: 2 },
@@ -367,6 +481,7 @@ function golpe_criar(_chave)
                 ] };
         break;
     }
+    if (is_undefined(_g)) _g = golpe_criar_v112(_chave);
     if (is_undefined(_g)) return undefined;
 
     // valores padrão

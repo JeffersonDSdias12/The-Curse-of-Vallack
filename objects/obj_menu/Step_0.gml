@@ -6,7 +6,7 @@ var _gh = display_get_gui_height();
 var _cx = _gw / 2;
 
 // =====================================================================
-// EFEITOS (brasas, relâmpagos, sangue do título, dicas)
+// EFEITOS (brasas, relâmpagos, sangue do título)
 // =====================================================================
 var _max_f = (global.cfg_qualidade == 0) ? 25 : (global.cfg_qualidade == 1 ? 45 : 75);
 if (array_length(faiscas) < _max_f and random(1) < 0.4 * _dt)
@@ -26,8 +26,20 @@ for (var _fi = array_length(faiscas) - 1; _fi >= 0; _fi--)
     if (_f.vida <= 0) array_delete(faiscas, _fi, 1);
 }
 
+// cinzas caindo devagar, levadas pelo vento
+var _max_c = (global.cfg_qualidade == 0) ? 0 : (global.cfg_qualidade == 1 ? 30 : 55);
+if (array_length(cinzas) < _max_c and random(1) < 0.5 * _dt)
+    array_push(cinzas, { x: random_range(-40, _gw), y: -6, vx: random_range(0.15, 0.55), vy: random_range(0.35, 0.9), r: random_range(0.8, 2), s: random(6.28) });
+for (var _ci = array_length(cinzas) - 1; _ci >= 0; _ci--)
+{
+    var _c = cinzas[_ci];
+    _c.x += (_c.vx + sin(tempo_total / 60 + _c.s) * 0.25) * _dt;
+    _c.y += _c.vy * _dt;
+    if (_c.y > _gh + 6) array_delete(cinzas, _ci, 1);
+}
+
 if (relampago > 0) relampago -= _dt;
-if (estado != "intro_creditos")
+if (estado != "intro_video")
 {
     proximo_relampago -= _dt;
     if (proximo_relampago <= 0)
@@ -46,22 +58,13 @@ for (var _gi = array_length(gotas) - 1; _gi >= 0; _gi--)
     if (_g.vida <= 0) array_delete(gotas, _gi, 1);
 }
 
-// as dicas mostram teclas ou botões, conforme o que está sendo usado
-if (global.usando_pad != usando_pad_antes) { usando_pad_antes = global.usando_pad; dicas = dicas_tutorial(); dica_atual = dica_atual mod array_length(dicas); }
-
-dica_tempo += _dt;
-if (dica_tempo >= 220)
-{
-    dica_tempo = 0;
-    dica_atual = (dica_atual + 1) mod array_length(dicas);
-}
 if (mensagem_tempo > 0) mensagem_tempo -= _dt;
-if (estado != "intro_creditos" and estado != "intro_titulo") menu_aparece += _dt;
+if (estado != "intro_video" and estado != "intro_titulo") menu_aparece += _dt;
 
 // =====================================================================
 // ENTRADAS (teclado, controle e mouse)
 // =====================================================================
-var _bloq = instance_exists(obj_loading) or instance_exists(obj_cutscene);
+var _bloq = instance_exists(obj_loading) or instance_exists(obj_cutscene) or instance_exists(obj_mapa) or instance_exists(obj_perfil);     // v1.17: mapa e perfil por cima
 var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);
 var _mexeu = (mouse_antes_x != -1) and (_mx != mouse_antes_x or _my != mouse_antes_y);
@@ -80,13 +83,34 @@ if (_bloq)
     _cima = false; _baixo = false; _esq = false; _dir = false; _ok = false; _voltar = false;
     _clique = false; _clique_dir = false; _mexeu = false;
 }
+// v1.17: o fogo do menu reage ao ponteiro (faíscas no rastro, explosão no clique)
+if (estado == "menu" or estado == "pressione" or estado == "opcoes") menu_fogo_atualizar(_mx, _my, _mexeu, _clique, _dt);
 
 // =====================================================================
 // ESTADOS
 // =====================================================================
 switch (estado)
 {
-    // ----- ABERTURA 0: imagem de introdução ("este é um jogo fictício") -----
+    // ----- ABERTURA 0: vídeo do estúdio (GAMBITECH STUDIO) -----
+    // passa inteiro, sem como pular; termina quando o vídeo acaba (com uma
+    // folga de segurança caso o computador não consiga tocá-lo)
+    case "intro_video":
+        var _vst = video_get_status();
+        var _vdur = video_get_duration();
+        var _acabou = (tempo > 30 and _vst == video_status_closed)
+            or (tempo > 30 and _vdur > 0 and video_get_position() >= _vdur - 40);
+        if (_acabou or tempo > 60 * 26)
+        {
+            video_close();
+            global.video_intro_ativo = false;
+            io_clear();
+            estado = (img_aviso != -1) ? "intro_aviso" : "intro_titulo";
+            tempo = 0;
+            musica("bgm_main_menu", 3000);
+        }
+    break;
+
+    // ----- ABERTURA 1: imagem de introdução ("este é um jogo fictício") -----
     // fica 6 s inteiros (entra em 0,7 s, fica e sai em 0,5 s)
     case "intro_aviso":
         // v1.8: não pula mais com tecla: o aviso de jogo fictício fica os 6 s inteiros
@@ -94,15 +118,6 @@ switch (estado)
         {
             if (img_aviso != -1 and sprite_exists(img_aviso)) sprite_delete(img_aviso);
             img_aviso = -1;
-            estado = "intro_creditos";
-            tempo = 0;
-        }
-    break;
-
-    // ----- ABERTURA: créditos (não pode ser pulada) -----
-    case "intro_creditos":
-        if (tempo >= creditos_total)
-        {
             estado = "intro_titulo";
             tempo = 0;
         }
@@ -121,7 +136,22 @@ switch (estado)
         {
             global.intro_vista = true;
             gotas = [];
+            mudar_estado("pressione", 0, false);
+        }
+    break;
+
+    // ----- v1.14: "PRESSIONE QUALQUER BOTÃO" (depois da abertura) -----
+    case "pressione":
+        var _algum = _ok or _voltar or _clique or _cima or _baixo or _esq or _dir or keyboard_check_pressed(vk_anykey);
+        if (!_algum and global.pad_slot >= 0)
+            for (var _b = gp_face1; _b <= gp_padr; _b++) if (gamepad_button_check_pressed(global.pad_slot, _b)) { _algum = true; break; }
+        if (tempo > 30 and _algum and !_bloq)
+        {
+            som("tit_start", 0.8, 0);
             mudar_estado("menu", 0, false);
+            selecionado = 0;     // v1.20: abre em CONTINUAR quando há progresso
+            menu_aparece = 0;
+            io_clear();
         }
     break;
 
@@ -133,8 +163,8 @@ switch (estado)
         var _escolheu = _ok;
         for (var _i = 0; _i < _n; _i++)
         {
-            var _oy = menu_y(_i);
-            if (point_in_rectangle(_mx, _my, _cx - 230, _oy - 27, _cx + 230, _oy + 27))
+            var _bx = menu_caixa(_i);
+            if (point_in_rectangle(_mx, _my, _bx[0], _bx[1], _bx[2], _bx[3]))
             {
                 if (_mexeu) selecionado = _i;
                 if (_clique) { selecionado = _i; _escolheu = true; }
@@ -142,13 +172,28 @@ switch (estado)
         }
         if (_escolheu and tempo > 25)
         {
-            switch (selecionado)
+            switch (opcoes_menu[selecionado])
             {
-                case 0:
-                    // o herói é Twilight Vetrus: escolhe-se só o nível de dificuldade
-                    mudar_estado("dificuldade", global.dificuldade);
+                case "CONTINUAR":
+                    // v1.20: direto para o save mais recente do perfil
+                    var _sr = slot_recente();
+                    if (_sr != -1 and carregar_slot(_sr))
+                    {
+                        som("tit_start", 0.9, 0);
+                        var _lc = instance_create_depth(0, 0, -10000, obj_loading);
+                        _lc.modo = "carregar";
+                        _lc.destino = global.checkpoint_room;
+                    }
+                    else { aviso_menu("Nenhum jogo salvo ainda."); som("tit_negado", 0.7, 0); }
                 break;
-                case 1:
+                case "NOVO JOGO":
+                    // v1.17: na primeira vez, o PERFIL (o nome de quem joga, só para as
+                    // conquistas); depois o MAPA (fase e dificuldade)
+                    som("tit_selecao", 0.8, 0.02);
+                    if (global.perfil.nome == "") { var _pf = instance_create_depth(0, 0, -10400, obj_perfil); _pf.modo = "primeiro"; }
+                    else instance_create_depth(0, 0, -10400, obj_mapa);
+                break;
+                case "CARREGAR JOGO":
                     if (tem_save)
                     {
                         var _primeiro = 0;
@@ -157,36 +202,17 @@ switch (estado)
                     }
                     else { aviso_menu("Nenhum jogo salvo ainda."); som("tit_negado", 0.7, 0); }
                 break;
-                case 2:
-                    // livro com todos os pergaminhos do tutorial
-                    livro_pag = 0;
-                    livro_abre = 0;
-                    mudar_estado("tutorial", 2);
-                break;
-                case 3: mudar_estado("opcoes", 0); break;
-                case 4: game_end(); break;
+                case "CONQUISTAS": som("tit_selecao", 0.8, 0.02); instance_create_depth(0, 0, -10400, obj_perfil); break;     // v1.17: CONQUISTAS
+                case "OPÇÕES": mudar_estado("opcoes", 0); break;
+                case "SAIR": game_end(); break;
             }
-        }
-    break;
-
-    // ----- TUTORIAL: pergaminhos com todos os comandos e combos -----
-    case "tutorial":
-        livro_abre = min(1, livro_abre + _dt / 22);
-        if (tempo < 18) break;
-        if (_voltar or _clique_dir) { mudar_estado("menu", 2); break; }
-        if (_esq and livro_pag > 0)                { livro_pag -= 1; livro_abre = 0.55; }
-        if (_dir and livro_pag < TUT.TOTAL - 1)    { livro_pag += 1; livro_abre = 0.55; }
-        if (_ok or _clique)
-        {
-            if (livro_pag < TUT.TOTAL - 1) { livro_pag += 1; livro_abre = 0.55; }
-            else mudar_estado("menu", 2);
         }
     break;
 
     // ----- NÍVEL DE DIFICULDADE (escolhido antes de iniciar o jogo) -----
     case "dificuldade":
         if (_voltar) { mudar_estado("menu", 0); break; }
-        // « »: liga / desliga o tutorial da fase (o mesmo de OPÇÕES)
+        // « »: liga / desliga o tutorial da tela de carregamento (o mesmo de OPÇÕES)
         if (_esq or _dir) { global.cfg_tutorial = 1 - global.cfg_tutorial; config_salvar(); som("tit_alterar", 0.7, 0.03); }
         if (_cima)  selecionado = (selecionado + DIF.TOTAL - 1) mod DIF.TOTAL;
         if (_baixo) selecionado = (selecionado + 1) mod DIF.TOTAL;
@@ -219,7 +245,7 @@ switch (estado)
         if (_voltar)
         {
             if (estado == "carregar") mudar_estado("menu", 1);
-            else mudar_estado("dificuldade", global.dificuldade);
+            else { mudar_estado("menu", 0); instance_create_depth(0, 0, -10400, obj_mapa); }     // v1.17: volta ao mapa
             break;
         }
         if (_esq or _cima)  { selecionado = (selecionado + 2) mod 3; confirmar_slot = -1; }
@@ -323,7 +349,6 @@ switch (estado)
                 {
                     if (_modo_pad) global.botoes = botoes_padrao(); else global.teclas = teclas_padrao();
                     config_salvar();
-                    dicas = dicas_tutorial();
                     aviso_menu("Controles restaurados para o padrão.");
                 }
                 else { config_validar_controles(); config_salvar(); mudar_estado("opcoes", CFG_ULTIMO_VALOR + (_modo_pad ? 2 : 1)); }
@@ -359,8 +384,7 @@ switch (estado)
                         capturando = false;
                         som("tit_selecao", 0.8, 0.02);
                         config_salvar();
-                        dicas = dicas_tutorial();
-                    }
+                        }
                 }
             }
             else
@@ -394,8 +418,7 @@ switch (estado)
                         capturando = false;
                         som("tit_selecao", 0.8, 0.02);
                         config_salvar();
-                        dicas = dicas_tutorial();
-                        io_clear();
+                            io_clear();
                     }
                 }
             }
@@ -403,11 +426,10 @@ switch (estado)
     break;
 }
 
-// som de "mover" quando a seleção (ou a página do livro) muda na mesma tela
-if (estado == som_estado and (selecionado != som_sel or livro_pag != som_pag) and !_bloq) som("tit_mover", 0.55, 0.03);
+// som de "mover" quando a seleção muda na mesma tela
+if (estado == som_estado and selecionado != som_sel and !_bloq) som("tit_mover", 0.55, 0.03);
 som_estado = estado;
 som_sel = selecionado;
-som_pag = livro_pag;
 
 // =====================================================================
 // ANIMAÇÃO DOS ITENS E FAÍSCAS AO TROCAR DE OPÇÃO
@@ -422,7 +444,7 @@ if (estado == "menu" and selecionado != selecionado_antes and selecionado_antes 
     repeat (10)
     {
         array_push(faiscas, {
-            x: _cx + random_range(-200, 200), y: _oy2 + random_range(-10, 10),
+            x: menu_x() + random_range(-20, 320), y: _oy2 + random_range(-10, 10),
             vx: random_range(-0.8, 0.8), vy: random_range(-1.6, -0.4),
             vida: irandom_range(25, 50), vmax: 50, r: random_range(1, 2.2)
         });

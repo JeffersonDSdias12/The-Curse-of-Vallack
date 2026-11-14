@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_player_fall
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 6abdb7f27c31f5e4e83777455a450661, type: 3}
+  - {fileID: 21300000, guid: f088bbae292534546a5dcda8b27829c1, type: 3}
+  - {fileID: 21300000, guid: eab49402659a3034bbf4e637d761079a, type: 3}
+  - {fileID: 21300000, guid: 0eb8cc23be083fe43a824785f6c4441c, type: 3}
+  velocidade: 6
+  porSegundo: 1
+  k: 3

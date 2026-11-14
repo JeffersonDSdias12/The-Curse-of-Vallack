@@ -1,0 +1,2290 @@
+fileFormatVersion: 2
+guid: 6bd6e96fd26d55d4395ca92d3fc96eda
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9196499473191359926
+    second: pecas_fase1_0
+  - first:
+      213: 1694484943804657009
+    second: pecas_fase1_1
+  - first:
+      213: -532579132113427354
+    second: pecas_fase1_2
+  - first:
+      213: -146987217515262
+    second: pecas_fase1_3
+  - first:
+      213: -8253330178827494128
+    second: pecas_fase1_4
+  - first:
+      213: 804072031374153145
+    second: pecas_fase1_5
+  - first:
+      213: -2709061445989278053
+    second: pecas_fase1_6
+  - first:
+      213: -6977087920318326482
+    second: pecas_fase1_7
+  - first:
+      213: 5995006726999625882
+    second: pecas_fase1_8
+  - first:
+      213: -1433889337394648495
+    second: pecas_fase1_9
+  - first:
+      213: 4644736629010238313
+    second: pecas_fase1_10
+  - first:
+      213: 5236753444172514292
+    second: pecas_fase1_11
+  - first:
+      213: 1938970456500398526
+    second: pecas_fase1_12
+  - first:
+      213: -7379885886620926201
+    second: pecas_fase1_13
+  - first:
+      213: -753496774661947854
+    second: pecas_fase1_14
+  - first:
+      213: 5134915446061595011
+    second: pecas_fase1_15
+  - first:
+      213: -1216448272505574846
+    second: pecas_fase1_16
+  - first:
+      213: -2227270882916899579
+    second: pecas_fase1_17
+  - first:
+      213: -1405212764627588068
+    second: pecas_fase1_18
+  - first:
+      213: -6728875981148541779
+    second: pecas_fase1_19
+  - first:
+      213: 2730364963502822603
+    second: pecas_fase1_20
+  - first:
+      213: 8989900626344319001
+    second: pecas_fase1_21
+  - first:
+      213: -7577060202705423246
+    second: pecas_fase1_22
+  - first:
+      213: -5356103828095609700
+    second: pecas_fase1_23
+  - first:
+      213: -3602599253837562271
+    second: pecas_fase1_24
+  - first:
+      213: 2073751035892071791
+    second: pecas_fase1_25
+  - first:
+      213: -4447393703366637528
+    second: pecas_fase1_26
+  - first:
+      213: 1502513355530954254
+    second: pecas_fase1_27
+  - first:
+      213: -3687520900584922959
+    second: pecas_fase1_28
+  - first:
+      213: -2883798340650594705
+    second: pecas_fase1_29
+  - first:
+      213: -305665784229511384
+    second: pecas_fase1_30
+  - first:
+      213: -3977382418470108494
+    second: pecas_fase1_31
+  - first:
+      213: -5365520944581583010
+    second: pecas_fase1_32
+  - first:
+      213: -6869911212160369702
+    second: pecas_fase1_33
+  - first:
+      213: 8379796723484212982
+    second: pecas_fase1_34
+  - first:
+      213: -235888014945720480
+    second: pecas_fase1_35
+  - first:
+      213: 5255494105843477283
+    second: pecas_fase1_36
+  - first:
+      213: -7836410714416998597
+    second: pecas_fase1_37
+  - first:
+      213: 8921317472153105826
+    second: pecas_fase1_38
+  - first:
+      213: -5673509311629787336
+    second: pecas_fase1_39
+  - first:
+      213: -338821548992017349
+    second: pecas_fase1_40
+  - first:
+      213: 7503055646879209064
+    second: pecas_fase1_41
+  - first:
+      213: 8227934364279861538
+    second: pecas_fase1_42
+  - first:
+      213: 2699242815822789331
+    second: pecas_fase1_43
+  - first:
+      213: 740775589189374223
+    second: pecas_fase1_44
+  - first:
+      213: 5023511383869309135
+    second: pecas_fase1_45
+  - first:
+      213: -5553553401195063509
+    second: pecas_fase1_46
+  - first:
+      213: -5655335573728711518
+    second: pecas_fase1_47
+  - first:
+      213: -6218601363515112424
+    second: pecas_fase1_48
+  - first:
+      213: 2232094668669552720
+    second: pecas_fase1_49
+  - first:
+      213: 2296074323381375825
+    second: pecas_fase1_50
+  - first:
+      213: 3229636022615558117
+    second: pecas_fase1_51
+  - first:
+      213: 6594026318564481584
+    second: pecas_fase1_52
+  - first:
+      213: 1522430678732035977
+    second: pecas_fase1_53
+  - first:
+      213: 5025919985925752665
+    second: pecas_fase1_54
+  - first:
+      213: 6362591854443617659
+    second: pecas_fase1_55
+  - first:
+      213: 7571321695589840591
+    second: pecas_fase1_56
+  - first:
+      213: 4907961359719031007
+    second: pecas_fase1_57
+  - first:
+      213: 8866977706760657521
+    second: pecas_fase1_58
+  - first:
+      213: -3421934993181497655
+    second: pecas_fase1_59
+  - first:
+      213: 3519756915132447260
+    second: pecas_fase1_60
+  - first:
+      213: -2466194965407760211
+    second: pecas_fase1_61
+  - first:
+      213: -8494380693135234712
+    second: pecas_fase1_62
+  - first:
+      213: -8558214863535316516
+    second: pecas_fase1_63
+  - first:
+      213: 7793823657096879531
+    second: pecas_fase1_64
+  - first:
+      213: 7195726045475879846
+    second: pecas_fase1_65
+  - first:
+      213: -7127873299974539401
+    second: pecas_fase1_66
+  - first:
+      213: 6905383843773674393
+    second: pecas_fase1_67
+  - first:
+      213: -4584015794387185523
+    second: pecas_fase1_68
+  - first:
+      213: 6203853971214419204
+    second: pecas_fase1_69
+  - first:
+      213: 8298515887627604974
+    second: pecas_fase1_70
+  - first:
+      213: -885884260749000887
+    second: pecas_fase1_71
+  - first:
+      213: 7125808289555538156
+    second: pecas_fase1_72
+  - first:
+      213: 5151880279185124908
+    second: pecas_fase1_73
+  - first:
+      213: 3370591525964177213
+    second: pecas_fase1_74
+  - first:
+      213: -1163528981771790607
+    second: pecas_fase1_75
+  - first:
+      213: -1963421421896155984
+    second: pecas_fase1_76
+  - first:
+      213: -321557309646227327
+    second: pecas_fase1_77
+  - first:
+      213: 6079947829305022897
+    second: pecas_fase1_78
+  - first:
+      213: -7014338409202267831
+    second: pecas_fase1_79
+  - first:
+      213: 2867449815354636084
+    second: pecas_fase1_80
+  - first:
+      213: 7817339537317699885
+    second: pecas_fase1_81
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: pecas_fase1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 307
+        width: 76
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b553a4bb8780af70800000000000000
+      internalID: 9196499473191359926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_1
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 308
+        width: 44
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17d69b02415048710800000000000000
+      internalID: 1694484943804657009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_2
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 308
+        width: 54
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 664e79fd916eb98f0800000000000000
+      internalID: -532579132113427354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_3
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 308
+        width: 49
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20d0d1fd05a7ffff0800000000000000
+      internalID: -146987217515262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_4
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 313
+        width: 43
+        height: 139
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01dd9fc2ee7467d80800000000000000
+      internalID: -8253330178827494128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_5
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 316
+        width: 142
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b512eb9043a82b00800000000000000
+      internalID: 804072031374153145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_6
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 316
+        width: 143
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9e5a15d7fa776ad0800000000000000
+      internalID: -2709061445989278053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_7
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 317
+        width: 87
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e29d1cea0876c2f90800000000000000
+      internalID: -6977087920318326482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_8
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 318
+        width: 68
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a90d3e4fada823350800000000000000
+      internalID: 5995006726999625882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_9
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 322
+        width: 193
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15a2f55ae3dc91ce0800000000000000
+      internalID: -1433889337394648495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_10
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 322
+        width: 70
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96b866fea5b657040800000000000000
+      internalID: 4644736629010238313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_11
+      rect:
+        serializedVersion: 2
+        x: 969
+        y: 337
+        width: 141
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f3c430138faca840800000000000000
+      internalID: 5236753444172514292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_12
+      rect:
+        serializedVersion: 2
+        x: 1110
+        y: 344
+        width: 45
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb9eea96b5b98ea10800000000000000
+      internalID: 1938970456500398526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_13
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 344
+        width: 40
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70f7a0de2e0659990800000000000000
+      internalID: -7379885886620926201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_14
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 344
+        width: 58
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23e3fd6fcaa0b85f0800000000000000
+      internalID: -753496774661947854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_15
+      rect:
+        serializedVersion: 2
+        x: 1253
+        y: 345
+        width: 39
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 389fa2a6462e24740800000000000000
+      internalID: 5134915446061595011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_16
+      rect:
+        serializedVersion: 2
+        x: 1292
+        y: 347
+        width: 81
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24aeaadbdbe4e1fe0800000000000000
+      internalID: -1216448272505574846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_17
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 347
+        width: 50
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 505ea2dbee42711e0800000000000000
+      internalID: -2227270882916899579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_18
+      rect:
+        serializedVersion: 2
+        x: 1423
+        y: 347
+        width: 48
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1c278a8f6eaf7ce0800000000000000
+      internalID: -1405212764627588068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_19
+      rect:
+        serializedVersion: 2
+        x: 1471
+        y: 347
+        width: 40
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dacabfd32fa3e92a0800000000000000
+      internalID: -6728875981148541779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_20
+      rect:
+        serializedVersion: 2
+        x: 1511
+        y: 349
+        width: 57
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc412ccd77434e520800000000000000
+      internalID: 2730364963502822603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_21
+      rect:
+        serializedVersion: 2
+        x: 1568
+        y: 350
+        width: 282
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91890573dfa82cc70800000000000000
+      internalID: 8989900626344319001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_22
+      rect:
+        serializedVersion: 2
+        x: 1850
+        y: 353
+        width: 34
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2747efff3efd8d690800000000000000
+      internalID: -7577060202705423246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_23
+      rect:
+        serializedVersion: 2
+        x: 1884
+        y: 353
+        width: 74
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c94504a32fb4ba5b0800000000000000
+      internalID: -5356103828095609700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 224
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16ebce6e01ff00ec0800000000000000
+      internalID: -3602599253837562271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_25
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 209
+        width: 63
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6df1f6749177cc10800000000000000
+      internalID: 2073751035892071791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_26
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 210
+        width: 73
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 828c5867dfea742c0800000000000000
+      internalID: -4447393703366637528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_27
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 210
+        width: 73
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e06e3baafeff9d410800000000000000
+      internalID: 1502513355530954254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_28
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 211
+        width: 40
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b0aeca374b43dcc0800000000000000
+      internalID: -3687520900584922959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_29
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 211
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6e09ad20b0baf7d0800000000000000
+      internalID: -2883798340650594705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_30
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 213
+        width: 51
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82f3207b69e02cbf0800000000000000
+      internalID: -305665784229511384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_31
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 213
+        width: 69
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b2843373cf7dc8c0800000000000000
+      internalID: -3977382418470108494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_32
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 214
+        width: 87
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5fdb4fe027d985b0800000000000000
+      internalID: -5365520944581583010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_33
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 222
+        width: 121
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adb35b0a62c29a0a0800000000000000
+      internalID: -6869911212160369702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_34
+      rect:
+        serializedVersion: 2
+        x: 865
+        y: 222
+        width: 129
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fe3241d8b40b4470800000000000000
+      internalID: 8379796723484212982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_35
+      rect:
+        serializedVersion: 2
+        x: 994
+        y: 224
+        width: 133
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0676366a915f9bcf0800000000000000
+      internalID: -235888014945720480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_36
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 224
+        width: 95
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32ba5f16b044fe840800000000000000
+      internalID: 5255494105843477283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_37
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 226
+        width: 106
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b371c1d69f97f3390800000000000000
+      internalID: -7836410714416998597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_38
+      rect:
+        serializedVersion: 2
+        x: 1328
+        y: 228
+        width: 120
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a5fb2849f2eecb70800000000000000
+      internalID: 8921317472153105826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_39
+      rect:
+        serializedVersion: 2
+        x: 1448
+        y: 228
+        width: 166
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83f7f623755a341b0800000000000000
+      internalID: -5673509311629787336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_40
+      rect:
+        serializedVersion: 2
+        x: 1614
+        y: 228
+        width: 84
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3c451aa8934c4bf0800000000000000
+      internalID: -338821548992017349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_41
+      rect:
+        serializedVersion: 2
+        x: 1698
+        y: 229
+        width: 130
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8665932ab55302860800000000000000
+      internalID: 7503055646879209064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_42
+      rect:
+        serializedVersion: 2
+        x: 1828
+        y: 229
+        width: 70
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 221712af5be7f2270800000000000000
+      internalID: 8227934364279861538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_43
+      rect:
+        serializedVersion: 2
+        x: 1898
+        y: 229
+        width: 120
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3da74af2a03a57520800000000000000
+      internalID: 2699242815822789331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 131
+        width: 65
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f01d9eb3973c74a00800000000000000
+      internalID: 740775589189374223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_45
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 132
+        width: 207
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc049a8ecf817b540800000000000000
+      internalID: 5023511383869309135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_46
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 132
+        width: 112
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b271b980b90dde2b0800000000000000
+      internalID: -5553553401195063509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_47
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 133
+        width: 72
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ac254a42463481b0800000000000000
+      internalID: -5655335573728711518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_48
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 133
+        width: 72
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8140ce7e10713b9a0800000000000000
+      internalID: -6218601363515112424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_49
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 133
+        width: 116
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0588717664ef9fe10800000000000000
+      internalID: 2232094668669552720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_50
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 134
+        width: 71
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 153da079e6b4ddf10800000000000000
+      internalID: 2296074323381375825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_51
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 134
+        width: 73
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e74ec9e9d8f1dc20800000000000000
+      internalID: 3229636022615558117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_52
+      rect:
+        serializedVersion: 2
+        x: 788
+        y: 134
+        width: 73
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03adc950000b28b50800000000000000
+      internalID: 6594026318564481584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_53
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 134
+        width: 1132
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 987daf8d2a2c02510800000000000000
+      internalID: 1522430678732035977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 58
+        width: 142
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95704a64997afb540800000000000000
+      internalID: 5025919985925752665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_55
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 58
+        width: 94
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7dd7e6c4977c4850800000000000000
+      internalID: 6362591854443617659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_56
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 58
+        width: 123
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc637d1b7fcb21960800000000000000
+      internalID: 7571321695589840591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_57
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 59
+        width: 120
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd065696ad49c1440800000000000000
+      internalID: 4907961359719031007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_58
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 59
+        width: 174
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17ad6cabe35dd0b70800000000000000
+      internalID: 8866977706760657521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_59
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 59
+        width: 124
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c620fef048d280d0800000000000000
+      internalID: -3421934993181497655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_60
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 61
+        width: 203
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1ab13e0440b8d030800000000000000
+      internalID: 3519756915132447260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_61
+      rect:
+        serializedVersion: 2
+        x: 980
+        y: 62
+        width: 207
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da08304deb056cdd0800000000000000
+      internalID: -2466194965407760211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_62
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 67
+        width: 85
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 869ecb6c3c5ed1a80800000000000000
+      internalID: -8494380693135234712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_63
+      rect:
+        serializedVersion: 2
+        x: 1272
+        y: 68
+        width: 114
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd1628bccec1b3980800000000000000
+      internalID: -8558214863535316516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_64
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 68
+        width: 112
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bad9b4b9259392c60800000000000000
+      internalID: 7793823657096879531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_65
+      rect:
+        serializedVersion: 2
+        x: 1498
+        y: 69
+        width: 138
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6abbd99b6ba5cd360800000000000000
+      internalID: 7195726045475879846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_66
+      rect:
+        serializedVersion: 2
+        x: 1636
+        y: 71
+        width: 107
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 777b60faff4b41d90800000000000000
+      internalID: -7127873299974539401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_67
+      rect:
+        serializedVersion: 2
+        x: 1743
+        y: 71
+        width: 103
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 993f9d5050ad4df50800000000000000
+      internalID: 6905383843773674393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_68
+      rect:
+        serializedVersion: 2
+        x: 1846
+        y: 72
+        width: 79
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8095c21ced4260c0800000000000000
+      internalID: -4584015794387185523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_69
+      rect:
+        serializedVersion: 2
+        x: 1925
+        y: 73
+        width: 70
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 405c1a04154881650800000000000000
+      internalID: 6203853971214419204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 55
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee39afc7b304a2370800000000000000
+      internalID: 8298515887627604974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_71
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 0
+        width: 102
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94f32fd55f4b4b3f0800000000000000
+      internalID: -885884260749000887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_72
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 0
+        width: 114
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce0ed7c92e4f3e260800000000000000
+      internalID: 7125808289555538156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_73
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 0
+        width: 97
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2e6b2e61d72f7740800000000000000
+      internalID: 5151880279185124908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_74
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 1
+        width: 60
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3f590c722fb6ce20800000000000000
+      internalID: 3370591525964177213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_75
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 1
+        width: 118
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f6de934e805adfe0800000000000000
+      internalID: -1163528981771790607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_76
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 2
+        width: 92
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bcbc739e9680c4e0800000000000000
+      internalID: -1963421421896155984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_77
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 2
+        width: 91
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1883b9f9459998bf0800000000000000
+      internalID: -321557309646227327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_78
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 3
+        width: 91
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b912aa7650506450800000000000000
+      internalID: 6079947829305022897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_79
+      rect:
+        serializedVersion: 2
+        x: 820
+        y: 4
+        width: 93
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 949ce11616018ae90800000000000000
+      internalID: -7014338409202267831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_80
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 11
+        width: 93
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 437f8772a6a3bc720800000000000000
+      internalID: 2867449815354636084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pecas_fase1_81
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 16
+        width: 87
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d21207224e4cc7c60800000000000000
+      internalID: 7817339537317699885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      pecas_fase1_0: 9196499473191359926
+      pecas_fase1_1: 1694484943804657009
+      pecas_fase1_10: 4644736629010238313
+      pecas_fase1_11: 5236753444172514292
+      pecas_fase1_12: 1938970456500398526
+      pecas_fase1_13: -7379885886620926201
+      pecas_fase1_14: -753496774661947854
+      pecas_fase1_15: 5134915446061595011
+      pecas_fase1_16: -1216448272505574846
+      pecas_fase1_17: -2227270882916899579
+      pecas_fase1_18: -1405212764627588068
+      pecas_fase1_19: -6728875981148541779
+      pecas_fase1_2: -532579132113427354
+      pecas_fase1_20: 2730364963502822603
+      pecas_fase1_21: 8989900626344319001
+      pecas_fase1_22: -7577060202705423246
+      pecas_fase1_23: -5356103828095609700
+      pecas_fase1_24: -3602599253837562271
+      pecas_fase1_25: 2073751035892071791
+      pecas_fase1_26: -4447393703366637528
+      pecas_fase1_27: 1502513355530954254
+      pecas_fase1_28: -3687520900584922959
+      pecas_fase1_29: -2883798340650594705
+      pecas_fase1_3: -146987217515262
+      pecas_fase1_30: -305665784229511384
+      pecas_fase1_31: -3977382418470108494
+      pecas_fase1_32: -5365520944581583010
+      pecas_fase1_33: -6869911212160369702
+      pecas_fase1_34: 8379796723484212982
+      pecas_fase1_35: -235888014945720480
+      pecas_fase1_36: 5255494105843477283
+      pecas_fase1_37: -7836410714416998597
+      pecas_fase1_38: 8921317472153105826
+      pecas_fase1_39: -5673509311629787336
+      pecas_fase1_4: -8253330178827494128
+      pecas_fase1_40: -338821548992017349
+      pecas_fase1_41: 7503055646879209064
+      pecas_fase1_42: 8227934364279861538
+      pecas_fase1_43: 2699242815822789331
+      pecas_fase1_44: 740775589189374223
+      pecas_fase1_45: 5023511383869309135
+      pecas_fase1_46: -5553553401195063509
+      pecas_fase1_47: -5655335573728711518
+      pecas_fase1_48: -6218601363515112424
+      pecas_fase1_49: 2232094668669552720
+      pecas_fase1_5: 804072031374153145
+      pecas_fase1_50: 2296074323381375825
+      pecas_fase1_51: 3229636022615558117
+      pecas_fase1_52: 6594026318564481584
+      pecas_fase1_53: 1522430678732035977
+      pecas_fase1_54: 5025919985925752665
+      pecas_fase1_55: 6362591854443617659
+      pecas_fase1_56: 7571321695589840591
+      pecas_fase1_57: 4907961359719031007
+      pecas_fase1_58: 8866977706760657521
+      pecas_fase1_59: -3421934993181497655
+      pecas_fase1_6: -2709061445989278053
+      pecas_fase1_60: 3519756915132447260
+      pecas_fase1_61: -2466194965407760211
+      pecas_fase1_62: -8494380693135234712
+      pecas_fase1_63: -8558214863535316516
+      pecas_fase1_64: 7793823657096879531
+      pecas_fase1_65: 7195726045475879846
+      pecas_fase1_66: -7127873299974539401
+      pecas_fase1_67: 6905383843773674393
+      pecas_fase1_68: -4584015794387185523
+      pecas_fase1_69: 6203853971214419204
+      pecas_fase1_7: -6977087920318326482
+      pecas_fase1_70: 8298515887627604974
+      pecas_fase1_71: -885884260749000887
+      pecas_fase1_72: 7125808289555538156
+      pecas_fase1_73: 5151880279185124908
+      pecas_fase1_74: 3370591525964177213
+      pecas_fase1_75: -1163528981771790607
+      pecas_fase1_76: -1963421421896155984
+      pecas_fase1_77: -321557309646227327
+      pecas_fase1_78: 6079947829305022897
+      pecas_fase1_79: -7014338409202267831
+      pecas_fase1_8: 5995006726999625882
+      pecas_fase1_80: 2867449815354636084
+      pecas_fase1_81: 7817339537317699885
+      pecas_fase1_9: -1433889337394648495
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

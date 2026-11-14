@@ -33,6 +33,5 @@ for (var _i = 0; _i < 3; _i++)
 }
 
 if (confirmado) txt_sombra(_gw / 2, 552, "JOGO SALVO NO SLOT " + string(selecionado + 1), FONTE.MEDIA, make_color_rgb(140, 255, 150), 1, fa_center, fa_middle);
-txt_bloco(_gw / 2, _gh - 104, "DICA  ·  " + dicas[dica_atual], FONTE.MINI, _ouro, _a, min(_gw - 120, 900));
 txt(_gw / 2, _gh - 40, "« » escolhe   ·   " + nome_confirmar() + " confirma   ·   " + nome_voltar() + " cancela", FONTE.MINI, make_color_rgb(190, 190, 190), _a, fa_center, fa_middle);
 desenho_resetar();

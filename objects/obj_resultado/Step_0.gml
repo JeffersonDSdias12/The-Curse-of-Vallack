@@ -25,7 +25,17 @@ switch (fase)
     break;
 
     case "obrigado":
-        if (tempo >= 420 or (_ok and tempo > 120)) { fase = "sair"; tempo = 0; }
+        if (tempo >= 360 or (_ok and tempo > 90)) { fase = "obrigado_sai"; tempo = 0; }
+    break;
+
+    // a mensagem some e entram os créditos com os nomes da equipe
+    case "obrigado_sai":
+        if (tempo >= 45) { fase = "creditos"; tempo = 0; }
+    break;
+
+    case "creditos":
+        if (_ok and tempo > 60) tempo += 120;          // ENTER / clique acelera
+        if (tempo >= creditos_duracao() + 240) { fase = "sair"; tempo = 0; }
     break;
 
     case "sair":

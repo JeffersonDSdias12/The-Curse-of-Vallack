@@ -89,7 +89,7 @@ else
         // --------------------------------------------------------------
         case "perseguir":
             if (!_dentro) { estado_ia = "parado"; velh = 0; break; }
-            if (_dx != 0) dir = sign(_dx);
+            inimigo_virar(_dx);
 
             if (_no_chao and recarga <= 0)
             {
@@ -97,6 +97,7 @@ else
                 if (_adx <= 62 and abs(_dy) < 50)
                 {
                     estado_ia = "garra";
+                    fala_ataque(id, falas, cor_fala, 0.3);       // v1.18: balão ao começar a garra
                     ataque_t = 0;
                     golpe_dado = false;
                     velh = 0;
@@ -113,11 +114,11 @@ else
                     velh = 0;
                     trocar_sprite(spr_ia_parado, 0);
                     image_index = 1;
-                    fala_aleatoria(id, falas, cor_fala, 0.3);
+                    fala_ataque(id, falas, cor_fala, 0.4);       // v1.18: balão ao começar o bote
                     break;
                 }
                 // TEIA: de longe, em arco
-                if (recarga_teia <= 0 and _adx >= 110 and _adx <= 430 and abs(_dy) < 140 and inimigo_na_tela())
+                if (dif_golpe_liberado(DIF.MEDIO) and recarga_teia <= 0 and _adx >= 110 and _adx <= 430 and abs(_dy) < 140 and inimigo_na_tela())
                 {
                     estado_ia = "teia";
                     ataque_t = 0;
@@ -137,13 +138,13 @@ else
             if (_mv != 0 and !inimigo_pode_andar(_mv)) _mv = 0;
             if (_mv != 0)
             {
-                velh = _mv * vel_andar * ((_mv == dir) ? 1 : 0.75);
+                velh_para(_mv * vel_andar * ((_mv == dir) ? 1 : 0.75), 0.35, 0.5);
                 trocar_sprite(spr_ia_andar, (_mv == dir) ? 1.5 : 1.1);
             }
             else
             {
-                velh = 0;
-                trocar_sprite(spr_ia_parado, 1);
+                velh_para(0, 0.35, 0.5);
+                trocar_sprite((abs(velh) > 0.5) ? spr_ia_andar : spr_ia_parado, 1);
             }
         break;
 
@@ -194,7 +195,7 @@ else
                 var _vv = (_ty - _by) / _tempo - 0.5 * 0.12 * _tempo;
                 magia_criar("teia", _bx, _by, dir * _vh, clamp(_vv, -7, 4), dano_teia, id);
                 som_em("teia_disparo", x, y, 0.75);
-                fala_aleatoria(id, falas_aranha_teia(), cor_fala, 0.3);
+                fala_ataque(id, falas_aranha_teia(), cor_fala, 0.35);    // v1.18
             }
             if (ataque_t >= 46)
             {
@@ -209,7 +210,7 @@ else
         case "bote_prep":
             velh = 0;
             ataque_t += _dt;
-            if (_tem_alvo and _dx != 0) dir = sign(_dx);
+            if (_tem_alvo) inimigo_virar(_dx, true);
             if (ataque_t >= 18)
             {
                 // salta até onde Twilight está

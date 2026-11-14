@@ -1,0 +1,13 @@
+gpu_set_blendmode(bm_add);
+draw_set_alpha(0.35);
+draw_set_color(make_color_rgb(120, 255, 90));
+draw_circle(x, y, 9, false);
+gpu_set_blendmode(bm_normal);
+draw_set_alpha(1);
+draw_set_color(make_color_rgb(70, 160, 60));
+draw_circle(x, y, 5, false);
+draw_set_color(make_color_rgb(170, 255, 140));
+draw_circle(x - 1.5, y - 1.5, 1.6, false);
+draw_set_color(make_color_rgb(120, 90, 60));
+draw_line_width(x, y, x + lengthdir_x(8, ang), y + lengthdir_y(8, ang), 2.5);
+draw_set_color(c_white);

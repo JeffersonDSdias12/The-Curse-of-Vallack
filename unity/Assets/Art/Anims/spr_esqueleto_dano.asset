@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_esqueleto_dano
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 8c8252743a693dd41b197fb65183c0bb, type: 3}
+  - {fileID: 21300000, guid: 8c31327796dfa904898166f0cdd14b92, type: 3}
+  - {fileID: 21300000, guid: 0591b2821c638ad4d898d88ee556f47f, type: 3}
+  - {fileID: 21300000, guid: 0110d4aec8862984e890fed0ee937031, type: 3}
+  - {fileID: 21300000, guid: e149c1c9c40865f47818bfd1e9a86d01, type: 3}
+  - {fileID: 21300000, guid: 407b853288cc93345a0a6dc315a5302c, type: 3}
+  - {fileID: 21300000, guid: 196710d79e5c61d47839e5d8732d3283, type: 3}
+  - {fileID: 21300000, guid: 6bd825ba72b0adf48b4168720219c6fc, type: 3}
+  - {fileID: 21300000, guid: e1ec04e5d3d9ddb48a15bddab25a848e, type: 3}
+  velocidade: 12
+  porSegundo: 1
+  k: 2

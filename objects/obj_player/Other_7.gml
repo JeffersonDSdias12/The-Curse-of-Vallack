@@ -4,7 +4,7 @@
 if (sprite_index == spr_player_dano)
 {
     machucado = false;
-    trocar_animacao(spr_player_idle, 1);
+    trocar_animacao(spr_player_parado, 1);
 }
 else if (sprite_index == spr_player_morte)
 {

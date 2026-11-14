@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_fundo_hd
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: b734f037ec1a40d489b19817a9a4e157, type: 3}
+  - {fileID: 21300000, guid: 69352c91214bc9a4aac4cb3877ad3435, type: 3}
+  - {fileID: 21300000, guid: 4c07495a52d33084eaf741083437cb48, type: 3}
+  - {fileID: 21300000, guid: 05d32f68e01173342b9d32cb718cc31d, type: 3}
+  velocidade: 30
+  porSegundo: 1
+  k: 1

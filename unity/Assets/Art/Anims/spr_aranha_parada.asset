@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_aranha_parada
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 7fb18ce71605cc74cac28c4948701cba, type: 3}
+  - {fileID: 21300000, guid: ce3e15863353fa742bb078664b615aff, type: 3}
+  - {fileID: 21300000, guid: 7d7e4b705f1c5ac4588413b6d79a44ec, type: 3}
+  - {fileID: 21300000, guid: c5e662245d34c594aba37047071fd608, type: 3}
+  velocidade: 6
+  porSegundo: 1
+  k: 3

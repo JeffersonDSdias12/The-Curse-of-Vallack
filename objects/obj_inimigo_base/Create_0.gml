@@ -27,6 +27,9 @@ barra_tempo = 0;
 flash_dano = 0;
 empurrao = 0;
 dir = -1;
+virar_t = 0;             // v1.14: reação antes de virar (inimigo_virar)
+limite_x1 = -1;          // v1.14: área em que o inimigo fica (arena da chave no alto do forte)
+limite_x2 = -1;
 
 // atordoamento (scr_dano)
 atordoado = 0;
@@ -43,6 +46,12 @@ recarga = 0;
 finalizavel = false;     // atordoado e fraco (ou aparado): BOLA perto = finalizador
 executando = false;      // preso no finalizador de Twilight
 finalizado = false;      // morreu no finalizador (solta mais orbs)
+// v1.17: SEQUÊNCIA DE GOLPES (Carrasco e Árvore): só caem por ela
+usa_qte = false;         // o finalizador abre a sequência em vez do golpe único
+qte_pronto = false;      // pode começar agora (exausto / cambaleando)
+em_qte = false;          // preso na sequência (a vida só desce por ela)
+qte_vencido = false;     // a sequência foi completada: o finalizador mata
+qte_falhou = function() {};   // cada chefe decide o que faz quando o jogador erra
 pode_lancar = true;      // golpes que lançam ao ar funcionam nele
 aparado_t = 0;           // tempo atordoado depois de ter o golpe aparado
 resiste_atordoar = false;// mini-boss: só fica atordoado se aparado ou exausto
@@ -58,6 +67,14 @@ tremor = 0;
 nivel = 1;                    // Nv 1 a 5 (scr_inimigos_novos); os antigos ficam no 1
 ultimo_golpe = undefined;     // golpe (struct de scr_combate) do último dano
 estado_ao_surgir = "";        // estado da IA ao sair do portal ("" = padrão)
+
+// v1.12: elites, petrificação (Modo Fúria) e combo aéreo
+elite = false;                // inimigo de elite: mais vida, brilho vermelho, pode ser executado
+petrif = 0;                   // 0 a 3: golpes do Modo Fúria (3 = vira pedra)
+petrif_t = 0;
+petrificado = false;
+suspenso_t = 0;               // preso no ar pelo combo aéreo (gravidade baixa)
+grav_ia_base = 0.4;
 
 // cada inimigo redefine como reage a um golpe
 reagir_dano = function(_dano, _dir, _forca) {};

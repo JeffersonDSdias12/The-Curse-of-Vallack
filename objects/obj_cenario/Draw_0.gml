@@ -23,12 +23,42 @@ var _k0   = floor((_x1 - _off) / _sw) - 1;
 var _k1   = ceil((_x2 - _off) / _sw) + 1;
 for (var _k = _k0; _k <= _k1; _k++)
 {
+    if (array_length(castelo) == 2)
+    {
+        // v1.13: a arte nova do castelo também no salão distante (sem borrão)
+        var _tfd = gpu_get_texfilter();
+        gpu_set_texfilter(true);
+        var _hd = sprite_get_height(spr_fundo_fase2) * _esc;
+        var _ed = (_sw / 2) / sprite_get_width(castelo[0]);
+        var _eyd = _hd / sprite_get_height(castelo[0]);
+        var _xd = _off + _k * _sw - _sw / 2;
+        draw_sprite_ext(castelo[0], 0, _xd, _base - _hd, _ed, _eyd, 0, make_color_rgb(92, 66, 70), 1);
+        draw_sprite_ext(castelo[1], 0, _xd + _sw / 2, _base - _hd, _ed, _eyd, 0, make_color_rgb(92, 66, 70), 1);
+        gpu_set_texfilter(_tfd);
+    }
     // origem do sprite = centro da base
-    draw_sprite_ext(spr_fundo_fase2, 0, _off + _k * _sw, _base, _esc, _esc, 0, make_color_rgb(92, 66, 70), 1);
+    else draw_sprite_ext(spr_fundo_fase2, 0, _off + _k * _sw, _base, _esc, _esc, 0, make_color_rgb(92, 66, 70), 1);
 }
 
 // 3) escuridão do teto (degradê)
 retangulo_gradiente(_x1, _vy - 4, _x2, banda_topo, make_color_rgb(6, 3, 5), 0.88, make_color_rgb(30, 12, 14), 0.35);
+
+// 3b) o salão (arte nova em alta resolução, repetida a cada 1616 px como os tiles)
+if (array_length(castelo) == 2)
+{
+    var _tf = gpu_get_texfilter();
+    gpu_set_texfilter(true);
+    var _per = 1616;
+    var _alt = banda_base - banda_topo;
+    var _ex = (_per / 2) / sprite_get_width(castelo[0]);
+    var _ey = _alt / sprite_get_height(castelo[0]);
+    for (var _k = floor(_x1 / _per); _k * _per < _x2; _k++)
+    {
+        draw_sprite_ext(castelo[0], 0, _k * _per, banda_topo, _ex, _ey, 0, c_white, 1);
+        draw_sprite_ext(castelo[1], 0, _k * _per + _per / 2, banda_topo, _ex, _ey, 0, c_white, 1);
+    }
+    gpu_set_texfilter(_tf);
+}
 
 // 4) piso de pedra abaixo da arte (antes era azul)
 var _cor_piso = make_color_rgb(150, 112, 118);

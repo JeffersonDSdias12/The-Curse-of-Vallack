@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_player_idle
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: 92a8798329e5f154294667cbcf3338d4, type: 3}
+  - {fileID: 21300000, guid: cfe1e82389f0a71458967d3edac5df1a, type: 3}
+  - {fileID: 21300000, guid: 4f2efe693386d444ba8ccc1104c0701e, type: 3}
+  - {fileID: 21300000, guid: ee283775897992a40aa83bc2d67d7da3, type: 3}
+  - {fileID: 21300000, guid: 38c9b5b3f2c64af4b95beb8e5f0571a1, type: 3}
+  - {fileID: 21300000, guid: 5ed3cf7d624d2ce4983119dd69b1df36, type: 3}
+  - {fileID: 21300000, guid: 4124ce16c80403347a3f7a738cbfabb2, type: 3}
+  - {fileID: 21300000, guid: d580011cc81849e44b79ebde4c39c2e3, type: 3}
+  velocidade: 7
+  porSegundo: 1
+  k: 3

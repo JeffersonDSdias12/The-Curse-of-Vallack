@@ -24,37 +24,56 @@ draw_rectangle(_vx - 4, _vy - 4, _vx + _vw + 4, _vy + _vh + 4, false);
 // névoa rente ao chão
 if (chao_y >= 0) retangulo_gradiente(_vx - 4, chao_y - 110, _vx + _vw + 4, chao_y + 12, make_color_rgb(120, 130, 160), 0, make_color_rgb(120, 130, 160), 0.24);
 
-// chuva: camada de trás (fina)
-draw_set_color(make_color_rgb(165, 185, 225));
+// v1.19: chuva e respingos em POUCOS lotes (alfa por vértice). Antes cada gota
+// trocava o alfa e virava um desenho separado (centenas de lotes por quadro)
+draw_set_alpha(1);
+// chuva: camada de trás (fina) — uma lista de linhas
+var _ct = make_color_rgb(165, 185, 225);
+draw_primitive_begin(pr_linelist);
 for (var _i = 0; _i < array_length(gotas); _i++)
 {
     var _g = gotas[_i];
     if (_g.perto) continue;
-    draw_set_alpha(_g.a * (1 + _flash * 0.6));
-    draw_line(_g.x, _g.y, _g.x - vento / _g.vel * _g.comp, _g.y - _g.comp);
+    var _ga = min(1, _g.a * (1 + _flash * 0.6));
+    draw_vertex_colour(_g.x, _g.y, _ct, _ga);
+    draw_vertex_colour(_g.x - vento / _g.vel * _g.comp, _g.y - _g.comp, _ct, _ga);
 }
-// chuva: camada da frente (grossa e brilhante)
-draw_set_color(make_color_rgb(205, 220, 250));
+draw_primitive_end();
+// chuva: camada da frente (mais clara e mais longa) — outra lista de linhas
+// (no modo VM cada vértice é uma chamada: 2 por gota é o mais barato)
+var _cf = make_color_rgb(205, 220, 250);
+draw_primitive_begin(pr_linelist);
 for (var _i2 = 0; _i2 < array_length(gotas); _i2++)
 {
     var _g2 = gotas[_i2];
     if (!_g2.perto) continue;
-    draw_set_alpha(min(1, _g2.a * (1 + _flash * 0.5)));
-    draw_line_width(_g2.x, _g2.y, _g2.x - vento * 1.3 / _g2.vel * _g2.comp, _g2.y - _g2.comp, 1.4);
+    var _ga2 = min(1, _g2.a * (1 + _flash * 0.5));
+    draw_vertex_colour(_g2.x, _g2.y, _cf, _ga2);
+    draw_vertex_colour(_g2.x - vento * 1.3 / _g2.vel * _g2.comp, _g2.y - _g2.comp, _cf, _ga2);
 }
+draw_primitive_end();
 
-// respingos no chão
-draw_set_color(make_color_rgb(205, 220, 245));
+// respingos no chão — uma lista de linhas (a coroa dos grossos: um losango achatado)
+var _cr = make_color_rgb(205, 220, 245);
+draw_primitive_begin(pr_linelist);
 for (var _r = 0; _r < array_length(respingos); _r++)
 {
     var _s = respingos[_r];
     var _q = _s.t / 12;
     var _k = _s.g ? 1.5 : 1;
-    draw_set_alpha(0.65 * (1 - _q));
-    draw_line(_s.x, _s.y, _s.x - (3 + 3 * _q) * _k, _s.y - (3 + 3 * _q) * _k);
-    draw_line(_s.x, _s.y, _s.x + (3 + 3 * _q) * _k, _s.y - (3 + 3 * _q) * _k);
-    if (_s.g) draw_ellipse(_s.x - 4 * _q - 1, _s.y - 1, _s.x + 4 * _q + 1, _s.y + 1, true);
+    var _ra = 0.65 * (1 - _q), _d = (3 + 3 * _q) * _k;
+    draw_vertex_colour(_s.x, _s.y, _cr, _ra); draw_vertex_colour(_s.x - _d, _s.y - _d, _cr, _ra);
+    draw_vertex_colour(_s.x, _s.y, _cr, _ra); draw_vertex_colour(_s.x + _d, _s.y - _d, _cr, _ra);
+    if (_s.g)
+    {
+        var _ex = 4 * _q + 1;
+        draw_vertex_colour(_s.x - _ex, _s.y, _cr, _ra); draw_vertex_colour(_s.x, _s.y - 1, _cr, _ra);
+        draw_vertex_colour(_s.x, _s.y - 1, _cr, _ra); draw_vertex_colour(_s.x + _ex, _s.y, _cr, _ra);
+        draw_vertex_colour(_s.x + _ex, _s.y, _cr, _ra); draw_vertex_colour(_s.x, _s.y + 1, _cr, _ra);
+        draw_vertex_colour(_s.x, _s.y + 1, _cr, _ra); draw_vertex_colour(_s.x - _ex, _s.y, _cr, _ra);
+    }
 }
+draw_primitive_end();
 
 // relâmpago: clarão que ilumina a tela e raio com galhos
 if (_flash > 0)

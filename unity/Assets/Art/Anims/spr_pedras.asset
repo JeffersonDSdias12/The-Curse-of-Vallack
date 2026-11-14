@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec28f8a0c697c644b4cdec9d8e4f674, type: 3}
+  m_Name: spr_pedras
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteAnim
+  quadros:
+  - {fileID: 21300000, guid: e682ffc70dd49e54d99a723dfc59f96a, type: 3}
+  - {fileID: 21300000, guid: d36b2e0b38a848f41925e9ab317ec86e, type: 3}
+  - {fileID: 21300000, guid: 832afc83b36602b409d011a0b004a667, type: 3}
+  velocidade: 0
+  porSegundo: 1
+  k: 1

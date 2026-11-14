@@ -85,6 +85,7 @@ if (andar_t > 0)
         andar_img = (andar_img + 0.17 * _dt) mod sprite_get_number(spr_ia_andar);
         image_index = andar_img;
         image_speed = 0;
-        velh *= 0.45;
+        velh = clamp(velh, -vel_correr * 0.45, vel_correr * 0.45);
+        anda_v = velh;
     }
 }

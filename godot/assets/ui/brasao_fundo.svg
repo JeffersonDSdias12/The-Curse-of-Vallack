@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="240" viewBox="0 0 200 240">
+  <defs>
+    <radialGradient id="fundo" cx="0.5" cy="0.32" r="0.7">
+      <stop offset="0" stop-color="#4a3a3c"/>
+      <stop offset="0.55" stop-color="#1d1517"/>
+      <stop offset="1" stop-color="#0a0708"/>
+    </radialGradient>
+  </defs>
+  <path fill="url(#fundo)" d="M100 22 L176 43 L173 118 C 168 163, 139 196, 100 214 C 61 196, 32 163, 27 118 L24 43 Z"/>
+</svg>

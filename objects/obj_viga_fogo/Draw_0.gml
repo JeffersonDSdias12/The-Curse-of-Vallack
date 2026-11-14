@@ -10,9 +10,18 @@ if (estado == "aviso" or estado == "caindo")
     draw_set_alpha(1);
     if (estado == "aviso")
     {
+        // v1.12: faixa de perigo no chão + "!" grande (onde a viga vai cair)
         var _pa = 0.6 + 0.4 * sin(_tt * 0.5);
+        gpu_set_blendmode(bm_add);
+        draw_set_alpha(0.18 + 0.2 * _k);
+        draw_set_color(make_color_rgb(170, 60, 255));
+        draw_rectangle(x - 42, y_chao - 150, x + 42, y_chao, false);
+        draw_set_alpha(0.5 + 0.3 * _pa);
+        draw_ellipse(x - 46, y_chao - 5, x + 46, y_chao + 4, false);
+        gpu_set_blendmode(bm_normal);
+        draw_set_alpha(1);
         gpu_set_texfilter(true);
-        txt(x, y_chao - 70, "!", FONTE.MEDIA, make_color_rgb(255, 120, 50), _pa, fa_center, fa_middle, 0.9);
+        txt_sombra(x, y_chao - 96, "!", FONTE.GRANDE, make_color_rgb(255, 210, 80), _pa, fa_center, fa_middle, 1.25 + 0.15 * _k);
         gpu_set_texfilter(false);
     }
 }

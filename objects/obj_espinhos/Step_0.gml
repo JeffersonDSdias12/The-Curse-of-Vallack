@@ -13,7 +13,7 @@ switch (estado)
     break;
     case "alto":
         sobe = min(1, sobe + 0.35 * _dt);
-        if (sobe > 0.6) armadilha_area(x - 15, y - 13 * sobe, x + 15, y, 14, 30, atingidos, 3);
+        if (sobe > 0.6) armadilha_area(x - 24, y - 22 * sobe, x + 24, y, 14, 30, atingidos, 3);     // v1.12: área maior (espinhos 1,6x)
         if (t >= 70) { estado = "descendo"; t = 0; }
     break;
     case "descendo":
