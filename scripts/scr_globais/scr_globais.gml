@@ -5,7 +5,7 @@
 
 #macro JOGO_TITULO        "THE CURSE OF VALLACK"
 #macro JOGO_SUBTITULO     "A MALDIÇÃO DE VALLACK"
-#macro JOGO_VERSAO        "v1.17"
+#macro JOGO_VERSAO        "BETA 0.5.2"
 // altura (em pixels do mundo) que a câmera mostra (v1.13: 420 -> 280, a câmera
 // bem mais perto do herói)
 #macro CAMERA_ALTURA      280
