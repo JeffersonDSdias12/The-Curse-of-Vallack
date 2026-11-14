@@ -56,7 +56,7 @@ func ev_create() -> void:
 	resiste_atordoar = true
 	pode_lancar = false
 	usa_qte = true          # v1.17: com 1/4 da vida, a SEQUÊNCIA DE GOLPES o derruba
-	vida_max = round(460 * dif_vida_inimigo())
+	vida_max = round(460 * dif_vida_boss())     # v1.22: o Carrasco usa a vida de chefe
 	vida = vida_max
 	vida_atraso = vida
 	dano_corte = maxf(1, round(20 * dif_dano_inimigo()))
@@ -240,7 +240,7 @@ func mini_morrer(d: float) -> void:
 	aviso_mostrar("O CARRASCO CAIU  ·  +" + str(int(round(ORBS_MINI_BOSS * (ORBS_FINALIZADOR if finalizado else 1.0)))) + " ORBS")
 	dialogo_fim_t = 50
 	# v1.17: ORBES DE VIDA (verdes) e as conquistas
-	V117.orbs_vida_soltar(x, y - 50, dif_valor([8, 6, 5, 4]), 6)
+	V117.orbs_vida_soltar(x, y - 50, dif_valor([10, 8, 6, 4]), 6)     # v1.22: mais orbs de vida (era 8 6 5)
 	V117.conquista("carrasco")
 	if G.dano_na_luta <= 0:
 		V117.conquista("intocavel")

@@ -11,6 +11,7 @@ var passo := 0
 var espera := 0.0
 var segurando: Array = []      # [keycode, tempo restante]
 var arrasto = null             # {de, para, t, dur}
+var _dif := 1                  # v1.22: dificuldade usada pelo jogo_direto (dif=N)
 var _perf_frames := 0
 var _perf_t0 := 0
 var _inim = null               # inimigo criado pelo roteiro
@@ -290,12 +291,16 @@ func _ready() -> void:
 					roteiro = _camera()
 				"teste=hud":
 					roteiro = _hud()
+				"teste=dificuldade":
+					roteiro = _dificuldade()
 				"teste=pontes":
 					roteiro = _pontes()
 				_:
 					roteiro = ROTEIROS.get(a.substr(6), [])
 		elif a.begins_with("shots="):
 			pasta = a.substr(6)
+		elif a.begins_with("dif="):
+			_dif = int(a.substr(4))     # v1.22: dificuldade do jogo_direto (0 fácil .. 3 extremo)
 		elif a.begins_with("perfil="):
 			G.cfg_desempenho = int(a.substr(7))     # 1 mínimo .. 4 máximo
 		elif a == "fps30":
@@ -1038,6 +1043,29 @@ func _hud() -> Array:
 	]
 
 
+# v1.22: luta contra a Árvore por 40 s SEM curar e anota a vida do herói e do chefe
+func _dificuldade() -> Array:
+	var r := [
+		[1.5, "jogo_direto", null],
+		[1.5, "acelerar_carregamento", null],
+		[3.0, "acelerar_carregamento", null],
+		[4.0, "pular_dialogo", null],
+		[0.5, "teleporta", 4300.0],
+		[0.1, "info_luta", "inicio"],
+	]
+	for i in 80:
+		if i % 8 == 0:
+			r.append([0.0, "segura", [KEY_D, 0.8]])
+			r.append([0.0, "pular_dialogo", null])
+		r.append([0.25, "tecla", KEY_J])
+		r.append([0.25, "tecla", [KEY_J, KEY_I, KEY_J, KEY_SPACE, KEY_J][i % 5]])
+		if i % 10 == 9:
+			r.append([0.0, "info_luta", "t%02ds" % ((i + 1) / 2)])
+	r.append([0.0, "shot", "d_fim"])
+	r.append([0.5, "sair", null])
+	return r
+
+
 func _executar(acao: String, v) -> void:
 	print("[teste] ", acao, " ", v)
 	match acao:
@@ -1236,6 +1264,12 @@ func _executar(acao: String, v) -> void:
 			var pj = G.lib.instance_find("obj_player", 0)
 			print("[hud] ", v, ": modo=", G.cfg_hud_modo, " tam=", G.cfg_hud_tam, " pos=", G.cfg_hud_pos, " desempenho=", G.cfg_desempenho, " cam=", G.cfg_camera_acao,
 				" toque_modo=", G.toque.calcular_modo(), " defendendo=", (pj.defendendo if pj != null and "defendendo" in pj else "-"))
+		"info_luta":
+			var bl = G.lib.instance_find("obj_boss_01", 0)
+			var pl = G.lib.instance_find("obj_player", 0)
+			print("[luta] ", v, " dif=", G.dificuldade, " heroi_vida=", (roundi(pl.vida) if pl != null else -1), " morto=", (pl.morto if pl != null else "-"),
+				" chefe_vida=", (roundi(bl.vida) if bl != null else -1), "/", (roundi(bl.vida_max) if bl != null else -1), " acordado=", (bl.acordado if bl != null else "-"),
+				" inimigos=", G.lib.inimigos_vivos())
 		"inim_fase":
 			if _inim != null and G.existe(_inim):
 				var falas := []
@@ -1350,7 +1384,7 @@ func _executar(acao: String, v) -> void:
 			# v1.17: começa a partida no slot 3 (o de teste) sem passar pelo menu e pelo mapa
 			G.lib.partida_resetar()
 			G.save_slot_atual = 3
-			G.dificuldade = 1
+			G.dificuldade = _dif
 			var lj = G.lib.instance_create_depth(0, 0, -11000, "obj_loading")
 			lj.modo = "novo_jogo"
 			lj.destino = "Room1"

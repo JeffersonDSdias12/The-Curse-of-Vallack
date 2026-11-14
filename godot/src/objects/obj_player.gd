@@ -730,9 +730,12 @@ func levar_dano(dano: float, origem_x = null, bloqueavel := true, forca := 4.0, 
 	# v1.12: MODO FÚRIA = super armadura (metade do dano)
 	if furia_modo:
 		dano = maxf(1, round(dano * 0.5))
+	# v1.22 (patch mobile): todo dano que chega em Twilight (inimigos, chefes,
+	# projéteis e armadilhas) é aliviado, menos no EXTREMO
+	dano = maxf(1, round(dano * dif_dano_recebido()))
 	vida = maxf(0, vida - dano)
 	G.dano_na_luta += dano      # v1.17: conquista INTOCÁVEL (zera quando o Carrasco acorda)
-	tempo_invencivel = 60
+	tempo_invencivel = dif_invencivel()     # v1.22: mais fôlego depois de um golpe (60 no EXTREMO)
 	tempo_sem_dano = 0
 	G.combo = 0
 	G.combo_tempo = 0

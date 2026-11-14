@@ -28,7 +28,7 @@ func ev_create() -> void:
 	sprite_index = Spr.spr_bau
 	image_speed = 0
 	image_index = 0
-	cura_total = dif_valor([70, 55, 45, 35])
+	cura_total = dif_valor([90, 75, 60, 35])     # v1.22: era 70 55 45
 	chave = aberto_chave("bau", xstart, ystart)
 	if aberto_tem(chave):
 		estado = "aberto"

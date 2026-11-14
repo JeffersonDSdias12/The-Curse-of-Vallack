@@ -8,6 +8,8 @@
 <meta property="og:title" content="The Curse of Vallack · A Maldição de Vallack">
 <meta property="og:description" content="Ação em pixel art contra a maldição do Rei dos Dragões. Beta 0.5 para Android e Windows.">
 <meta property="og:image" content="img/prologo_9.jpg">
+<meta property="og:site_name" content="Gambitech Studio">
+<meta name="author" content="Gambitech Studio">
 <meta name="theme-color" content="#0b0708">
 <link rel="icon" href="img/icone.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,6 +66,15 @@ nav a.cta{color:#1a0c08;background:linear-gradient(180deg,#ffd27a,var(--ouro2));
 @keyframes flutua{50%{transform:translateY(-8px)}}
 .heroi h1{font-size:clamp(1.05rem,3.4vw,1.5rem);color:var(--ouro);margin-top:6px;font-weight:500;letter-spacing:.22em}
 .heroi p{font-size:clamp(1rem,2.6vw,1.2rem);max-width:640px;margin:16px auto 0;text-shadow:0 2px 10px #000}
+.apresenta{font-family:var(--titulo);font-size:.78rem;letter-spacing:.32em;color:#f0d9c6;margin-bottom:6px;text-shadow:0 2px 8px #000}
+.apresenta b{color:var(--brasa);font-weight:700}
+.atualizacao{display:inline-flex;align-items:center;gap:8px;font-family:var(--titulo);font-size:.7rem;letter-spacing:.16em;font-weight:700;color:#06210f;background:linear-gradient(180deg,#8dff9e,#3fcf6a);border-radius:999px;padding:5px 12px;box-shadow:0 0 0 0 rgba(80,230,120,.6);animation:pulsa 2s infinite}
+.atualizacao::before{content:"";width:8px;height:8px;border-radius:50%;background:#06210f}
+@keyframes pulsa{70%{box-shadow:0 0 0 10px rgba(80,230,120,0)}100%{box-shadow:0 0 0 0 rgba(80,230,120,0)}}
+.pacote .atualizacao{margin-bottom:12px}
+.novidades{text-align:left;margin:14px 0 0;padding:12px 14px;border:1px solid #2f5a3a;border-radius:10px;background:rgba(63,207,106,.07);font-size:.9rem;color:#d9ead9}
+.novidades b{display:block;font-family:var(--titulo);font-size:.72rem;letter-spacing:.16em;color:#8dff9e;margin-bottom:4px}
+.novidades ul{margin:0;padding-left:18px;line-height:1.5}
 .selo{display:inline-block;margin-top:18px;padding:5px 16px;border:1px solid var(--sangue);border-radius:999px;background:rgba(200,32,28,.18);font-family:var(--titulo);font-size:.8rem;letter-spacing:.2em;color:#ffb0a6}
 .botoes{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
 .btn{display:inline-flex;align-items:center;gap:12px;text-align:left;text-decoration:none;font-family:var(--titulo);border-radius:12px;padding:12px 22px;min-height:60px;border:1px solid var(--ouro2);color:var(--texto);background:linear-gradient(180deg,#2a1716,#170d0e);transition:transform .15s,box-shadow .15s,border-color .15s}
@@ -238,10 +249,12 @@ footer img{width:120px;margin:0 auto 10px;opacity:.9}
 <section class="heroi" id="inicio">
   <canvas id="brasas" aria-hidden="true"></canvas>
   <div class="dentro">
+    <div class="apresenta"><b>GAMBITECH STUDIO</b> APRESENTA</div>
     <img class="logo" src="img/logo.png" alt="The Curse of Vallack">
     <h1>A MALDIÇÃO DE VALLACK</h1>
     <p>Duzentos anos depois de o Rei dos Dragões ser selado, o selo envelheceu e virou maldição. Vista a armadura de Twilight Vetrus e atravesse uma vila em chamas até o castelo.</p>
     <span class="selo" data-versao>BETA 0.5</span>
+    <div style="margin-top:12px"><a class="atualizacao" href="#baixar" data-atualizacao>ATUALIZAÇÃO DISPONÍVEL</a></div>
     <div class="botoes">
       <a class="btn primario" data-baixar="android" href="#baixar">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.38.38 0 00-.66-.38l-1.86 3.22A11.4 11.4 0 0012 8.1c-1.76 0-3.42.38-4.92 1.04L5.22 5.92a.38.38 0 00-.66.38L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
@@ -345,11 +358,11 @@ footer img{width:120px;margin:0 auto 10px;opacity:.9}
 <!-- ===================== EQUIPE ===================== -->
 <section id="equipe" class="faixa">
   <div class="cx">
-    <h2 class="revela">Quem fez</h2>
+    <h2 class="revela">Gambitech Studio</h2>
     <div class="ornamento">◆</div>
-    <p class="sub revela">Um projeto acadêmico da Faculdade FAPAN.</p>
+    <p class="sub revela">The Curse of Vallack é criado pela equipe da Gambitech Studio.</p>
     <div class="equipe">
-      <div class="cartao revela"><small>DESENVOLVIDO POR</small><b>Jefferson Dias</b></div>
+      <div class="cartao revela"><small>DIREÇÃO E DESENVOLVIMENTO</small><b>Jefferson Dias</b></div>
       <div class="cartao revela"><small>DESENVOLVIMENTO</small><b>Eduardo<br>Isaac<br>Alex<br>Aldreon</b></div>
       <div class="cartao revela"><small>DESIGN</small><b>Alex<br>I.A. Claude</b></div>
       <div class="cartao revela"><small>ROTEIRO</small><b>Isaac<br>Eduardo<br>I.A. Claude</b></div>
@@ -393,11 +406,13 @@ footer img{width:120px;margin:0 auto 10px;opacity:.9}
     <p class="sub revela">Gratuito. Escolha a sua plataforma.</p>
     <div class="baixar">
       <div class="pacote revela">
+        <span class="atualizacao" data-atualizacao>ATUALIZAÇÃO DISPONÍVEL</span>
         <img src="img/icone.png" alt="Ícone do jogo">
         <h3>Android</h3>
         <p class="info" id="infoAndroid">Instalador APK</p>
         <a class="btn primario" data-baixar="android" href="#"><span><small>The Curse of Vallack</small><b>BAIXAR APK</b></span></a>
-        <ol><li>Baixe o arquivo no celular.</li><li>Abra o arquivo e, se o Android pedir, permita instalar apps desta fonte.</li><li>Toque em Instalar e depois em Abrir.</li></ol>
+        <div class="novidades" id="novidades"></div>
+        <ol><li>Baixe o arquivo no celular.</li><li>Abra o arquivo e, se o Android pedir, permita instalar apps desta fonte.</li><li>Toque em Instalar e depois em Abrir. Quem já tem o jogo instala por cima: os saves continuam.</li></ol>
       </div>
       <div class="pacote revela">
         <img src="img/icone.png" alt="Ícone do jogo">
@@ -415,7 +430,7 @@ footer img{width:120px;margin:0 auto 10px;opacity:.9}
 <footer>
   <img src="img/logo.png" alt="">
   <div>The Curse of Vallack · A Maldição de Vallack · <span data-versao>Beta 0.5</span></div>
-  <div>© 2026 Jefferson Dias · Gambitech Studio · Faculdade FAPAN</div>
+  <div>© 2026 Gambitech Studio · Todos os direitos reservados</div>
   <div style="margin-top:6px;font-style:italic">A jornada continua em breve...</div>
 </footer>
 
@@ -429,9 +444,20 @@ footer img{width:120px;margin:0 auto 10px;opacity:.9}
    CONFIGURAÇÃO — tudo o que muda a cada versão fica aqui
    ===================================================================== */
 const CONFIG = {
-  versao: "Beta 0.5",
-  android: { url: "downloads/TheCurseOfVallack-Beta0.5-Android.apk", info: "Instalador APK · Android 7 ou mais novo" },
-  windows: { url: "downloads/TheCurseOfVallack-Beta0.5-Windows-Setup.exe", info: "Instalador para Windows 10 e 11 (64 bits)" },
+  versao: "Beta 0.5.1",
+  android: { url: "downloads/TheCurseOfVallack-Beta0.5.1-Android.apk", info: "Beta 0.5.1 · Instalador APK · Android 7 ou mais novo" },
+  windows: { url: "downloads/TheCurseOfVallack-Beta0.5-Windows-Setup.exe", info: "Beta 0.5 · Instalador para Windows 10 e 11 (64 bits)" },
+  // Etiqueta "ATUALIZAÇÃO DISPONÍVEL" e a lista de novidades do celular (vazio = sem etiqueta)
+  novidades: {
+    titulo: "NOVIDADES DA 0.5.1 (CELULAR)",
+    itens: [
+      "Jogo bem mais fácil nos níveis Fácil, Médio e Difícil",
+      "Inimigos e chefes com menos vida; menos dano em Twilight",
+      "Mais tempo entre os ataques e só um inimigo ataca por vez no Médio",
+      "Baús curam mais e a sequência de golpes dá mais tempo",
+      "Modo Extremo continua com o desafio original"
+    ]
+  },
   // Endereço do banco de comentários (Firebase Realtime Database), sem barra no fim.
   // Vazio = os comentários ficam só no aparelho de quem escreve.
   comentariosUrl: ""
@@ -456,6 +482,12 @@ document.querySelectorAll("[data-baixar]").forEach(a => {
   if (a.closest(".pacote")) { a.href = p.url; a.setAttribute("download", ""); }
 });
 $("#infoAndroid").textContent = CONFIG.android.info;
+(() => {
+  const n = CONFIG.novidades, box = $("#novidades");
+  if (!n || !n.itens || !n.itens.length) { box.remove(); document.querySelectorAll("[data-atualizacao]").forEach(e => e.remove()); return; }
+  const ul = cria("ul"); n.itens.forEach(t => ul.appendChild(cria("li", "", t)));
+  box.append(cria("b", "", n.titulo), ul);
+})();
 $("#infoWindows").textContent = CONFIG.windows.info;
 
 /* ---------- menu do celular ---------- */

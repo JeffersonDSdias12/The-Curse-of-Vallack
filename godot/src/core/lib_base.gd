@@ -8,7 +8,7 @@ extends GMObj
 
 const JOGO_TITULO := "THE CURSE OF VALLACK"
 const JOGO_SUBTITULO := "A MALDIÇÃO DE VALLACK"
-const JOGO_VERSAO := "BETA 0.5"
+const JOGO_VERSAO := "BETA 0.5.1"
 const CAMERA_ALTURA := 280.0     # v1.13: 420 -> 280, a câmera bem mais perto do herói
 const GUI_ALTURA := 720.0
 const ESPECIAL_SEGUNDOS := 10.0
@@ -323,11 +323,11 @@ static func dificuldade_cor(d := -1) -> Color:
 static func dificuldade_descricao(d: int) -> Array:
 	match d:
 		DIF.FACIL:
-			return ["Inimigos fracos, lentos e só com o golpe básico.", "Só 1 inimigo ataca de cada vez.", "Chefes com menos vida."]
+			return ["Para curtir a história: inimigos fracos e lentos.", "Só 1 inimigo ataca de cada vez; os baús curam muito.", "Chefes com bem menos vida."]
 		DIF.MEDIO:
-			return ["A experiência equilibrada: saltos, teias e ondas.", "Até 2 inimigos atacam ao mesmo tempo.", "A vida volta nos baús e nos cristais dourados."]
+			return ["A experiência equilibrada: saltos, teias e ondas.", "Um inimigo ataca por vez e dá tempo de reagir.", "A vida volta nos baús e nos cristais dourados."]
 		DIF.DIFICIL:
-			return ["Inimigos rápidos, resistentes e com golpes novos.", "O porco invoca esqueletos; arqueiros atiram 2 flechas.", "Até 3 atacam juntos; a guarda quebra mais."]
+			return ["Inimigos rápidos e com golpes novos.", "O porco invoca esqueletos; arqueiros atiram 2 flechas.", "Até 2 atacam juntos; chefes resistentes."]
 	return ["Inimigos implacáveis: dano e vida dobrados.", "Arqueiros atiram 3 flechas; até 4 atacam juntos.", "O cristal dourado não cura: só os baús de vida."]
 
 
@@ -335,42 +335,54 @@ static func dificuldade_descricao(d: int) -> Array:
 # PC, scr_globais). Cada nível muda a vida, o dano, a espera entre golpes, a
 # velocidade, quantos atacam juntos e QUAIS golpes cada inimigo usa
 # (dif_golpe_liberado). O nível do inimigo no mapa (Nv 1-5) sobe mais forte nas
-# dificuldades altas: a fase 2 aperta mais.        FÁCIL  MÉDIO  DIFÍCIL EXTREMO
+# dificuldades altas: a fase 2 aperta mais.
+# v1.22 (patch mobile): FÁCIL, MÉDIO e DIFÍCIL bem mais leves no celular (menos
+# dano, menos vida nos inimigos e nos chefes, mais tempo entre os golpes). O
+# EXTREMO continua exatamente como era.             FÁCIL  MÉDIO  DIFÍCIL EXTREMO
 static func dif_dano_inimigo() -> float:
-	return dif_valor([0.5, 0.85, 1.25, 1.7])
+	return dif_valor([0.35, 0.55, 0.8, 1.7])        # era 0.5  0.85 1.25
 
 static func dif_vida_inimigo() -> float:
-	return dif_valor([0.65, 1.0, 1.4, 1.9])
+	return dif_valor([0.5, 0.75, 1.0, 1.9])         # era 0.65 1.0  1.4
 
 static func dif_vida_boss() -> float:
-	return dif_valor([0.7, 1.0, 1.35, 1.8])
+	return dif_valor([0.45, 0.6, 0.8, 1.8])         # era 0.7  1.0  1.35
 
 static func dif_recarga_inimigo() -> float:
-	return dif_valor([1.5, 1.0, 0.78, 0.6])
+	return dif_valor([1.75, 1.35, 1.05, 0.6])       # era 1.5  1.0  0.78
 
 static func dif_atordoamento() -> float:
-	return dif_valor([1.3, 1.0, 0.8, 0.6])
+	return dif_valor([1.5, 1.25, 1.0, 0.6])         # era 1.3  1.0  0.8
 
 static func dif_atacantes_max() -> int:
-	return dif_valor([1, 2, 3, 4])
+	return dif_valor([1, 1, 2, 4])                  # era 1    2    3
 
 static func dif_velocidade() -> float:
-	return dif_valor([0.88, 1.0, 1.1, 1.2])
+	return dif_valor([0.85, 0.92, 1.0, 1.2])        # era 0.88 1.0  1.1
 
 static func dif_nivel_vida() -> float:
-	return dif_valor([0.08, 0.15, 0.22, 0.3])
+	return dif_valor([0.06, 0.1, 0.15, 0.3])        # era 0.08 0.15 0.22
 
 static func dif_nivel_dano() -> float:
-	return dif_valor([0.05, 0.10, 0.15, 0.2])
+	return dif_valor([0.04, 0.07, 0.1, 0.2])        # era 0.05 0.10 0.15
 
 static func dif_cristal_cura() -> bool:
 	return G.dificuldade != DIF.EXTREMO
 
 static func dif_boss_recarga() -> float:
-	return dif_valor([150, 100, 75, 55])
+	return dif_valor([185, 140, 105, 55])           # era 150  100  75
 
 static func dif_quebra_guarda() -> int:
-	return dif_valor([6, 4, 3, 2])
+	return dif_valor([9, 7, 5, 2])                  # era 6    4    3
+
+# v1.22: alívio sobre QUALQUER dano que Twilight recebe (inclui chefes,
+# projéteis e armadilhas, que não usam dif_dano_inimigo)
+static func dif_dano_recebido() -> float:
+	return dif_valor([0.6, 0.7, 0.85, 1.0])
+
+# v1.22: quadros de invencibilidade depois de levar um golpe (era 60 em todas)
+static func dif_invencivel() -> float:
+	return dif_valor([95, 85, 72, 60])
 
 # golpes especiais dos inimigos: liberados a partir de um nível (DIF.FACIL = sempre)
 static func dif_golpe_liberado(nivel: int) -> bool:

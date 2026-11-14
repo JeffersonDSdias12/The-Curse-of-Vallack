@@ -24,8 +24,8 @@ const MAPA_FASES := 18
 static func qte_parametros(eh_boss: bool) -> Array:
 	# v1.17: curva nivelada (a mesma da versão PC)
 	if eh_boss:
-		return [Lib.dif_valor([5, 6, 7, 8]), Lib.dif_valor([90, 72, 60, 50])]
-	return [Lib.dif_valor([3, 4, 5, 5]), Lib.dif_valor([100, 84, 70, 60])]
+		return [Lib.dif_valor([4, 5, 6, 8]), Lib.dif_valor([115, 95, 80, 50])]     # v1.22: mais tempo por botão (era 5 6 7 / 90 72 60)
+	return [Lib.dif_valor([3, 3, 4, 5]), Lib.dif_valor([125, 105, 90, 60])]     # v1.22: era 3 4 5 / 100 84 70
 
 
 # v1.19: cada sequência completada cura Twilight (fração da vida máxima).

@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "comentarios": {
+      ".read": true,
+      ".indexOn": ["data"],
+      "$id": {
+        ".write": "!data.exists()",
+        ".validate": "newData.hasChildren(['nome', 'texto', 'estrelas', 'pai', 'data', 'curtidas'])",
+        "nome": { ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 24" },
+        "texto": { ".validate": "newData.isString() && newData.val().length >= 3 && newData.val().length <= 600" },
+        "estrelas": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 5" },
+        "pai": { ".validate": "newData.isString() && newData.val().length <= 40" },
+        "data": { ".validate": "newData.isNumber() && newData.val() <= now + 60000" },
+        "curtidas": {
+          ".write": "data.parent().exists()",
+          ".validate": "newData.isNumber() && newData.val() >= 0 && ((!data.exists() && newData.val() == 0) || newData.val() - data.val() == 1 || data.val() - newData.val() == 1)"
+        },
+        "$outro": { ".validate": false }
+      }
+    },
+    "$qualquer": { ".read": false, ".write": false }
+  }
+}
