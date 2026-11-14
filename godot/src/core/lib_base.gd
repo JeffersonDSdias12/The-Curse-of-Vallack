@@ -8,7 +8,7 @@ extends GMObj
 
 const JOGO_TITULO := "THE CURSE OF VALLACK"
 const JOGO_SUBTITULO := "A MALDIÇÃO DE VALLACK"
-const JOGO_VERSAO := "BETA 0.5.1"
+const JOGO_VERSAO := "BETA 0.5.2"
 const CAMERA_ALTURA := 280.0     # v1.13: 420 -> 280, a câmera bem mais perto do herói
 const GUI_ALTURA := 720.0
 const ESPECIAL_SEGUNDOS := 10.0

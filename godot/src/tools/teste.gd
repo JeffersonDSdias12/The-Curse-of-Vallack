@@ -293,6 +293,8 @@ func _ready() -> void:
 					roteiro = _hud()
 				"teste=dificuldade":
 					roteiro = _dificuldade()
+				"teste=cores":
+					roteiro = _cores()
 				"teste=pontes":
 					roteiro = _pontes()
 				_:
@@ -1063,6 +1065,32 @@ func _dificuldade() -> Array:
 			r.append([0.0, "info_luta", "t%02ds" % ((i + 1) / 2)])
 	r.append([0.0, "shot", "d_fim"])
 	r.append([0.5, "sair", null])
+	return r
+
+
+# v1.23: herói parado, andando, correndo e atacando no mesmo lugar (comparar as cores)
+func _cores() -> Array:
+	var r := [
+		[1.5, "jogo_direto", null],
+		[1.5, "acelerar_carregamento", null],
+		[3.0, "acelerar_carregamento", null],
+		[4.0, "pular_dialogo", null],
+		[0.5, "teleporta_xy", [2560.0, 690.0]],
+		[0.6, "limpar", null],
+		[0.8, "shot", "k1_parado"],
+		[0.3, "shot", "k2_parado"],
+		[0.0, "segura", [KEY_D, 1.4]],
+		[0.6, "shot", "k3_correndo"],
+		[0.25, "shot", "k4_correndo"],
+		[0.8, "tecla", KEY_J],
+		[0.12, "shot", "k5_ataque"],
+		[0.3, "tecla", KEY_J],
+		[0.12, "shot", "k6_ataque2"],
+		[0.9, "tecla", KEY_SPACE],
+		[0.2, "shot", "k7_pulo"],
+		[1.2, "shot", "k8_parado_depois"],
+		[0.3, "sair", null],
+	]
 	return r
 
 

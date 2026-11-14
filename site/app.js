@@ -2,14 +2,15 @@
    CONFIGURAÇÃO — tudo o que muda a cada versão fica aqui
    ===================================================================== */
 const CONFIG = {
-  versao: "Beta 0.5.1",
-  android: { url: "downloads/TheCurseOfVallack-Beta0.5.1-Android.apk", info: "Beta 0.5.1 · Instalador APK · Android 7 ou mais novo" },
+  versao: "Beta 0.5.2",
+  android: { url: "downloads/TheCurseOfVallack-Beta0.5.2-Android.apk", info: "Beta 0.5.2 · Instalador APK · Android 7 ou mais novo" },
   windows: { url: "downloads/TheCurseOfVallack-Beta0.5-Windows-Setup.exe", info: "Beta 0.5 · Instalador para Windows 10 e 11 (64 bits)" },
   // Etiqueta "ATUALIZAÇÃO DISPONÍVEL" e a lista de novidades do celular (vazio = sem etiqueta)
   novidades: {
-    titulo: "NOVIDADES DA 0.5.1 (CELULAR)",
+    titulo: "NOVIDADES DA 0.5.2 (CELULAR)",
     itens: [
-      "Jogo bem mais fácil nos níveis Fácil, Médio e Difícil",
+      "Cores de Twilight corrigidas: parado, correndo, andando, combos e escalada com o mesmo vermelho da armadura",
+      "Da 0.5.1: jogo bem mais fácil nos níveis Fácil, Médio e Difícil",
       "Inimigos e chefes com menos vida; menos dano em Twilight",
       "Mais tempo entre os ataques e só um inimigo ataca por vez no Médio",
       "Baús curam mais e a sequência de golpes dá mais tempo",
